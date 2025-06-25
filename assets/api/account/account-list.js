@@ -186,9 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             .then(({ response, data }) => {
                                 if (response.ok) {
                                     showAlert('✅ Account deleted successfully!', 'success');
-                                    setTimeout(() => {
-                                        window.location.reload();
-                                    }, 1200);
+                                    window.location.reload();
                                 } else {
                                     throw new Error(data.message || 'Failed to delete account');
                                 }
