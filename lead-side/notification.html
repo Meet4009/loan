@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Project</title>
+
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/jquery-ui.min.css" rel="stylesheet">
+    <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../assets/css/animate/animate.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- fontawesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+
+<body class="dark-sidenav">
+
+    <!-- Left Sidenav -->
+    <div class="left-sidenav">
+        <!-- LOGO -->
+        <div class="brand">
+            <a href="dashboard/crm-login.html" class="logo">
+                <h1 class="text-center m-5 text-white">
+                    LOGO
+                </h1>
+            </a>
+        </div>
+        <!--end logo-->
+        <div class="menu-content h-100" data-simplebar>
+            <ul class="metismenu left-sidenav-menu">
+                <li>
+                    <a href="add-data.html">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Add Data</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="index.html">
+                        <i class="fas fa-external-link-square-alt"></i>
+                        <span>Direct</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="agent.html">
+                        <i class="fas fa-id-badge"></i>
+                        <span>Agent</span><span class="menu-arrow"></span></a>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fas fa-id-card-alt"></i>
+                        Builder
+                        <span class="menu-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="mehul-bhai.html">Mehul Bhai</a></li>
+                        <li><a href="kamlesh-bhai.html">Kamlesh Bhai</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="other.html">
+                        <i class="fas fa-window-maximize"></i>
+                        <span>Other</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="notification.html">
+                        <i class="fas fa-bell"></i>
+                        <span>Notification</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span><span class="menu-arrow"></span></a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <!-- end left-sidenav-->
+
+    <div class="page-wrapper">
+        <!-- Top Bar Start -->
+        <div class="topbar">
+            <!-- Navbar -->
+            <nav class="navbar-custom">
+                <ul class="list-unstyled topbar-nav float-right mb-0">
+                    <li class="dropdown hide-phone">
+                        <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown"
+                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <i data-feather="search" class="topbar-icon"></i>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right dropdown-lg p-0">
+                            <!-- Top Search Bar -->
+                            <div class="app-search-topbar">
+                                <form id="search-form">
+                                    <input type="search" name="search" id="table-search"
+                                        class="from-control top-search mb-0" placeholder="Search in table...">
+                                    <button type="submit">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown"
+                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <span class="ml-1 nav-user-name hidden-sm" id="user-name"></span>
+                            <img src="../assets/images/profile.png" alt="profile-user" class="rounded-circle" />
+                        </a>
+                    </li>
+                </ul><!--end topbar-nav-->
+
+                <ul class="list-unstyled topbar-nav mb-0">
+                    <li>
+                        <button class="nav-link button-menu-mobile">
+                            <i data-feather="menu" class="align-self-center topbar-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <!-- end navbar-->
+        </div>
+        <!-- Top Bar End -->
+
+        <!-- Page Content-->
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="page-title">Notification</h4>
+                                </div><!--end col-->
+                            </div><!--end row-->
+                        </div><!--end page-title-box-->
+                    </div><!--end col-->
+                </div><!--end row-->
+                <!-- end page title end breadcrumb -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body m-3">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="startDate">Start Date</label>
+                                            <input type="date" class="form-control" id="nstartDate" name="startDate">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="endDate">End Date</label>
+                                            <input type="date" class="form-control" id="nendDate" name="endDate">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-primary mt-4 apply-notification-filter">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="cardBody">
+                                <div class="table-wrapper">
+                                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                                        <table id="notification-table" class="table text-center table-striped mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <!-- <th>ID</th> -->
+                                                    <th>Follow ID</th>
+                                                    <th>Source</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                    <th>Property Name</th>
+                                                    <th>Description</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div><!--end card-body-->
+                        </div><!--end card-->
+                    </div> <!-- end col -->
+                </div> <!-- end row -->
+            </div><!-- container -->
+        </div>
+        <!-- end page content -->
+    </div>
+
+    <!-- jQuery  -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/metismenu.min.js"></script>
+    <script src="../assets/js/waves.js"></script>
+    <script src="../assets/js/feather.min.js"></script>
+    <script src="../assets/js/simplebar.min.js"></script>
+    <script src="../assets/js/jquery-ui.min.js"></script>
+    <script src="../assets/js/moment.js"></script>
+    <script src="../assets/css/daterangepicker/daterangepicker.js"></script>
+
+    <!-- App js -->
+    <script src="../assets/js/app.js"></script>
+    <script src="../assets/js/search.js"></script>
+    <script src="../assets/api/lead-side/lead-notification.js"></script>
+</body>
+
+</html>

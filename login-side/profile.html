@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Loan Project</title>
+
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/jquery-ui.min.css" rel="stylesheet">
+    <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../assets/css/animate/animate.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- fontawesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        @media (max-width: 991.98px) {
+            .page-title-box .row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .card .row>div[class^="col-"] {
+                margin-bottom: 1rem;
+            }
+
+            .row.bg-white.p-5 {
+                padding: 1.5rem !important;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .row.bg-white.p-5 {
+                padding: 1rem !important;
+            }
+
+            .col-lg-4,
+            .col-lg-4.ml-auto,
+            .col-lg-4.align-self-end {
+                max-width: 100% !important;
+                flex: 0 0 100% !important;
+            }
+
+            .dastyle-profile-main {
+                text-align: center;
+                margin-bottom: 1.5rem;
+            }
+
+            .row.justify-content-end {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .col-auto,
+            .col-lg-4.align-self-center {
+                width: 100% !important;
+                text-align: center !important;
+                margin-bottom: 0.5rem;
+            }
+
+            .btn,
+            .btn-lg,
+            .btn-icon-circle-sm {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+
+            ul.personal-detail {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="dark-sidenav">
+    <!-- Left Sidenav -->
+    <div class="left-sidenav">
+        <!-- LOGO -->
+        <div class="brand">
+            <a href="dashboard/crm-login.html" class="logo">
+                <h1 class="text-center m-5 text-white">
+                    LOGO
+                </h1>
+            </a>
+        </div>
+        <!--end logo-->
+        <div class="menu-content h-100" data-simplebar>
+            <ul class="metismenu left-sidenav-menu">
+                <li>
+                    <a href="index.html">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <span>Login Side</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="account-details.html">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        <span>Account Details</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span><span class="menu-arrow"></span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- end left-sidenav-->
+
+    <div class="page-wrapper">
+        <!-- Top Bar Start -->
+        <div class="topbar">
+            <!-- Navbar -->
+            <nav class="navbar-custom">
+                <ul class="list-unstyled topbar-nav float-right mb-0">
+
+
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown"
+                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <span class="ml-1 nav-user-name hidden-sm" id="user-name"></span>
+                            <img src="../assets/images/profile.png" alt="profile-user" class="rounded-circle" />
+                        </a>
+                    </li>
+                </ul><!--end topbar-nav-->
+
+                <ul class="list-unstyled topbar-nav mb-0">
+                    <li>
+                        <button class="nav-link button-menu-mobile">
+                            <i data-feather="menu" class="align-self-center topbar-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <!-- end navbar-->
+        </div>
+        <!-- Top Bar End -->
+
+        <!-- Page Content-->
+        <div class="page-content">
+            <div class="container-fluid px-2 px-md-4">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="page-title">Profile</h4>
+                                </div><!--end col-->
+                            </div><!--end row-->
+                        </div><!--end page-title-box-->
+                    </div><!--end col-->
+                </div><!--end row-->
+                <!-- end page title end breadcrumb -->
+                <div class="row bg-white p-5">
+                    <div class="col-lg-4 mx-auto align-self-center mb-3 mb-lg-0">
+                        <div class="dastyle-profile-main">
+                            <div class="dastyle-profile-main-pic">
+                                <img src="../assets/images/profile.png" alt="" height="110" class="rounded-circle">
+                                <!-- <span class="dastyle-profile_main-pic-change">
+                                    <i class="fas fa-camera"></i>
+                                </span> -->
+                            </div>
+                            <div class="dastyle-profile_user-detail">
+                                <h5 class="dastyle-user-name " id="user-name"></h5>
+                                <p class="mb-0 dastyle-user-name-post" id="user-email"></p>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+
+                    <div class="col-lg-4 ml-auto" style="font-size: large;">
+                        <ul class="list-unstyled personal-detail mb-0">
+                            <li class="mt-2">
+                                <b>Full Name</b> : <span id="detail-name"></span>
+                            </li>
+                            <b> Email </b> : <span id="detail-email"></span>
+                            </li>
+                            <li class="">
+                                <b>Mobile Number</b> : <span id="detail-mobile"></span>
+                            </li>
+                            <li class="mt-2">
+                        </ul>
+
+                    </div><!--end col-->
+
+
+                    <div class="col-lg-4 align-self-end">
+                        <div class="row justify-content-end ">
+                            <div class="col-auto text-right">
+                                <button type="button" class="btn btn-primary btn-lg"
+                                    id="edit-profile-btn" data-toggle="modal" data-target="#updateProfileModal">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                            </div><!--end col-->
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-danger btn-lg"
+                                    id="delete-profile-btn">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div><!--end col-->
+                            <div class="col-lg-4 align-self-center">
+                                <button type="button" class="btn btn-danger btn-lg" id="logout-btn">
+                                    <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>
+                                    Logout
+                                </button>
+                            </div>
+                        </div><!--end row-->
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!-- container -->
+
+            <div class="modal fade" id="updateProfileModal" tabindex="-1" role="dialog"
+                aria-labelledby="updateProfileModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="updateProfileModalLabel">Update Profile</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="updateProfileForm">
+                                <div class="form-group">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" class="form-control" id="ufullName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="uemail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobile">Mobile Number</label>
+                                    <input type="tel" class="form-control" id="umobile" required>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <label for="password">New Password</label>
+                                    <input type="password" class="form-control" id="upassword"
+                                        placeholder="Leave blank if you don't want to change">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword">Confirm Password</label>
+                                    <input type="password" class="form-control" id="uconfirmPassword">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profilePicture">Profile Picture</label>
+                                    <input type="file" class="form-control-file" id="uprofilePicture" accept="image/*">
+                                </div> -->
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page content -->
+    </div>
+
+    <!-- jQuery  -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/metismenu.min.js"></script>
+    <script src="../assets/js/waves.js"></script>
+    <script src="../assets/js/feather.min.js"></script>
+    <script src="../assets/js/simplebar.min.js"></script>
+    <script src="../assets/js/jquery-ui.min.js"></script>
+    <script src="../assets/js/moment.js"></script>
+    <script src="../assets/css/daterangepicker/daterangepicker.js"></script>
+
+    <script src="../assets/pages/jquery.animate.init.js"></script>
+
+    <!-- App js -->
+    <script src="../assets/js/app.js"></script>
+    <script src="../assets/api/auth/profile.js"></script>
+</body>
+
+</html>

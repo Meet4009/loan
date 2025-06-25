@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Project</title>
+
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="../../../../assets/css/app.css">
+    <link href="../../../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../assets/css/jquery-ui.min.css" rel="stylesheet">
+    <link href="../../../../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../assets/css/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../../../../assets/css/animate/animate.css">
+    <link rel="stylesheet" href="../../../../assets/css/style.css">
+
+    <!-- fontawesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+
+<body class="dark-sidenav">
+
+    <!-- Left Sidenav -->
+    <div class="left-sidenav">
+        <!-- LOGO -->
+        <div class="brand">
+            <a href="dashboard/crm-login.html" class="logo">
+                <h1 class="text-center m-5 text-white">
+                    LOGO
+                </h1>
+            </a>
+        </div>
+        <!--end logo-->
+        <div class="menu-content h-100" data-simplebar>
+            <ul class="metismenu left-sidenav-menu">
+                <li>
+                    <a href="../../../account-side/index.html">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <span>Account</span><span class="menu-arrow"></span></a>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Lead</span>
+                        <span class="menu-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li class="nav-item"><a class="nav-link" href="../../direct/index.html"><i
+                                    class="ti-control-record"></i>Direct</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../../agent/index.html"><i
+                                    class="ti-control-record"></i>Agent</a></li>
+                        <li>
+                            <a href="javascript: void(0);">
+                                <i class="ti-control-record"></i>
+                                Builder
+                                <span class="menu-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </span>
+                            </a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a href="index.html">Mehul Bhai</a></li>
+                                <li><a href="../kamleshbhai/index.html">Kamlesh Bhai</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="../../other/index.html"><i
+                                    class="ti-control-record"></i>Other</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="../../../login-side/index.html">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        <span>Log In</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="../../../account-side/monthly-report.html">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Monthly Report</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="../../../account-side/bulk-import.html">
+                        <i class="fa-solid fa-file-import"></i>
+                        <span>Bulk Import</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="../../../notification.html">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>Notification</span><span class="menu-arrow"></span></a>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);"><i class="fa-solid fa-users"></i><span>Manage Staff</span><span
+                            class="menu-arrow"><i class="fas fa-angle-down"></i></span></a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li class="nav-item"><a class="nav-link" href="../../../staff/all-staff/staff.html"><i
+                                    class="ti-control-record"></i>All Staff</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../../../staff/role/roles.html"><i
+                                    class="ti-control-record"></i>Roles</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="../../../profile.html">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span>Profile</span><span class="menu-arrow"></span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- end left-sidenav-->
+    <div class="page-wrapper">
+        <!-- Top Bar Start -->
+        <div class="topbar">
+            <!-- Navbar -->
+            <nav class="navbar-custom">
+                <ul class="list-unstyled topbar-nav float-right mb-0">
+                    <li class="dropdown hide-phone">
+                        <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown"
+                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <i data-feather="search" class="topbar-icon"></i>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right dropdown-lg p-0">
+                            <!-- Top Search Bar -->
+                            <div class="app-search-topbar">
+                                <form id="search-form">
+                                    <input type="search" name="search" id="table-search"
+                                        class="from-control top-search mb-0" placeholder="Search in table...">
+                                    <button type="submit">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown"
+                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <span class="ml-1 nav-user-name hidden-sm" id="user-name"></span>
+                            <img src="../../../../assets/images/profile.png" alt="profile-user"
+                                class="rounded-circle" />
+                        </a>
+                    </li>
+                </ul><!--end topbar-nav-->
+
+                <ul class="list-unstyled topbar-nav mb-0">
+                    <li>
+                        <button class="nav-link button-menu-mobile">
+                            <i data-feather="menu" class="align-self-center topbar-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <!-- end navbar-->
+        </div>
+        <!-- Top Bar End -->
+
+        <!-- Page Content-->
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="page-title">Mehul Bhai</h4>
+                                </div><!--end col-->
+                                <div class="col-auto align-self-center">
+                                    <a href="add-mehulbhai.html" class="btn btn-sm btn-outline-primary">
+                                        <span class="day-name" id="Day_Name">Add Data</span>
+                                    </a>
+                                </div><!--end col-->
+                            </div><!--end row-->
+                        </div><!--end page-title-box-->
+                    </div><!--end col-->
+                </div><!--end row-->
+                <!-- end page title end breadcrumb -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="cardBody">
+                                <div class="table-wrapper">
+                                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                                        <table id="builder-list-table" class="table text-center table-striped mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Date</th>
+                                                    <th>Access</th>
+                                                    <th>Builder Name</th>
+                                                    <th>Party Name</th>
+                                                    <th>Party Mo.No.</th>
+                                                    <th>Property Name</th>
+                                                    <th>Reference</th>
+                                                    <th>Party Profile</th>
+                                                    <th>Document</th>
+                                                    <th>Document Check</th>
+                                                    <th>Bank</th>
+                                                    <th>Cost</th>
+                                                    <th>Follow Up</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div><!--end card-body-->
+                        </div><!--end card-->
+                    </div> <!-- end col -->
+                </div> <!-- end row -->
+            </div><!-- container -->
+        </div>
+        <!-- end page content -->
+    </div>
+
+    <!-- jQuery  -->
+    <script src="../../../../assets/js/jquery.min.js"></script>
+    <script src="../../../../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../../assets/js/metismenu.min.js"></script>
+    <script src="../../../../assets/js/waves.js"></script>
+    <script src="../../../../assets/js/feather.min.js"></script>
+    <script src="../../../../assets/js/simplebar.min.js"></script>
+    <script src="../../../../assets/js/jquery-ui.min.js"></script>
+    <script src="../../../../assets/js/moment.js"></script>
+    <script src="../../../../assets/css/daterangepicker/daterangepicker.js"></script>
+
+    <!-- App js -->
+    <script src="../../../../assets/js/app.js"></script>
+    <script src="../../../../assets/js/search.js"></script>
+    <script src="../../../../assets/api/AdminSide/lead-side/builder/mehulbhai/mehulbhai-list.js"></script>
+</body>
+
+</html>

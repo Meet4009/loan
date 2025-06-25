@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Project</title>
+
+    <!-- CSS Links -->
+
+    <link href="../assets/dropify/css/dropify.min.css" rel="stylesheet">
+
+    <!-- <link rel="stylesheet" href="./assets/css/app.css"> -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/jquery-ui.min.css" rel="stylesheet">
+    <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+
+    <!-- fontawesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        @media (max-width: 991.98px) {
+            .page-title-box .row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .bg-white.p-5,
+            .upload-section.bg-white.p-5 {
+                padding: 1rem !important;
+                margin: 0.5rem !important;
+            }
+
+            .upload-box {
+                padding: 1rem !important;
+            }
+
+            .d-flex.justify-content-end.gap-2 {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.5rem !important;
+            }
+
+            .d-flex.justify-content-end.gap-2 button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body class="dark-sidenav">
+
+    <!-- Left Sidenav -->
+    <div class="left-sidenav">
+        <!-- LOGO -->
+        <div class="brand">
+            <a href="dashboard/crm-login.html" class="logo">
+                <h1 class="text-center m-5 text-white">
+                    LOGO
+                </h1>
+            </a>
+        </div>
+        <!--end logo-->
+        <div class="menu-content h-100" data-simplebar>
+            <ul class="metismenu left-sidenav-menu">
+                <li>
+                    <a href="index.html">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <span>Account</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="monthly-report.html">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Monthly Report</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="bulk-import.html">
+                        <i class="fa-solid fa-file-import"></i>
+                        <span>Bulk Import</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span><span class="menu-arrow"></span></a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <!-- end left-sidenav-->
+
+    <div class="page-wrapper">
+        <!-- Top Bar Start -->
+        <div class="topbar">
+            <!-- Navbar -->
+            <nav class="navbar-custom">
+                <ul class="list-unstyled topbar-nav float-right mb-0">
+                    <li class="dropdown hide-phone">
+                        <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown"
+                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <i data-feather="search" class="topbar-icon"></i>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right dropdown-lg p-0">
+                            <!-- Top Search Bar -->
+                            <div class="app-search-topbar">
+                                <form id="search-form">
+                                    <input type="search" name="search" id="table-search"
+                                        class="from-control top-search mb-0" placeholder="Search in table...">
+                                    <button type="submit">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown"
+                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <span class="ml-1 nav-user-name hidden-sm" id="user-name"></span>
+                            <img src="../assets/images/profile.png" alt="profile-user" class="rounded-circle" />
+                        </a>
+                    </li>
+                </ul><!--end topbar-nav-->
+
+                <ul class="list-unstyled topbar-nav mb-0">
+                    <li>
+                        <button class="nav-link button-menu-mobile">
+                            <i data-feather="menu" class="align-self-center topbar-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <!-- end navbar-->
+        </div>
+        <!-- Top Bar End -->
+
+        <!-- Page Content-->
+        <div class="page-content">
+            <!-- Add Bootstrap responsive container -->
+            <div class="container-fluid px-2 px-md-4">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="page-title">Bulk Import</h4>
+                                </div><!--end col-->
+                                <div class="col-auto ">
+                                    <a href="add-login.html" class="btn btn-sm btn-outline-primary">
+                                        <span class="day-name" id="Day_Name">Add Demo</span>
+                                    </a>
+                                </div><!--end col-->
+                            </div><!--end row-->
+                        </div><!--end page-title-box-->
+                    </div><!--end col-->
+                </div><!--end row-->
+                <!-- end page title end breadcrumb -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="bg-white p-5 m-4 border-1 shadow-sm w-100" style="color: #8997bd">
+                            <h1 class="text-primary fs-2">Intructions:</h1>
+                            <ol class="mt-4" style="font-size: large;">
+                                <li>Download the format file and fill with proper date</li>
+                                <li>You can download the example file to understand how the date must be filled</li>
+                                <li>Once you downloaded and filled the format file upload in the from below and submit</li>
+                                <li>After uploading the data you need to edit them</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="upload-section bg-white p-5 m-4 border-1 shadow-sm w-100">
+                            <form class="upload-form w-100 w-md-80 mx-auto">
+                                <div class="mb-4">
+                                    <div class="d-flex flex-column gap-3">
+                                        <div
+                                            class="upload-box p-4 border-2 border-dashed rounded-3 d-flex flex-column align-items-center justify-content-center bg-light">
+                                            <i class="fa-solid fa-cloud-arrow-up fa-3x text-primary"></i>
+                                            <p class="mb-2">Add a file here or <label for="fileUpload"
+                                                class="text-primary">
+                                                <input type="file" id="fileUpload" name="csv_file" class="d-none"
+                                                    accept=".csv" />import</label> here</p>
+                                        </div>
+                                        <div class="selected-file d-none">
+                                            <div class="d-flex align-items-center p-3 bg-light rounded">
+                                                <i class="fas fa-file-excel text-primary me-3"></i>
+                                                <div class="flex-grow-1">
+                                                    <p class="mb-0 filename">filename.xlsx</p>
+                                                    <div class="progress mt-1" style="height: 2px;">
+                                                        <div class="progress-bar" role="progressbar" style="width: 0%">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn-close ms-3"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="d-flex justify-content-end gap-2 mt-3">
+                                <button type="button" class="btn btn-primary" id="submitCsv">Submit</button>
+                                <button type="reset" class="btn btn-danger mx-md-2" id="cancelCsv">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- end row -->
+
+            </div><!-- container -->
+
+        </div>
+        <!-- end page content -->
+
+        <!-- jQuery  -->
+        <script src="../assets/js/jquery.min.js"></script>
+        <script src="../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../assets/js/metismenu.min.js"></script>
+        <script src="../assets/js/waves.js"></script>
+        <script src="../assets/js/feather.min.js"></script>
+        <script src="../assets/js/simplebar.min.js"></script>
+        <script src="../assets/js/jquery-ui.min.js"></script>
+        <script src="../assets/js/moment.js"></script>
+        <script src="../assets/css/daterangepicker/daterangepicker.js"></script>
+        <script src="../assets/css/daterangepicker/daterangepicker.js"></script>
+        <script src="../assets/pages/jquery.form-upload.init.js"></script>
+
+        <!-- App js -->
+        <script src="../assets/js/app.js"></script>
+        <script src="../assets/js/search.js"></script>
+        <script src="../assets/api/account/bulk-import.js"> </script>
+    </div>
+    <script src="../assets/api/profile.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Project</title>
+
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/jquery-ui.min.css" rel="stylesheet">
+    <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../assets/css/animate/animate.css">
+
+    <!-- fontawesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+        @media (max-width: 991.98px) {
+            .page-title-box .row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .card .row>div[class^="col-"] {
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+
+            .card.p-5,
+            .card-body {
+                padding: 1rem !important;
+            }
+
+            .form-group.row {
+                flex-direction: ROW;
+                align-items: stretch;
+            }
+
+            .form-group.row>label,
+            .form-group.row>div {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .form-group.row>label {
+                margin-bottom: 0.5rem;
+            }
+
+            .btn,
+            .btn-sm {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+
+</head>
+
+<body class="dark-sidenav">
+    <!-- Left Sidenav -->
+    <div class="left-sidenav">
+        <!-- LOGO -->
+        <div class="brand">
+            <a href="dashboard/crm-login.html" class="logo">
+                <h1 class="text-center m-5 text-white">
+                    LOGO
+                </h1>
+            </a>
+        </div>
+        <!--end logo-->
+        <div class="menu-content h-100" data-simplebar>
+            <ul class="metismenu left-sidenav-menu">
+                <li>
+                    <a href="add-data.html">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Add Data</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="index.html">
+                        <i class="fas fa-external-link-square-alt"></i>
+                        <span>Direct</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="agent.html">
+                        <i class="fas fa-id-badge"></i>
+                        <span>Agent</span><span class="menu-arrow"></span></a>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fas fa-id-card-alt"></i>
+                        Builder
+                        <span class="menu-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="mehul-bhai.html">Mehul Bhai</a></li>
+                        <li><a href="kamlesh-bhai.html">Kamlesh Bhai</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="other.html">
+                        <i class="fas fa-window-maximize"></i>
+                        <span>Other</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="notification.html">
+                        <i class="fas fa-bell"></i>
+                        <span>Notification</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span><span class="menu-arrow"></span></a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <!-- end left-sidenav-->
+
+    <div class="page-wrapper">
+        <!-- Top Bar Start -->
+        <div class="topbar">
+            <!-- Navbar -->
+            <nav class="navbar-custom">
+                <ul class="list-unstyled topbar-nav float-right mb-0">
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown"
+                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <span class="ml-1 nav-user-name hidden-sm" id="user-name"></span>
+                            <img src="../assets/images/profile.png" alt="profile-user" class="rounded-circle" />
+                        </a>
+                    </li>
+                </ul><!--end topbar-nav-->
+
+                <ul class="list-unstyled topbar-nav mb-0">
+                    <li>
+                        <button class="nav-link button-menu-mobile">
+                            <i data-feather="menu" class="align-self-center topbar-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <!-- end navbar-->
+        </div>
+        <!-- Top Bar End -->
+
+        <!-- Page Content-->
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="page-title">Update Data</h4>
+                                </div><!--end col-->
+                            </div><!--end row-->
+                        </div><!--end page-title-box-->
+                    </div><!--end col-->
+                </div><!--end row-->
+                <!-- end page title end breadcrumb -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card p-5">
+                            <div class="card-body">
+                                <div class="row justify-content-end">
+                                    <div class="col-lg-6">
+                                        <div class="form-group row">
+                                            <label for="date"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Date</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="date" id="date">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="builder_name"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Builder
+                                                Name
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" id="builder_name">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="party_name"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Party
+                                                Name</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" id="party_name">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="party_mono"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Party
+                                                Mo.No.</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="number" id="party_mono">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="property_name"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Property Name
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" id="property_name">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="reference"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Reference</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" id="reference">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group row">
+                                            <label for="party_profile"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Party
+                                                Profile</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" id="party_profile">
+                                                    <option>Salary</option>
+                                                    <option>Business</option>
+                                                    <option>Pinal</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="document"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Document</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" id="document">
+                                                    <option>Yes</option>
+                                                    <option>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="document_check"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Document Check
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" id="document_check">
+                                                    <option>Yes</option>
+                                                    <option>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="bank"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Bank</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" id="bank">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="dropdown"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Status</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" id="dropdown">
+                                                    <option>Pending</option>
+                                                    <option>Reject</option>
+                                                    <option>Hold</option>
+                                                    <option>Done</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div><!--end card-->
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!-- container -->
+
+            <div class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="page-title">Cost</h4>
+                                </div><!--end col-->
+                            </div><!--end row-->
+                        </div><!--end page-title-box-->
+                    </div><!--end col-->
+                </div><!--end row-->
+                <!-- end page title end breadcrumb -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card p-5">
+                            <div class="card-body">
+                                <div class="row justify-content-end">
+                                    <div class="col-lg-6">
+                                        <div class="form-group row">
+                                            <label for="pf"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">PF</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="number" id="pf">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="rm"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">RM</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="number" id="rm">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="stemppaper"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Stamp
+                                                Paper
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="number" id="stemppaper">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="tcvr"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">TCR-VR</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="number" id="tcvr">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="c_astiment"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">C.Astiment</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="number" id="c_astiment">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group row">
+                                            <label for="ework"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">E-Work</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="number" id="ework">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="astiment"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Astiment</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="number" id="astiment">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="b_astiment"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">B.Astiment</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="number" id="b_astiment">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="vahivat"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Vahivat</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="number" id="vahivat">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="loan_fees"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Loan
+                                                Fees</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="number" id="loan_fees">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end card-->
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!-- container -->
+
+            <div class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="page-title">Follow Up</h4>
+                                </div><!--end col-->
+                                <div class="col-auto align-self-center">
+                                    <a href="#" class="btn btn-sm btn-outline-primary" id="add-follow-up">
+                                        <span class="day-name" id="Day_Name">Add Follow Up</span>
+                                    </a>
+                                </div><!--end col-->
+                            </div><!--end row-->
+                        </div><!--end page-title-box-->
+                    </div><!--end col-->
+                </div><!--end row-->
+                <!-- end page title end breadcrumb -->
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <button type="submit" class="btn btn-primary px-5 py-2 add-builder-data"
+                            id="add-builder-data">Update</button>
+                        <button type="submit" class="btn btn-danger px-5 py-2" id="cancelBtn">Cancel</button>
+                    </div>
+                </div>
+            </div><!-- container -->
+        </div>
+        <!-- end page content -->
+    </div>
+
+    <!-- jQuery  -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/metismenu.min.js"></script>
+    <script src="../assets/js/waves.js"></script>
+    <script src="../assets/js/feather.min.js"></script>
+    <script src="../assets/js/simplebar.min.js"></script>
+    <script src="../assets/js/jquery-ui.min.js"></script>
+    <script src="../assets/js/moment.js"></script>
+    <script src="../assets/css/daterangepicker/daterangepicker.js"></script>
+
+    <!-- App js -->
+    <script src="../assets/js/app.js"></script>
+    <script src="../assets/api/lead-side/update-kamlesh-builder.js"></script>
+</body>
+
+</html>

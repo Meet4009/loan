@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Project</title>
+
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="../../../assets/css/app.css">
+    <link href="../../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/css/jquery-ui.min.css" rel="stylesheet">
+    <link href="../../../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/css/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../../../assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../../../assets/css/animate/animate.css">
+
+    <!-- fontawesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body class="dark-sidenav">
+    <!-- Left Sidenav -->
+    <div class="left-sidenav">
+        <!-- LOGO -->
+        <div class="brand">
+            <a href="dashboard/crm-login.html" class="logo">
+                <h1 class="text-center m-5 text-white">
+                    LOGO
+                </h1>
+            </a>
+        </div>
+        <!--end logo-->
+        <div class="menu-content h-100" data-simplebar>
+            <ul class="metismenu left-sidenav-menu">
+                <li>
+                    <a href="../../account-side/index.html">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <span>Account</span><span class="menu-arrow"></span></a>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Lead</span>
+                        <span class="menu-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li class="nav-item"><a class="nav-link" href="../../lead-side/direct/index.html"><i
+                                    class="ti-control-record"></i>Direct</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../../lead-side/agent/index.html"><i
+                                    class="ti-control-record"></i>Agent</a></li>
+                        <li>
+                            <a href="javascript: void(0);">
+                                <i class="ti-control-record"></i>
+                                Builder
+                                <span class="menu-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </span>
+                            </a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a href="../../lead-side/builder/mehulbhai/index.html">Mehul Bhai</a></li>
+                                <li><a href="../../lead-side/builder/kamleshbhai/index.html">Kamlesh Bhai</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="../../lead-side/other/index.html"><i
+                                    class="ti-control-record"></i>Other</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="../../login-side/index.html">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        <span>Log In</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="../../account-side/monthly-report.html">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Monthly Report</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="../../account-side/bulk-import.html">
+                        <i class="fa-solid fa-file-import"></i>
+                        <span>Bulk Import</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="../../notification.html">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>Notification</span><span class="menu-arrow"></span></a>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);"><i class="fa-solid fa-users"></i><span>Manage Staff</span><span
+                            class="menu-arrow"><i class="fas fa-angle-down"></i></span></a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li class="nav-item"><a class="nav-link" href="../all-staff/staff.html"><i
+                                    class="ti-control-record"></i>All Staff</a></li>
+                        <li class="nav-item"><a class="nav-link" href="roles.html"><i
+                                    class="ti-control-record"></i>Roles</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="../../profile.html">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span>Profile</span><span class="menu-arrow"></span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- end left-sidenav-->
+
+    <div class="page-wrapper">
+        <!-- Top Bar Start -->
+        <div class="topbar">
+            <!-- Navbar -->
+            <nav class="navbar-custom">
+                <ul class="list-unstyled topbar-nav float-right mb-0">
+
+
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown"
+                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <span class="ml-1 nav-user-name hidden-sm" id="user-name"></span>
+                            <img src="../../../assets/images/profile.png" alt="profile-user" class="rounded-circle" />
+                        </a>
+                    </li>
+                </ul><!--end topbar-nav-->
+
+                <ul class="list-unstyled topbar-nav mb-0">
+                    <li>
+                        <button class="nav-link button-menu-mobile">
+                            <i data-feather="menu" class="align-self-center topbar-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <!-- end navbar-->
+        </div>
+        <!-- Top Bar End -->
+
+        <!-- Page Content-->
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="page-title">Update Role</h4>
+                                </div><!--end col-->
+                            </div><!--end row-->
+                        </div><!--end page-title-box-->
+                    </div><!--end col-->
+                </div><!--end row-->
+                <!-- end page title end breadcrumb -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form>
+                                    <div class="form-group ">
+                                        <label for="exampleInputPassword1">Name</label>
+                                        <input type="text" class="form-control" id="name">
+                                    </div>
+                                    <div class="form-group mb-0 row">
+                                        <label class="col-md-3 my-2 control-label">Account Side</label>
+                                        <div class="col-md-9">
+                                            <div class="form-check-inline my-2 mx-5">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="addCheck"
+                                                        data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                                    <label class="custom-control-label" for="addCheck">Add</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-check-inline my-2 mx-5">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="updateCheck"
+                                                        data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                                    <label class="custom-control-label" for="updateCheck">Update</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-check-inline my-2 mx-5">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="deleteCheck"
+                                                        data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                                    <label class="custom-control-label" for="deleteCheck">Delete</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-check-inline my-2 mx-5">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="dataCheck"
+                                                        data-parsley-multiple="groups" data-parsley-mincheck="2">
+                                                    <label class="custom-control-label" for="dataCheck">Show
+                                                        Data</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--end row-->
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-primary" id="updateRole">Update</button>
+                                        <button type="button" class="btn btn-danger" id="cancelBtn">Cancel</button>
+                                    </div>
+                                </form>
+                            </div><!--end card-body-->
+                        </div><!--end card-->
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!-- container -->
+        </div>
+        <!-- end page content -->
+    </div>
+
+    <!-- jQuery  -->
+    <script src="../../../assets/js/jquery.min.js"></script>
+    <script src="../../../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../assets/js/metismenu.min.js"></script>
+    <script src="../../../assets/js/waves.js"></script>
+    <script src="../../../assets/js/feather.min.js"></script>
+    <script src="../../../assets/js/simplebar.min.js"></script>
+    <script src="../../../assets/js/jquery-ui.min.js"></script>
+    <script src="../../../assets/js/moment.js"></script>
+    <script src="../../../assets/css/daterangepicker/daterangepicker.js"></script>
+
+    <!-- App js -->
+    <script src="../../../assets/js/app.js"></script>
+    <script src="../../../assets/api/AdminSide/role/update-role.js"></script>
+
+</body>
+
+</html>

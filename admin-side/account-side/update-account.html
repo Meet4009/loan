@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Project</title>
+
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="../../assets/css/app.css">
+    <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/jquery-ui.min.css" rel="stylesheet">
+    <link href="../../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../../assets/css/animate/animate.css">
+
+    <!-- fontawesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body class="dark-sidenav">
+    <!-- Left Sidenav -->
+    <div class="left-sidenav">
+        <!-- LOGO -->
+        <div class="brand">
+            <a href="dashboard/crm-login.html" class="logo">
+                <h1 class="text-center m-5 text-white">
+                    LOGO
+                </h1>
+            </a>
+        </div>
+        <!--end logo-->
+        <div class="menu-content h-100" data-simplebar>
+            <ul class="metismenu left-sidenav-menu">
+                <li>
+                    <a href="index.html">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <span>Account</span><span class="menu-arrow"></span></a>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Lead</span>
+                        <span class="menu-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li class="nav-item"><a class="nav-link" href="../lead-side/direct/index.html"><i
+                                    class="ti-control-record"></i>Direct</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../lead-side/agent/index.html"><i
+                                    class="ti-control-record"></i>Agent</a></li>
+                        <li>
+                            <a href="javascript: void(0);">
+                                <i class="ti-control-record"></i>
+                                Builder
+                                <span class="menu-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </span>
+                            </a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a href="../lead-side/builder/mehulbhai/index.html">Mehul Bhai</a></li>
+                                <li><a href="../lead-side/builder/kamleshbhai/index.html">Kamlesh Bhai</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="../lead-side/other/index.html"><i
+                                    class="ti-control-record"></i>Other</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="index.html">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        <span>Log In</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="monthly-report.html">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Monthly Report</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="bulk-import.html">
+                        <i class="fa-solid fa-file-import"></i>
+                        <span>Bulk Import</span><span class="menu-arrow"></span></a>
+                </li>
+                <li>
+                    <a href="../notification.html">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>Notification</span><span class="menu-arrow"></span></a>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);"><i class="fa-solid fa-users"></i><span>Manage Staff</span><span
+                            class="menu-arrow"><i class="fas fa-angle-down"></i></span></a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li class="nav-item"><a class="nav-link" href="../staff/all-staff/staff.html"><i
+                                    class="ti-control-record"></i>All Staff</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../staff/role/roles.html"><i
+                                    class="ti-control-record"></i>Roles</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="../profile.html">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span>Profile</span><span class="menu-arrow"></span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- end left-sidenav-->
+
+    <div class="page-wrapper">
+        <!-- Top Bar Start -->
+        <div class="topbar">
+            <!-- Navbar -->
+            <nav class="navbar-custom">
+                <ul class="list-unstyled topbar-nav float-right mb-0">
+
+
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown"
+                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <span class="ml-1 nav-user-name hidden-sm" id="user-name"></span>
+                            <img src="../../assets/images/profile.png" alt="profile-user" class="rounded-circle" />
+                        </a>
+                    </li>
+                </ul><!--end topbar-nav-->
+
+                <ul class="list-unstyled topbar-nav mb-0">
+                    <li>
+                        <button class="nav-link button-menu-mobile">
+                            <i data-feather="menu" class="align-self-center topbar-icon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <!-- end navbar-->
+        </div>
+        <!-- Top Bar End -->
+
+        <!-- Page Content-->
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="page-title">Update Data</h4>
+                                </div><!--end col-->
+                            </div><!--end row-->
+                        </div><!--end page-title-box-->
+                    </div><!--end col-->
+                </div><!--end row-->
+                <!-- end page title end breadcrumb -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card p-5">
+                            <div class="card-body">
+                                <form action="#" method="post" id="add_acc_data">
+                                    <div class="row justify-content-end">
+                                        <div class="col-lg-6">
+                                            <div class="form-group row">
+                                                <label
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Bank</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control" name="bank" id="bank">
+                                                        <option>General</option>
+                                                        <option>PRIVATE</option>
+                                                        <option>BOB</option>
+                                                        <option>MACHINARI</option>
+                                                        <option>UBI</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="file_no"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">File
+                                                    No.</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" id="file_no" name="file_no">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="date"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Date</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="date" id="date" name="date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-password-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">F-Number</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" id="f_number"
+                                                        name="f_number">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-number-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Mo.No.</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" id="mo_no" name="mo_no">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Party
+                                                    Name</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" id="party_name"
+                                                        name="party_name">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Project
+                                                    Name</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" id="project_name"
+                                                        name="project_name">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Product</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" id="product" name="product">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">BHL/To</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" name="bhl_to" id="bhl_to">
+                                                    <!-- Changed from bhi_to -->
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Top
+                                                    Up</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" id="top_up" name="top_up">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Total</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" id="total" name="total"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Total
+                                                    Fees</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" id="total_fees"
+                                                        name="total_fees">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">AP-1</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" id="ap_1" name="ap_1">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-datetime-local-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">AP-1
+                                                    Date</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="date" id="ap_1_date"
+                                                        name="ap_1_date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Status</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control" name="status" id="status">
+                                                        <option>pending</option>
+                                                        <option>completed</option>
+                                                        <option>processing</option>
+                                                        <option>reject</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">PF</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" id="pf" name="pf">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">PF
+                                                    Parat</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" id="pf_parat"
+                                                        name="pf_parat">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">PF Parat
+                                                    Date</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="date" name="pf_parat_date"
+                                                        id="pf_parat_date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Remark</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" id="remark" name="remark">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Remark
+                                                    Payment</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" id="remark_payment"
+                                                        name="remark_payment">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Payment-2</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" id="payment_2"
+                                                        name="payment_2">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group row">
+                                                <label for="example-search-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Payment-2
+                                                    Date</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="date" id="payment_2_date"
+                                                        name="payment_2_date">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Payment-3</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" name="payment_3"
+                                                        id="payment_3">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-search-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Payment-3
+                                                    Date</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="date" id="payment_3_date"
+                                                        name="payment_3_date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Kasar</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" name="kasar" id="kasar">
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-date-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Payment
+                                                    Baki</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" name="payment_baki"
+                                                        id="payment_baki" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-month-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Morgej
+                                                    Parat</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" id="morgej_parat"
+                                                        name="morgej_parat">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-month-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Morgej
+                                                    Parat Date</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="date" id="morgej_parat_date"
+                                                        name="morgej_parat_date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-week-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">M-CAL</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" id="m_cal" name="m_cal"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-week-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">M-Diff</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" id="m_diff" name="m_diff"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-week-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Stamp</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" id="stamp" name="stamp"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-week-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Agreement
+                                                    Parat</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" id="agreement_parat"
+                                                        name="agreement_parat">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-week-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Agreement
+                                                    Parat
+                                                    Date</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="date" id="agreement_parat_date"
+                                                        name="agreement_parat_date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-week-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Payout
+                                                    Date</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="date" id="payout_date"
+                                                        name="payout_date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-week-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Payout
+                                                    Amount</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" id="payout_amount"
+                                                        name="payout_amount">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-week-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Payout
+                                                    Remark</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" id="payout_remark"
+                                                        name="payout_remark">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-week-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">AP
+                                                    Parat</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" id="ap_parat"
+                                                        name="ap_parat">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-week-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">AP Parat
+                                                    Date</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="date" id="ap_parat_date"
+                                                        name="ap_parat_date">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-week-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Remark
+                                                    1</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" id="remark_1"
+                                                        name="remark_1">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-week-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Remark
+                                                    2</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" id="remark_2"
+                                                        name="remark_2">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-week-input"
+                                                    class="col-sm-3 col-form-label text-left text-sm-center">Remark
+                                                    3</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" id="remark_3"
+                                                        name="remark_3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-primary px-5 py-2"
+                                                id="updateAccData">Update</button>
+                                            <button type="button" class="btn btn-danger px-5 py-2"
+                                                id="cancelUpdate">Cancel</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div><!--end card-->
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!-- container -->
+        </div>
+        <!-- end page content -->
+    </div>
+
+    <!-- jQuery  -->
+    <script src="../../assets/js/jquery.min.js"></script>
+    <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/metismenu.min.js"></script>
+    <script src="../../assets/js/waves.js"></script>
+    <script src="../../assets/js/feather.min.js"></script>
+    <script src="../../assets/js/simplebar.min.js"></script>
+    <script src="../../assets/js/jquery-ui.min.js"></script>
+    <script src="../../assets/js/moment.js"></script>
+    <script src="../../assets/css/daterangepicker/daterangepicker.js"></script>
+
+    <!-- App js -->
+    <script src="../../assets/js/app.js"></script>
+    <script src="../../assets/api/AdminSide/account-side/update-account.js"></script>
+
+</body>
+
+</html>
