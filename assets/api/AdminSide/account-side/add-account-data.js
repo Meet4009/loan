@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 party_name: document.getElementById('party_name')?.value || '',
                 project_name: document.getElementById('project_name')?.value || '',
                 product: document.getElementById('product')?.value || '',
-                bhl_to: document.getElementById('bhl_to')?.value || '',
+                bhl_to: document.getElementById('bhl_to')?.value || 0,
                 top_up: parseInt(document.getElementById('top_up')?.value) || 0,
                 total_fees: parseInt(document.getElementById('total_fees')?.value) || 0,
                 ap_1: parseInt(document.getElementById('ap_1')?.value) || 0,

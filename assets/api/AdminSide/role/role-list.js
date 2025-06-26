@@ -22,31 +22,31 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
 
     })
     .then(data => {
-    const tbody = document.querySelector("#tech-companies-1 tbody");
-    tbody.innerHTML = ""; 
+        const tbody = document.querySelector("#tech-companies-1 tbody");
+        tbody.innerHTML = "";
 
-    data.data.forEach((item, index) => {
-        let formattedDate = "N/A";
-        
-        if (item.created_at) { 
-            try {
-                const createdDate = new Date(item.created_at);
-                if (!isNaN(createdDate)) {
-                    formattedDate = createdDate.toLocaleString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: true
-                    });
+        data.data.forEach((item, index) => {
+            let formattedDate = "N/A";
+
+            if (item.created_at) {
+                try {
+                    const createdDate = new Date(item.created_at);
+                    if (!isNaN(createdDate)) {
+                        formattedDate = createdDate.toLocaleString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true
+                        });
+                    }
+                } catch (error) {
+                    console.error("Date parsing error:", error);
                 }
-            } catch (error) {
-                console.error("Date parsing error:", error);
             }
-        }
 
-        const row = `
+            const row = `
             <tr>
                 <td>${item.name}</td>
                 <td>${formattedDate}</td>
@@ -58,15 +58,13 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
                 </td>
             </tr>
         `;
-        tbody.innerHTML += row;
-    });
+            tbody.innerHTML += row;
+        });
         // 🔴 Add click listeners to all delete buttons
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', () => {
                 const id = button.getAttribute('data-id');
-                console.log("🗑️ Deleting ID:", id);
-
-                if (confirm("Are you sure you want to delete this data?")) {
+                showConfirm("Are you sure you want to delete this data?", () => {
                     fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/role-delete/${id}`, {
                         method: 'DELETE',
                         headers: {
@@ -76,18 +74,23 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
                     })
                         .then(res => res.json())
                         .then(result => {
-                            if (result.success || result.message.includes("deleted")) {
-                                button.closest('tr').remove(); // remove row from UI
-                                console.log("Staff member deleted successfully");
+                            if (result.success || (result.message && result.message.includes("deleted"))) {
+                                button.closest('tr').remove();
+                                if (result.message) {
+                                    showAlert("Role deleted successfully", "success");
+                                }
                             } else {
-                                console.log("Delete failed: " + result.message);
+                                if (result.message) {
+                                    showAlert("Delete failed: " + (result.message || ""), "error");
+                                }
                             }
                         })
-                        .catch(err => {
-                            console.error('Delete error:', err);
-                            console.log("Error deleting data.");
+                        .catch(() => {
+                            if (result.message) {
+                                showAlert("Error deleting data.", "error");
+                            }
                         });
-                }
+                });
             });
         })
         // 🔵 Add click listeners to all update buttons

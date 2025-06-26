@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         })
         .catch(error => {
-            console.log("Error Occured", error);
+            showAlert("Error Occurred while loading roles", "error");
         })
 
     document.getElementById('sub-btn').addEventListener('click', function (e) {
@@ -50,14 +50,12 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify(data)
         })
             .then(response => response.json())
-            .then(responseData => {
-                console.log('Success:', responseData);
-                console.log('Response message:', responseData.message);
+            .then(response => {
+                showAlert("Staff added successfully", "success");
                 window.location.href = 'staff.html';
             })
             .catch(error => {
-                console.error('Error:', error);
-                console.log("There was an error submitting the form.");
+                showAlert("There was an error submitting the form.", "error");
             });
     });
 });

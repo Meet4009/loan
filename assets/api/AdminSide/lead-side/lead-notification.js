@@ -42,11 +42,8 @@ async function fetchNotificationData(startDate, endDate) {
             button.addEventListener('click', () => {
                 const id = button.getAttribute('data-id');
                 const source = button.getAttribute('data-source').toLowerCase();
-                console.log(source);
-                console.log(id);
 
-
-                if (confirm("Are you sure you want to delete this data?")) {
+                showConfirm("Are you sure you want to Complete this follow up?", () => {
                     fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/delete-admin/${source}/${id}`, {
                         method: 'DELETE',
                         headers: {
@@ -56,23 +53,21 @@ async function fetchNotificationData(startDate, endDate) {
                     })
                         .then(res => res.json())
                         .then(result => {
-                            console.log("Delete result:", result);
-
                             if (result.message === "Follow-up deleted successfully.") {
                                 button.closest('tr').remove(); // remove row from UI
+                                showAlert("Follow-up completed!", "success");
                             } else {
-                                console.error("Delete failed.");
+                                showAlert("Delete failed.", "error");
                             }
                         })
                         .catch(err => {
-                            console.error('Delete error:', err);
+                            showAlert("Delete error", "error");
                         });
-                }
+                });
             });
         })
     } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to fetch data.');
+        showAlert('Error fetching notifications', 'error');
     }
 }
 
@@ -98,7 +93,6 @@ document.querySelector('.apply-notification-filter').addEventListener('click', f
     const endDate = document.getElementById('nendDate').value;
 
     if (!startDate || !endDate) {
-        alert('Please select both start and end dates.');
         return;
     }
 

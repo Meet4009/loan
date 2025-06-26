@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const id = urlParams.get('id');
 
     if (!id) {
-
-        console.error('No ID provided in URL parameters');
+        showAlert('No ID provided in URL parameters', 'error');
         return;
     }
     const token = localStorage.getItem('token');
@@ -23,17 +22,18 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(response => {
             if (!response.ok) {
+                showAlert(`HTTP error! status: ${response.status}`, "error");
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             if (response.headers.get('content-length') === '0') {
+                showAlert('Empty response received', "error");
                 throw new Error('Empty response received');
             }
             return response.json();
         })
         .then(response => {
-            console.log('Raw API response:', response);
-
             if (!response || !response.data) {
+                showAlert('Invalid data structure received', "error");
                 throw new Error('Invalid data structure received');
             }
 
@@ -45,15 +45,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById("role").value = data.role;
                 document.getElementById("password").value = data.password;
             } catch (err) {
-                console.error('Error populating form:', err);
+                showAlert('Error populating form', "error");
                 throw err;
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-            console.log(`Error loading data: ${error.message}`);
+            showAlert(`Error loading data: ${error.message}`, "error");
         });
-
 
     // fetching role list
     const roleSelect = document.getElementById('role')
@@ -74,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         })
         .catch(error => {
-            console.log("Error Occured", error);
+            showAlert("Error Occured while loading roles", "error");
         })
 
     // Handle form submission
@@ -88,8 +86,6 @@ document.addEventListener('DOMContentLoaded', function () {
             password: document.getElementById("password").value,
         };
 
-        console.log('Sending form data:', formData); // Debug log
-
         // Update fetch request with better error handling
         fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/staff-update/${id}`, {
             method: 'PUT',
@@ -102,17 +98,15 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => response.json())
             .then(data => {
-                console.log('Server response:', data);
-                if ('Data updated successfully') {
-                    console.log('Data updated successfully');
+                if (data.message) {
+                    showAlert('Data updated successfully', 'success');
                     window.location.href = 'staff.html';
                 } else {
-                    throw new Error(data.message || 'Failed to update data');
+                    showAlert('Failed to update data', 'error');
                 }
             })
             .catch(error => {
-                console.error('Error updating data:', error);
-                console.log(`Error updating data: ${error.message}`);
+                showAlert(`Error updating data: ${error.message}`, "error");
             });
     });
 });

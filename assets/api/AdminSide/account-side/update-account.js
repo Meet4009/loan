@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 fields.forEach(field => {
                     if (document.getElementById(field)) {
-                        document.getElementById(field).value = data[field] || '  -  ' ;
+                        document.getElementById(field).value = data[field] || '';
                     }
                 });
 

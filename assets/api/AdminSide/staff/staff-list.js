@@ -14,15 +14,13 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
     }
 })
     .then(response => {
-        console.log("response", response);
         if (!response.ok) {
+            showAlert("Failed to load staff data", "error");
             throw new Error("Network response was not OK");
         }
         return response.json();
-
     })
     .then(data => {
-
         const tbody = document.querySelector("#tech-companies-1 tbody");
         tbody.innerHTML = ""; // Clear any old rows
 
@@ -47,28 +45,28 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', () => {
                 const id = button.getAttribute('data-id');
-                console.log("🗑️ Deleting ID:", id);
-
-                if (confirm("Are you sure you want to delete this data?")) {
-                    fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/staff-delete/${id}`, {
-                        method: 'DELETE',
-                        headers: {
-                            "Accept": "application/json",
-                            "Authorization": `Bearer ${localStorage.getItem('token')}`
-                        }
-                    })
-                        .then(res => res.json())
-                        .then(result => {
-                            if (result.success || result.message.includes("deleted")) {
-                                button.closest('tr').remove(); // remove row from UI
-                                console.log("Staff member deleted successfully");
-                            } else {
-                                console.error("Delete failed:", result.message);
+                if (typeof showConfirm === "function") {
+                    showConfirm("Are you sure you want to delete this data?", () => {
+                        fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/staff-delete/${id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": `Bearer ${localStorage.getItem('token')}`
                             }
                         })
-                        .catch(err => {
-                            console.error('Delete error:', err);
-                        });
+                            .then(res => res.json())
+                            .then(result => {
+                                if (result.success || (result.message && result.message.includes("deleted"))) {
+                                    button.closest('tr').remove();
+                                    showAlert("Staff member deleted successfully", "success");
+                                } else {
+                                    showAlert("Delete failed: " + (result.message || ""), "error");
+                                }
+                            })
+                            .catch(() => {
+                                showAlert("Error deleting data.", "error");
+                            });
+                    });
                 }
             });
         })

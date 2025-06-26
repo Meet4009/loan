@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const dataCheck = document.getElementById('dataCheck').checked;
 
         console.log(dataCheck);
-        
+
 
         const data = {
             name: name,
@@ -41,13 +41,15 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(response => response.json())
             .then(responseData => {
-                console.log('Success:', responseData);
-                console.log(responseData.message || "Form submitted successfully!");
-                window.location.href = 'roles.html';
+                if (responseData && responseData.message) {
+                    showAlert(responseData.message, "success");
+                }
+                setTimeout(() => {
+                    window.location.href = 'roles.html';
+                }, 1200);
             })
             .catch(error => {
-                console.error('Error:', error);
-                console.log("There was an error submitting the form.");
+                showAlert("There was an error submitting the form.", "error");
             });
     });
 });

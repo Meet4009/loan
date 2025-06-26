@@ -20,8 +20,7 @@
         });
 
         if (!response.ok) {
-            console.error("❌ Failed to fetch data:", response.status, response.statusText);
-            alert("❌ Failed to load data");
+            showAlert("❌ Failed to load data", "error");
             return;
         }
 
@@ -35,8 +34,7 @@
         attachButtonEventListeners();
 
     } catch (err) {
-        console.error("❌ Error fetching data:", err);
-        alert("❌ Error loading data");
+        showAlert("❌ Error loading data", "error");
     }
 
     function renderTableRow(item) {
@@ -137,15 +135,15 @@ async function handleRoleBasedAction(role, id, action, button = null) {
         });
 
         if (!response.ok) {
-            throw new Error(`Failed to fetch roles: ${response.status}`);
+            showAlert(`Failed to fetch roles: ${response.status}`, "error");
+            return;
         }
 
         const { data } = await response.json();
         const matchedRole = data.find(item => item.name === role);
 
         if (!matchedRole) {
-            console.warn(`No matching role found for: ${role}`);
-            alert("❌ Role not found");
+            showAlert("❌ Role not found", "error");
             return;
         }
 
@@ -160,17 +158,16 @@ async function handleRoleBasedAction(role, id, action, button = null) {
                 await handleDeleteAccount(matchedRole, id, button);
                 break;
             default:
-                console.error("Invalid action:", action);
+                showAlert("Invalid action", "error");
         }
     } catch (error) {
-        console.error("❌ Error fetching roles:", error);
-        alert("❌ Failed to load roles");
+        showAlert("❌ Failed to load roles", "error");
     }
 }
 
 function handleAddAccount(role) {
     if (role.permissions[0].can_add === 0) {
-        alert("❌ You don't have permission to add data");
+        showAlert("❌ You don't have permission to add data", "error");
         return;
     }
     window.location.href = "adddata.html";
@@ -178,7 +175,7 @@ function handleAddAccount(role) {
 
 function handleUpdateAccount(role, id) {
     if (role.permissions[0].can_update === 0) {
-        alert("❌ You don't have permission to update data");
+        showAlert("❌ You don't have permission to update data", "error");
         return;
     }
     window.location.href = `update-account.html?id=${id}`;
@@ -186,11 +183,7 @@ function handleUpdateAccount(role, id) {
 
 async function handleDeleteAccount(role, id, button) {
     if (role.permissions[0].can_delete === 0) {
-        alert("❌ You don't have permission to delete data");
-        return;
-    }
-
-    if (!confirm("Are you sure you want to delete this data?")) {
+        showAlert("❌ You don't have permission to delete data", "error");
         return;
     }
 
@@ -198,32 +191,41 @@ async function handleDeleteAccount(role, id, button) {
     const token = localStorage.getItem("token");
 
     if (!id) {
-        throw new Error("ID is undefined or invalid");
+        showAlert("ID is undefined or invalid", "error");
+        return;
     }
     if (!token) {
-        throw new Error("No authentication token found");
+        showAlert("No authentication token found", "error");
+        return;
     }
 
-    try {
-        console.log("Deleting ID:", id);
-        const response = await fetch(`${API_BASE_URL}/account/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Accept": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        });
+    const doDelete = async () => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/account/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
 
-        if (response.ok) {
-            button.closest("tr").remove(); // Remove row dynamically
-            alert("✅ Record deleted successfully");
-        } else {
-            const errorData = await response.json();
-            console.error("❌ Failed to delete record:", response.status, errorData);
-            alert(`❌ Failed to delete record: ${errorData.message || "Unknown error"}`);
+            if (response.ok) {
+                button.closest("tr").remove(); // Remove row dynamically
+                showAlert("✅ Record deleted successfully", "success");
+            } else {
+                const errorData = await response.json();
+                showAlert(`❌ Failed to delete record: ${errorData.message || "Unknown error"}`, "error");
+            }
+        } catch (error) {
+            showAlert(`❌ Error: ${error.message}`, "error");
         }
-    } catch (error) {
-        console.error("❌ Delete error:", error);
-        alert(`❌ Error: ${error.message}`);
+    };
+
+    if (typeof showConfirm === "function") {
+        showConfirm("Are you sure you want to delete this data?", doDelete);
+    } else {
+        if (confirm("Are you sure you want to delete this data?")) {
+            await doDelete();
+        }
     }
 }
