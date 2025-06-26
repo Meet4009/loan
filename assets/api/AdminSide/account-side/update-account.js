@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
             "stamp", "payout_amount", "payout_date", "payout_remark", "ap_parat", "ap_parat_date",
             "remark_1", "remark_2", "remark_3"
         ].forEach(field => {
-            formData[field] = document.getElementById(field)?.value || '  -  ' ;
+            formData[field] = document.getElementById(field)?.value || '' ;
         });
 
         fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/account-edit/admin/${id}`, {
