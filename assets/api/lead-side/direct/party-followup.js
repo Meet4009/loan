@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
-    
+
     if (!id) {
         console.error('No ID provided in URL parameters');
         return;
     }
-   
+
     fetchFollowUpData(id);
 });
- 
+
 function fetchFollowUpData(id) {
     fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/follow-up-list/${id}`, {
         method: "GET",
@@ -23,7 +23,7 @@ function fetchFollowUpData(id) {
             if (result.message === "Follow-up data fetched successfully" && result.data.length > 0) {
                 const tableBody = document.querySelector("#party-follow-up-table tbody");
                 tableBody.innerHTML = ""; // Clear any existing rows
-                
+
                 result.data.forEach((item) => {
                     const row = `
                         <tr data-id="${item.id}">
@@ -46,7 +46,7 @@ function fetchFollowUpData(id) {
                             </td>
                         </tr>
                     `;
-                        tableBody.insertAdjacentHTML("beforeend", row);
+                    tableBody.insertAdjacentHTML("beforeend", row);
                 });
             } else {
                 console.error("No data found or error in response.");

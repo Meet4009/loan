@@ -14,17 +14,17 @@ async function loadFollowUpData() {
             console.error('No ID provided in URL parameters');
             return;
         }
-        const response = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/builder-follow-up-list/${id}`,{
+        const response = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/builder-follow-up-list/${id}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
-                ,'Content-Type': 'application/json'
+                , 'Content-Type': 'application/json'
             }
         });
         const result = await response.json();
 
         const followUps = result.data;
-        
+
         // Clear previous rows if any
         tableBody.innerHTML = '';
 

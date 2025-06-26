@@ -53,7 +53,7 @@ document.querySelector('#add-follow-up').addEventListener('click', function (e) 
     `;
 
     // Insert the new follow-up section before the submit buttons
-    const submitRow = document.querySelector('#Agent-data-add').closest('.row');
+    const submitRow = document.querySelector('#other-data-add').closest('.row');
     submitRow.insertAdjacentHTML('beforebegin', newFollowUp);
 });
 
@@ -63,80 +63,7 @@ document.addEventListener('click', function (e) {
     }
 });
 
-// Add custom alert styles and function
-const style = document.createElement('style');
-style.textContent = `
-    .custom-alert {
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%) translateY(-10px);
-        z-index: 1000;
-        padding: 15px 20px;
-        border-radius: 5px;
-        min-width: 200px;
-        max-width: 300px;
-        color: white;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        opacity: 0;
-        transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-    .custom-alert.show {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
-    .custom-alert.success {
-        background-color: #28a745;
-    }
-    .custom-alert.error {
-        background-color: #dc3545;
-    }
-    .custom-modal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 20px;
-        border-radius: 5px;
-        z-index: 2000;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        text-align: center;
-        max-width: 300px;
-    }
-    .custom-modal button {
-        margin: 10px;
-        padding: 8px 16px;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-        color: white;
-    }
-    .custom-modal .btn-yes {
-        background: #dc3545;
-    }
-    .custom-modal .btn-no {
-        background: #6c757d;
-    }
-`;
-document.head.appendChild(style);
-
-// Function to show custom alert
-const showAlert = (message, type = 'error') => {
-    const alertDiv = document.createElement('div');
-    alertDiv.className = `custom-alert ${type}`;
-    alertDiv.textContent = message;
-    document.body.appendChild(alertDiv);
-    setTimeout(() => alertDiv.classList.add('show'), 10);
-    setTimeout(() => {
-        alertDiv.classList.remove('show');
-        setTimeout(() => alertDiv.remove(), 300);
-    }, 3000);
-};
-
-document.querySelector('#Agent-data-add').addEventListener('click', async function (e) {
+document.querySelector('#other-data-add').addEventListener('click', async function (e) {
     e.preventDefault();
 
     // Get all follow-up sections
@@ -151,19 +78,18 @@ document.querySelector('#Agent-data-add').addEventListener('click', async functi
     const data = {
         date: document.getElementById("date").value,
         party_profile: document.getElementById("party_profile").value,
-        agent_name: document.getElementById("agent_name").value,
         party_name: document.getElementById("party_name").value,
-        builder_name: document.getElementById("builder_name").value,
         document: document.getElementById("document").value,
         document_check: document.getElementById("document_check").value,
         party_mono: document.getElementById("party_mono").value,
         bank: document.getElementById("bank").value,
         property_name: document.getElementById("property_name").value,
+        builder_name: document.getElementById("builder_name").value,
         dropdown: document.getElementById("dropdown").value,
         reference: document.getElementById("reference").value,
         pf: Number(document.getElementById("pf").value),
         rm: Number(document.getElementById("rm").value),
-        stemp: Number(document.getElementById("stamp").value),
+        stemppaper: Number(document.getElementById("stemppaper").value),
         tcvr: Number(document.getElementById("tcrvr").value),
         vahivat: Number(document.getElementById("vahivat").value),
         ework: Number(document.getElementById("ework").value),
@@ -173,8 +99,9 @@ document.querySelector('#Agent-data-add').addEventListener('click', async functi
         loan_fees: Number(document.getElementById("loan_fees").value),
         follow_up: followUps
     };
+
     try {
-        const response = await fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent-insert", {
+        const response = await fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api/other-add", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -186,23 +113,19 @@ document.querySelector('#Agent-data-add').addEventListener('click', async functi
         const result = await response.json();
 
         if (response.ok) {
-            showAlert("✅ Agent added successfully", "success");
+            showAlert("Data submitted successfully!", "success");
             setTimeout(() => {
-
-                // window.location.href = "agent.html"; // Redirect to agent list page
-            }, 1200);
+                window.location.href = "other.html";
+            }, 1000);
         } else {
-            showAlert(result.message || "An error occurred.", "error");
+            showAlert("❌ Error: " + (result.message || ""), "error");
         }
     } catch (err) {
         showAlert("❌ Network error", "error");
     }
 });
 
-// Handle cancel button
+
 document.getElementById("cancelBtn").addEventListener("click", function () {
-    window.location.href = "agent.html";
+    window.location.href = "other.html";
 });
-
-
-
