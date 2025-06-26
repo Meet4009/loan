@@ -1,58 +1,60 @@
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
-const token = localStorage.getItem('token');
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', function () {
+
     if (!id) {
-        console.error('No ID provided in URL parameters');
+        showAlert('No ID provided in URL parameters', 'error');
         return;
     }
 
+    const token = localStorage.getItem('token');
     if (!token) {
-        window.location.href = '../../index.html';
+        window.location.href = 'index.html';
         return;
     }
 
-    // Attach Add Follow-Up handler
-    document.querySelector('.btn-outline-primary').addEventListener('click', (e) => {
+    let followUpCount = 1;
+
+    // Add Follow Up button click handler
+    document.querySelector('.btn-outline-primary').addEventListener('click', function (e) {
         e.preventDefault();
-        addFollowUpSection();
+        followUpCount++;
+        addNewFollowUpSection();
     });
 
-    // Delegate remove follow-up handler
-    document.addEventListener('click', (e) => {
-        if (e.target.closest('.remove-follow-up')) {
+    // Remove Follow Up button handler
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-follow-up')) {
             e.target.closest('.follow-up-section').remove();
         }
     });
 
-    // Attach form submit handler
-    document.getElementById('agent-data-add').addEventListener('click', handleFormSubmission);
+    // Fetch both lead data and follow-ups
+    fetchAgentDetails(id, token);
+    fetchFollowUpData(id);
 
-    // Fetch data in parallel
-    await Promise.all([
-        loadAgentDetails(),
-        loadFollowUps()
-    ]);
+    // Form submission handler
+    document.getElementById('agent-data-add').addEventListener('click', handleFormSubmission);
 });
 
-/** Add a follow-up section. If `data` is given, prefill values. */
-function addFollowUpSection(data = {}) {
-    const html = `
-        <div class="row follow-up-section">
+// Add this after the existing data fetching code
+function addNewFollowUpSection(data = {}) {
+    const newFollowUp = `  
+        <div class="row follow-up-section" ${data.id ? `data-followup-id="${data.id}"` : ''}>
             <div class="col-lg-12">
                 <div class="card p-5">
                     <div class="card-body">
                         <div class="row justify-content-end">
                             <div class="col-lg-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Date</label>
+                                    <label class="col-sm-3 col-form-label text-left text-sm-center">Date</label>
                                     <div class="col-sm-9">
                                         <input class="form-control follow_start_date" type="date" value="${data.start_date || ''}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">End Date</label>
+                                    <label class="col-sm-3 col-form-label text-left text-sm-center">End Date</label>
                                     <div class="col-sm-9">
                                         <input class="form-control follow_end_date" type="date" value="${data.end_date || ''}">
                                     </div>
@@ -60,13 +62,13 @@ function addFollowUpSection(data = {}) {
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Property Name</label>
+                                    <label class="col-sm-3 col-form-label text-left text-sm-center">Property Name</label>
                                     <div class="col-sm-9">
                                         <input class="form-control follow_property" type="text" value="${data.property || ''}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Description</label>
+                                    <label class="col-sm-3 col-form-label text-left text-sm-center">Description</label>
                                     <div class="col-sm-9">
                                         <input class="form-control follow_description" type="text" value="${data.description || ''}">
                                     </div>
@@ -81,79 +83,146 @@ function addFollowUpSection(data = {}) {
             </div>
         </div>
     `;
-    const submitRow = document.getElementById('agent-data-add').closest('.row');
-    submitRow.insertAdjacentHTML('beforebegin', html);
+
+    const submitBtn = document.getElementById('agent-data-add');
+    submitBtn.closest('.row').insertAdjacentHTML('beforebegin', newFollowUp);
 }
 
-/** Load agent details and fill form fields */
-async function loadAgentDetails() {
-    try {
-        const res = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent/admin/${id}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const { data } = await res.json();
-        if (!data) throw new Error('Agent not found');
+document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('remove-follow-up')) {
+        e.target.closest('.follow-up-section').remove();
+    }
+});
 
-        // Fill basic fields
-        [
-            'date', 'agent_name', 'party_name', 'builder_name',
-            'party_mono', 'property_name', 'reference',
-            'party_profile', 'document', 'document_check',
-            'bank', 'dropdown',
-            'pf', 'rm', 'stemp', 'tcvr',
-            'c_astiment', 'ework', 'astiment', 'b_astiment',
-            'vahivat', 'loan_fees'
-        ].forEach(id => {
-            if (document.getElementById(id)) {
-                document.getElementById(id).value = data[id] || (['pf', 'rm', 'stemp', 'tcvr', 'c_astiment', 'ework', 'astiment', 'b_astiment', 'vahivat', 'loan_fees'].includes(id) ? 0 : '');
+// Fetch agent details
+async function fetchAgentDetails(id, token) {
+    try {
+        const response = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent/admin/${id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json'
             }
         });
 
-    } catch (err) {
-        console.error('Failed to load agent details:', err);
-        alert(err.message);
-    }
-}
+        const result = await response.json();
 
-/** Load follow-up sections from API and render them */
-async function loadFollowUps() {
-    try {
-        const res = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent-follow-ups/admin/${id}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const { data } = await res.json();
-        if (Array.isArray(data) && data.length) {
-            // Clear any existing follow-ups
-            document.querySelectorAll('.follow-up-section').forEach(el => el.remove());
-            // Add each
-            data.forEach(item => addFollowUpSection(item));
+        if (result.data) {
+            const agentData = result.data;
+            if (agentData) {
+                // Populate form fields with null checks
+                document.getElementById('date').value = agentData.date || '';
+                document.getElementById('agent_name').value = agentData.agent_name || '';
+                document.getElementById('party_name').value = agentData.party_name || '';
+                document.getElementById('builder_name').value = agentData.builder_name || '';
+                document.getElementById('party_mono').value = agentData.party_mono || '';
+                document.getElementById('property_name').value = agentData.property_name || '';
+                document.getElementById('reference').value = agentData.reference || '';
+                document.getElementById('party_profile').value = agentData.party_profile || 'Salary';
+                document.getElementById('document').value = agentData.document || 'No';
+                document.getElementById('document_check').value = agentData.document_check || 'No';
+                document.getElementById('bank').value = agentData.bank || '';
+                document.getElementById('dropdown').value = agentData.dropdown || 'Pending';
+
+                // Cost fields - note the stemp and tcvr field names
+                document.getElementById('pf').value = agentData.pf || 0;
+                document.getElementById('rm').value = agentData.rm || 0;
+                document.getElementById('stemp').value = agentData.stemp || 0;  // API returns stemp
+                document.getElementById('tcvr').value = agentData.tcvr || 0;  // API returns tcvr
+                document.getElementById('c_astiment').value = agentData.c_astiment || 0;
+                document.getElementById('ework').value = agentData.ework || 0;
+                document.getElementById('astiment').value = agentData.astiment || 0;
+                document.getElementById('b_astiment').value = agentData.b_astiment || 0;
+                document.getElementById('vahivat').value = agentData.vahivat || 0;
+                document.getElementById('loan_fees').value = agentData.loan_fees || 0;
+
+                // Follow up fields - handle array properly
+                if (agentData.follow_up && Array.isArray(agentData.follow_up)) {
+
+                    document.querySelectorAll('.follow-up-section').forEach(section => section.remove());
+
+                    agentData.follow_up.forEach((followUp, index) => {
+                        if (index > 0) {
+                            document.querySelector('.btn-outline-primary').click(); // Add new follow-up 
+                        }
+
+                        const sections = document.querySelectorAll('.follow-up-section');
+                        const currentSection = sections[sections.length - 1];
+
+
+                        if (currentSection) {
+                            currentSection.querySelector('.follow_start_date').value = followUp.start_date || '';
+                            currentSection.querySelector('.follow_end_date').value = followUp.end_date || '';
+                            currentSection.querySelector('.follow_property').value = followUp.property || '';
+                            currentSection.querySelector('.follow_description').value = followUp.description || '';
+                        }
+                    });
+                }
+                else {
+                    const sections = document.querySelectorAll('.follow-up-section');
+                    if (sections.length > 0) {
+                        document.querySelector('.btn-outline-primary').click();
+                    }
+                }
+            } else {
+                throw new Error('Agent not found');
+            }
         }
-    } catch (err) {
-        console.error('Failed to load follow-ups:', err);
+    } catch (error) {
+        showAlert('Error fetching agent details', 'error');
     }
 }
 
-/** Handle form submission and PUT update */
+function fetchFollowUpData(id) {
+    fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent-follow-ups/admin/${id}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+    })
+        .then(response => response.json())
+        .then(result => {
+            if (result.message === "Follow-up data fetched successfully" && result.data.length > 0) {
+                document.querySelectorAll('.follow-up-section').forEach(section => section.remove());
+                result.data.forEach(item => addNewFollowUpSection(item));
+            }
+        })
+        .catch(error => {
+            showAlert("Error fetching follow-up data", "error");
+        });
+}
+
+// Handle form submission
 async function handleFormSubmission(e) {
     e.preventDefault();
+
+    const token = localStorage.getItem('token');
     const formData = {
-        date: getVal('date'),
-        agent_name: getVal('agent_name'),
-        party_name: getVal('party_name'),
-        builder_name: getVal('builder_name'),
-        party_mono: getVal('party_mono'),
-        property_name: getVal('property_name'),
-        reference: getVal('reference'),
-        party_profile: getVal('party_profile'),
-        document: getVal('document'),
-        document_check: getVal('document_check'),
-        bank: getVal('bank'),
-        dropdown: getVal('dropdown'),
-        pf: getVal('pf'), rm: getVal('rm'),
-        stemp: getVal('stemp'), tcvr: getVal('tcvr'),
-        c_astiment: getVal('c_astiment'), ework: getVal('ework'),
-        astiment: getVal('astiment'), b_astiment: getVal('b_astiment'),
-        vahivat: getVal('vahivat'), loan_fees: getVal('loan_fees'),
+        date: document.getElementById('date').value,
+        agent_name: document.getElementById('agent_name').value,
+        party_name: document.getElementById('party_name').value,
+        builder_name: document.getElementById('builder_name').value,
+        party_mono: document.getElementById('party_mono').value,
+        property_name: document.getElementById('property_name').value,
+        reference: document.getElementById('reference').value,
+        party_profile: document.getElementById('party_profile').value,
+        document: document.getElementById('document').value,
+        document_check: document.getElementById('document_check').value,
+        bank: document.getElementById('bank').value,
+        dropdown: document.getElementById('dropdown').value,
+        // Cost fields
+        pf: document.getElementById('pf').value,
+        rm: document.getElementById('rm').value,
+        stemp: document.getElementById('stemp').value,
+        tcvr: document.getElementById('tcvr').value,
+        c_astiment: document.getElementById('c_astiment').value,
+        ework: document.getElementById('ework').value,
+        astiment: document.getElementById('astiment').value,
+        b_astiment: document.getElementById('b_astiment').value,
+        vahivat: document.getElementById('vahivat').value,
+        loan_fees: document.getElementById('loan_fees').value,
+        // Follow up fields - structure as an array
         follow_up: Array.from(document.querySelectorAll('.follow-up-section')).map(section => ({
             start_date: section.querySelector('.follow_start_date').value,
             end_date: section.querySelector('.follow_end_date').value,
@@ -163,27 +232,34 @@ async function handleFormSubmission(e) {
     };
 
     try {
-        const res = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent-edit-admin/${id}`, {
+        const response = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent-edit-admin/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json'
             },
             body: JSON.stringify(formData)
         });
-        const result = await res.json();
-        if (res.ok) {
-            alert('Agent updated successfully');
-            window.location.href = 'index.html';
-        } else {
-            throw new Error(result.message || 'Failed to update agent');
-        }
-    } catch (err) {
-        console.error('Update error:', err);
-        alert(err.message);
-    }
-}
 
-function getVal(id) {
-    return document.getElementById(id)?.value || '';
-}
+        const result = await response.json();
+        if (response.ok) {
+            showAlert('Agent updated successfully', 'success');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1200);
+        } else {
+            showAlert(result.message || 'Failed to update agent', 'error');
+        }
+    } catch (error) {
+        showAlert('Error updating agent', 'error');
+    }
+};
+
+// Load agent details when page loads
+// document.addEventListener('DOMContentLoaded', fetchAgentDetails);..
+
+
+document.getElementById("cancelBtn").addEventListener("click", function () {
+    window.location.href = "index.html";
+});

@@ -20,6 +20,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        @media (max-width: 991.98px) {
+            .page-title-box .row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .card .row>div[class^="col-"] {
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+
+            .card.p-5,
+            .card-body {
+                padding: 1rem !important;
+            }
+
+            .form-group.row {
+                flex-direction: ROW;
+                align-items: stretch;
+            }
+
+            .form-group.row>label,
+            .form-group.row>div {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .form-group.row>label {
+                margin-bottom: 0.5rem;
+            }
+
+            .btn,
+            .btn-sm {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+
 
 </head>
 
@@ -168,20 +210,23 @@
                                 <div class="row justify-content-end">
                                     <div class="col-lg-6">
                                         <div class="form-group row">
-                                            <label for="date" class="col-sm-3 col-form-label text-left text-sm-center">Date</label>
+                                            <label for="date"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Date</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" type="date" id="date">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="party_name" class="col-sm-3 col-form-label text-left text-sm-center">Party
+                                            <label for="party_name"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Party
                                                 Name</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" type="text" id="party_name">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="party_mono" class="col-sm-3 col-form-label text-left text-sm-center">Party
+                                            <label for="party_mono"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Party
                                                 Mo.No.</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" type="number" id="party_mono">
@@ -189,13 +234,15 @@
                                         </div>
                                         <div class="form-group row">
                                             <label for="property_name"
-                                                class="col-sm-3 col-form-label text-left text-sm-center">Property Name</label>
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Property
+                                                Name</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" type="text" id="property_name">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="builder_name" class="col-sm-3 col-form-label text-left text-sm-center">Builder
+                                            <label for="builder_name"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Builder
                                                 Name</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" type="text" id="builder_name">
@@ -211,7 +258,8 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-left text-sm-center">Party Profile</label>
+                                            <label class="col-sm-3 col-form-label text-left text-sm-center">Party
+                                                Profile</label>
                                             <div class="col-sm-9">
                                                 <select class="form-control" id="party_profile">
                                                     <option>Salary</option>
@@ -221,7 +269,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-left text-sm-center">Document</label>
+                                            <label
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Document</label>
                                             <div class="col-sm-9">
                                                 <select class="form-control" id="document">
                                                     <option>Yes</option>
@@ -230,7 +279,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-left text-sm-center">Document Check</label>
+                                            <label class="col-sm-3 col-form-label text-left text-sm-center">Document
+                                                Check</label>
                                             <div class="col-sm-9">
                                                 <select class="form-control" id="document_check">
                                                     <option>Yes</option>
@@ -239,13 +289,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="bank" class="col-sm-3 col-form-label text-left text-sm-center">Bank</label>
+                                            <label for="bank"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Bank</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" type="text" id="bank">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-left text-sm-center">status</label>
+                                            <label
+                                                class="col-sm-3 col-form-label text-left text-sm-center">status</label>
                                             <div class="col-sm-9">
                                                 <select class="form-control" id="status">
                                                     <option>Pending</option>
@@ -285,26 +337,30 @@
                                 <div class="row justify-content-end">
                                     <div class="col-lg-6">
                                         <div class="form-group row">
-                                            <label for="pf" class="col-sm-3 col-form-label text-left text-sm-center">PF</label>
+                                            <label for="pf"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">PF</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" type="number" id="pf">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="rm" class="col-sm-3 col-form-label text-left text-sm-center">RM</label>
+                                            <label for="rm"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">RM</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" type="number" id="rm">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="stemp" class="col-sm-3 col-form-label text-left text-sm-center">Stamp
+                                            <label for="stemp"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Stamp
                                                 Paper</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" type="number" id="stemp">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="tcvr" class="col-sm-3 col-form-label text-left text-sm-center">TCR-VR</label>
+                                            <label for="tcvr"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">TCR-VR</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" type="number" id="tcvr">
                                             </div>
@@ -321,7 +377,8 @@
 
                                     <div class="col-lg-6">
                                         <div class="form-group row">
-                                            <label for="ework" class="col-sm-3 col-form-label text-left text-sm-center">E-Work</label>
+                                            <label for="ework"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">E-Work</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" type="number" id="ework">
                                             </div>
@@ -348,7 +405,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="loan_fees" class="col-sm-3 col-form-label text-left text-sm-center">Loan
+                                            <label for="loan_fees"
+                                                class="col-sm-3 col-form-label text-left text-sm-center">Loan
                                                 Fees</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" type="number" id="loan_fees">
@@ -373,7 +431,7 @@
                                     <h4 class="page-title">Follow Up</h4>
                                 </div><!--end col-->
                                 <div class="col-auto align-self-center">
-                                    <a href="#" class="btn btn-sm btn-outline-primary" >
+                                    <a href="#" class="btn btn-sm btn-outline-primary">
                                         <span class="day-name" id="Day_Name">Add Follow Up</span>
                                     </a>
                                 </div><!--end col-->
@@ -383,9 +441,9 @@
                 </div><!--end row-->
 
                 <div class="row">
-                    <div class="col-sm-12 text-right">
-                        <button type="submit" class="btn btn-primary px-4" id="submitBtn">Submit</button>
-                        <button type="submit" class="btn btn-danger px-4">Cancel</button>
+                    <div class="col-sm-12 text-center">
+                        <button type="submit" class="btn btn-primary px-5 py-2" id="submitBtn">Submit</button>
+                        <button class="btn btn-danger px-5 py-2 cancelBtn" id="cancelBtn">Cancel</button>
                     </div>
                 </div>
             </div><!-- container -->

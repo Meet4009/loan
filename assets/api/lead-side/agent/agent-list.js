@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // check if the user is logged in
 if (!localStorage.getItem("token")) {
     // If not logged in, redirect to login page
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 }
 
 

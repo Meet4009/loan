@@ -1,149 +1,144 @@
-// ✅ Check auth token and redirect if missing
-const token = localStorage.getItem('token');
-if (!token) {
-    window.location.href = '../../index.html';
+document.addEventListener("DOMContentLoaded", function () {
+    fetchAgentList();
+});
+
+// check if the user is logged in
+if (!localStorage.getItem("token")) {
+    // If not logged in, redirect to login page
+    window.location.href = "index.html";
 }
 
-document.addEventListener("DOMContentLoaded", fetchAgentList);
 
-// ✅ Fetch agent list with async/await
-async function fetchAgentList() {
+function fetchAgentList() {
+    fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent-list-admin", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+    })
+        .then(response => response.json())
+        .then(result => {
+
+            if (result.message === "Data fetched successfully" && result.data.length > 0) {
+                renderAgentList(result.data);
+            } else {
+                showAlert("No data or unexpected response", "error");
+            }
+        })
+        .catch(error => {
+            showAlert("Error fetching agent list", "error");
+        });
+}
+
+function renderAgentList(data) {
     const tbody = document.querySelector('#agent-list tbody');
     tbody.innerHTML = '';
 
-    try {
-        const response = await fetch(
-            "https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent-list-admin",
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`,
-                },
+    data.forEach(agent => {
+        const row = `
+            <tr>
+                <td>${agent.id || ' - '}</td>
+                <td>${agent.date || ' - '}</td>
+                <td>
+                    <div class="button-items">
+                        <button type="button" class="btn btn-outline-info btn-icon-circle-sm agent-data-update" data-id="${agent.id}"><i class="fa-solid fa-pen"></i></button>
+                        <button type="button" class="btn btn-outline-danger btn-icon-circle-sm agent-data-delete" data-id="${agent.id}"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </td>
+                <td>${agent.agent_name || ' - '}</td> 
+                <td>${agent.party_name || ' - '}</td>
+                <td>${agent.party_mono || ' - '}</td>
+                <td>${agent.property_name || ' - '}</td>
+                <td>${agent.builder_name || ' - '}</td>
+                <td>${agent.reference || ' - '}</td>
+                <td>${agent.party_profile || ' - '}</td>
+                <td>${agent.document || ' - '}</td>
+                <td>${agent.document_check || ' - '}</td>
+                <td>${agent.bank || ' - '}</td>
+                <td>
+                    <div class="button-items">
+                        <button type="button" class="btn btn-outline-primary waves-effect waves-light show-cost-btn" data-id="${agent.id}">
+                            ${agent.cost.toLocaleString()}
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    <div class="button-items">
+                        <button type="button" class="btn btn-outline-primary waves-effect waves-light show-follow-up-btn" data-id="${agent.id}">
+                            ${agent.follow_up.length > 0 ? 'More' : 'None'}
+                        </button>
+                    </div>
+                </td>
+                <td>
+                            <div class="button-items">
+                                ${agent.dropdown === 'Done'
+                ? `<button type="button" class="btn btn-outline-success">${agent.dropdown}</button>`
+                : agent.dropdown === 'Pending'
+                    ? `<button type="button" class="btn btn-outline-primary">${agent.dropdown}</button>`
+                    : agent.dropdown === 'Hold'
+                        ? `<button type="button" class="btn btn-outline-warning">${agent.dropdown}</button>`
+                        : agent.dropdown === 'Reject'
+                            ? `<button type="button" class="btn btn-outline-danger">${agent.dropdown}</button>`
+                            : `<button type="button" class="btn btn-outline-secondary">${agent.dropdown}</button>`
             }
-        );
+                            </div>
+                        </td>
+            </tr>
+        `;
+        tbody.insertAdjacentHTML('beforeend', row);
+    });
 
-        const result = await response.json();
-        const agents = result.data;
+    // Add event listeners to edit buttons
+    document.querySelectorAll('.agent-data-update').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const id = e.currentTarget.dataset.id;
+            window.location.href = `update-agent.html?id=${id}`;
+        });
+    });
 
-        if (result.message === "Data fetched successfully" && Array.isArray(agents) && agents.length) {
-            renderAgentList(agents);
-        } else {
-            tbody.innerHTML = '<tr><td colspan="16">No agent data found.</td></tr>';
-        }
+    // 🔴 Add click listeners to all delete buttons
+    document.querySelectorAll('.agent-data-delete').forEach(button => {
+        button.addEventListener('click', () => {
+            const id = button.getAttribute('data-id');
 
-    } catch (error) {
-        console.error("❌ Error fetching agent list:", error);
-        tbody.innerHTML = '<tr><td colspan="16">Failed to load agent list.</td></tr>';
-    }
-}
-
-// ✅ Render agent list efficiently
-function renderAgentList(data) {
-    const tbody = document.querySelector('#agent-list tbody');
-
-    const rows = data.map(agent => `
-        <tr>
-            <td>${sanitize(agent.id)}</td>
-            <td>${sanitize(agent.date)}</td>
-            <td>
-                <div class="button-items">
-                    <button type="button" class="btn btn-outline-info btn-icon-circle-sm" data-action="update" data-id="${agent.id}">
-                        <i class="fa-solid fa-pen"></i>
-                    </button>
-                    <button type="button" class="btn btn-outline-danger btn-icon-circle-sm" data-action="delete" data-id="${agent.id}">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </div>
-            </td>
-            <td>${sanitize(agent.agent_name)}</td>
-            <td>${sanitize(agent.party_name)}</td>
-            <td>${sanitize(agent.party_mono)}</td>
-            <td>${sanitize(agent.property_name)}</td>
-            <td>${sanitize(agent.builder_name)}</td>
-            <td>${sanitize(agent.reference)}</td>
-            <td>${sanitize(agent.party_profile)}</td>
-            <td>${sanitize(agent.document)}</td>
-            <td>${sanitize(agent.document_check)}</td>
-            <td>${sanitize(agent.bank)}</td>
-            <td>
-                <button type="button" class="btn btn-outline-primary waves-effect show-cost-btn" data-id="${agent.id}">
-                    ${Number(agent.cost).toLocaleString()}
-                </button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-outline-primary waves-effect show-follow-up-btn" data-id="${agent.id}">
-                    ${agent.follow_up?.length > 0 ? 'More' : 'None'}
-                </button>
-            </td>
-            <td>
-                ${renderStatusButton(agent.dropdown)}
-            </td>
-        </tr>
-    `).join('');
-
-    tbody.innerHTML = rows;
-
-    // ✅ Delegate all clicks on the table
-    tbody.addEventListener('click', handleTableClick);
-}
-
-// ✅ Handle all button clicks with event delegation
-async function handleTableClick(e) {
-    const btn = e.target.closest('button');
-    if (!btn) return;
-
-    const id = btn.dataset.id;
-    const action = btn.dataset.action;
-
-    if (action === 'update') {
-        window.location.href = `update-agent.html?id=${id}`;
-    } else if (action === 'delete') {
-        if (confirm("Are you sure you want to delete this data?")) {
-            try {
-                const response = await fetch(
-                    `https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent-delete-admin/${id}`,
-                    {
-                        method: 'DELETE',
-                        headers: {
-                            "Accept": "application/json",
-                            "Authorization": `Bearer ${token}`,
-                        }
+            showConfirm("Are you sure you want to delete this data?", () => {
+                fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent-delete-admin/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem('token')}`
                     }
-                );
-                const result = await response.json();
-                if (result.message.includes("deleted successfully")) {
-                    btn.closest('tr').remove();
-                } else {
-                    alert("Failed to delete agent.");
-                }
-            } catch (err) {
-                console.error("❌ Delete error:", err);
-            }
-        }
-    } else if (btn.classList.contains('show-cost-btn')) {
-        window.location.href = `agent-cost.html?id=${id}`;
-    } else if (btn.classList.contains('show-follow-up-btn')) {
-        window.location.href = `agent-followup.html?id=${id}`;
-    }
+                })
+                    .then(res => res.json())
+                    .then(result => {
+                        if (result.message === "Agent and related follow-ups deleted successfully") {
+                            button.closest('tr').remove(); // remove row from UI
+                            showAlert("Data Deleted successfully", "success");
+                        } else {
+                            showAlert("Delete failed.", "error");
+                        }
+                    })
+                    .catch(err => {
+                        showAlert("Delete error", "error");
+                    });
+            });
+        });
+    })
+
+    // 🔴 Add click listeners to all cost buttons
+    document.querySelectorAll('.show-cost-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const id = button.getAttribute('data-id');
+            window.location.href = `agent-cost.html?id=${id}`;
+        });
+    });
+    // 🔴 Add click listeners to all follow-up buttons
+    document.querySelectorAll('.show-follow-up-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const id = button.getAttribute('data-id');
+            window.location.href = `agent-followup.html?id=${id}`;
+        });
+    });
 }
 
-// ✅ Render dropdown status button with correct style
-function renderStatusButton(status) {
-    const classes = {
-        'Done': 'success',
-        'Pending': 'primary',
-        'Hold': 'warning',
-        'Reject': 'danger'
-    };
-    const btnClass = classes[status] || 'secondary';
-    return `<button type="button" class="btn btn-outline-${btnClass}">${sanitize(status)}</button>`;
-}
-
-// ✅ Basic HTML sanitizer
-function sanitize(text) {
-    return text != null ? String(text).replace(/[<>&"'`]/g, char => ({
-        '<': '&lt;', '>': '&gt;', '&': '&amp;',
-        '"': '&quot;', "'": '&#39;', '`': '&#96;'
-    }[char])) : '';
-}
