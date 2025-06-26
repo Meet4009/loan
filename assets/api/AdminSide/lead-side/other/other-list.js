@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(async response => {
             // Log the raw response for debugging
             const rawResponse = await response.text();
-            console.log("Raw API Response:", rawResponse);
 
             try {
                 // Try to parse the response as JSON
@@ -45,23 +44,23 @@ document.addEventListener("DOMContentLoaded", function () {
             data.forEach((item) => {
                 const row = `
                     <tr>
-                        <td>${item.id}</td>
-                        <td>${item.date}</td>
+                        <td>${item.id || ' - '}</td>
+                        <td>${item.date || ' - '}</td>
                         <td>
                             <div class="button-items">
                                 <button type="button" class="btn btn-outline-info btn-icon-circle-sm update-builder-data"  data-id="${item.id}"><i class="fa-solid fa-pen"></i></button>
                                 <button type="button" class="btn btn-outline-danger btn-icon-circle-sm delete-builder-data" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
-                        <td>${item.party_name}</td>
-                        <td>${item.party_mono}</td>
-                        <td>${item.property_name}</td>
-                        <td>${item.builder_name}</td>
-                        <td>${item.reference}</td>
-                        <td>${item.party_profile}</td>
-                        <td>${item.document}</td>
-                        <td>${item.document_check}</td>
-                        <td>${item.bank}</td>
+                        <td>${item.party_name || ' - '}</td>
+                        <td>${item.party_mono || ' - '}</td>
+                        <td>${item.property_name || ' - '}</td>
+                        <td>${item.builder_name || ' - '}</td>
+                        <td>${item.reference || ' - '}</td>
+                        <td>${item.party_profile || ' - '}</td>
+                        <td>${item.document || ' - '}</td>
+                        <td>${item.document_check || ' - '}</td>
+                        <td>${item.bank || ' - '}</td>
                         <td>
                             <div class="button-items">
                                 <button type="button" class="btn btn-outline-primary waves-effect waves-light show-cost-btn" data-id="${item.id}">
@@ -98,9 +97,8 @@ document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll('.delete-builder-data').forEach(button => {
                 button.addEventListener('click', async function () {
                     const id = this.getAttribute('data-id');
-                    console.log("Deleting ID:", id);
 
-                    if (confirm("Are you sure you want to delete this data?")) {
+                    showConfirm("Are you sure you want to delete this data?", async () => {
                         try {
                             const response = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/other-delete/admin/${id}`, {
                                 method: 'DELETE', // Changed back to DELETE
@@ -111,19 +109,19 @@ document.addEventListener("DOMContentLoaded", function () {
                             });
 
                             const result = await response.json();
-                            console.log('Delete response:', result);
 
                             if (response.ok || result.status === true) {
-                                console.log('Data deleted successfully');
-                                window.location.reload();
+                                showAlert("Deleted successfully", "success");
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 1000);
                             } else {
-                                throw new Error(result.message || 'Delete failed');
+                                showAlert(result.message || 'Delete failed', "error");
                             }
                         } catch (error) {
-                            console.error('Delete error:', error);
-
+                            showAlert('Delete error', "error");
                         }
-                    }
+                    });
                 });
             })
             // 🔴 Add click listeners to all cost buttons
@@ -145,13 +143,12 @@ document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll('.update-builder-data').forEach(button => {
                 button.addEventListener('click', () => {
                     const id = button.getAttribute('data-id');
-                    console.log("Edit clicked for ID:", id);
                     window.location.href = `update-other.html?id=${id}`;
                 });
             });
         })
         .catch(error => {
-            console.error("Error fetching data:", error);
+            showAlert("Error fetching data: " + error.message, "error");
             tbody.innerHTML = `<tr><td colspan="15" class="text-center">Error loading data. Please check your connection and try again. (${error.message})</td></tr>`;
 
             // If token is invalid, redirect to login

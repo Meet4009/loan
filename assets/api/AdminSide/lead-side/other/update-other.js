@@ -3,7 +3,7 @@ const otherId = urlParams.get('id');
 
 document.addEventListener('DOMContentLoaded', function () {
     if (!otherId) {
-        console.error('No ID provided in URL parameters');
+        showAlert('No ID provided in URL parameters', 'error');
         return;
     }
 
@@ -104,7 +104,6 @@ function fetchOtherData(id) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log("Fetched data:", data); // Debug log
             if (data.data) {
                 const formData = data.data;
                 // Populate form fields
@@ -133,7 +132,7 @@ function fetchOtherData(id) {
                 document.getElementById('loan_fees').value = formData.loan_fees;
             }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => showAlert('Error fetching data', 'error'));
 }
 
 function fetchFollowUpData(id) {
@@ -150,10 +149,9 @@ function fetchFollowUpData(id) {
                 document.querySelectorAll('.follow-up-section').forEach(section => section.remove());
                 result.data.forEach(item => addNewFollowUpSection(item));
             }
-            console.log("🔍 DEBUG: Fetching follow-up data for ID:", result.data);
         })
         .catch(error => {
-            console.error("Error fetching follow-up data:", error);
+            showAlert("Error fetching follow-up data", "error");
         });
 }
 
@@ -165,8 +163,8 @@ async function handleFormSubmission(e) {
     // Validate token
     const token = localStorage.getItem('token');
     if (!token) {
-        console.error('Please login again');
-        window.location.href = 'index.html';
+        showAlert('Please login again', 'error');
+        window.location.href = 'other.html';
         return;
     }
 
@@ -175,7 +173,7 @@ async function handleFormSubmission(e) {
     const missingFields = requiredFields.filter(field => !document.getElementById(field).value.trim());
 
     if (missingFields.length > 0) {
-        console.error(`Please fill in all required fields: ${missingFields.join(', ')}`);
+        showAlert(`Please fill in all required fields: ${missingFields.join(', ')}`, 'error');
         return;
     }
 
@@ -226,21 +224,24 @@ async function handleFormSubmission(e) {
         );
 
         const data = await response.json();
-        console.log('Update response:', data);
 
         if (!response.ok) {
-            alert("Other Data Updated Successfully")
-            window.location.href = 'other.html'
-            throw new Error(data.message || 'Update failed');
+            showAlert(data.message || 'Update failed', 'error');
+            return;
         }
 
-        console.log('Other data updated successfully');
-        window.location.href = 'index.html';
+        showAlert("Other Data Updated Successfully", "success");
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 1000);
     } catch (error) {
-        console.error('Error:', error);
-        console.error('Error updating other data: ' + error.message);
+        showAlert('Error updating other data', 'error');
     }
 };
 
 // Load data when page loads
 document.addEventListener('DOMContentLoaded', fetchOtherData);
+
+document.getElementById("cancelBtn").addEventListener("click", function () {
+    window.location.href = "index.html";
+});

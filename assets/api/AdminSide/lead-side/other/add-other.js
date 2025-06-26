@@ -99,7 +99,6 @@ document.querySelector('#other-data-add').addEventListener('click', async functi
         loan_fees: Number(document.getElementById("loan_fees").value),
         follow_up: followUps
     };
-    console.log("📤 Submitting data:", data);
 
     try {
         const response = await fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api/other-add-admin", {
@@ -114,16 +113,19 @@ document.querySelector('#other-data-add').addEventListener('click', async functi
         const result = await response.json();
 
         if (response.ok) {
-            console.log("✅ Data submitted successfully");
-            window.location.href = "index.html"; // Redirect to the index page
-            console.log(result);
+            showAlert("Data submitted successfully!", "success");
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 1000);
         } else {
-            console.error("❌ Error: " + result.message);
-            console.error(result);
+            showAlert("❌ Error: " + (result.message || ""), "error");
         }
     } catch (err) {
-        console.error("❌ Network error");
-        console.error(err);
+        showAlert("❌ Network error", "error");
     }
 });
 
+
+document.getElementById("cancelBtn").addEventListener("click", function () {
+    window.location.href = "index.html";
+});

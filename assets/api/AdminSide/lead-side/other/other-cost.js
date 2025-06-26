@@ -25,7 +25,6 @@ async function loadAgentCostData() {
         const data = await response.json();
 
         console.log("data", data);
-        
 
         const costDetails = data.cost_details;
 
