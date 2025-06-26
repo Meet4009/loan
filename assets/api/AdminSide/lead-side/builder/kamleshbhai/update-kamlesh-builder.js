@@ -1,48 +1,49 @@
-// Extract ID from URL parameters once
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
 
-// Utility: Get token and check authentication
-const token = localStorage.getItem('token');
-if (!token) {
-    window.location.href = "../../../index.html";
-}
+document.addEventListener('DOMContentLoaded', function () {
 
-// Global follow-up counter
-let followUpCount = 1;
-
-// Main page initialization
-document.addEventListener('DOMContentLoaded', () => {
     if (!id) {
-        console.error('No ID provided in URL parameters');
+        showAlert('No ID provided in URL parameters', 'error');
         return;
     }
 
-    // Button handlers
-    document.querySelector('.btn-outline-primary').addEventListener('click', e => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'index.html';
+        return;
+    }
+
+    let followUpCount = 1;
+
+    // Add Follow Up button click handler
+    document.querySelector('.btn-outline-primary').addEventListener('click', function (e) {
         e.preventDefault();
         followUpCount++;
-        addFollowUpSection();
+        addNewFollowUpSection();
     });
 
-    document.addEventListener('click', e => {
+    // Remove Follow Up button handler
+    document.addEventListener('click', function (e) {
         if (e.target.classList.contains('remove-follow-up')) {
             e.target.closest('.follow-up-section').remove();
         }
     });
 
-    document.getElementById('add-builder-data').addEventListener('click', handleFormSubmission);
+    // Fetch both lead data and follow-ups
+    fetchBuilderDetails(id, token);
+    fetchFollowUpData(id);
 
-    // Load existing data
-    loadBuilderDetails();
-    loadFollowUps();
+    // Form submission handler
+    document.getElementById('add-builder-data').addEventListener('click', handleFormSubmission);
 });
 
-/**
- * Add a follow-up input section (reused for new and existing)
- */
-function addFollowUpSection(data = {}) {
-    const template = `
+
+
+
+// Add follow-up button click handler
+function addNewFollowUpSection(data = {}) {
+    const newFollowUp = `  
         <div class="row follow-up-section" ${data.id ? `data-followup-id="${data.id}"` : ''}>
             <div class="col-lg-12">
                 <div class="card p-5">
@@ -50,13 +51,13 @@ function addFollowUpSection(data = {}) {
                         <div class="row justify-content-end">
                             <div class="col-lg-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Date</label>
+                                    <label class="col-sm-3 col-form-label text-left text-sm-center">Date</label>
                                     <div class="col-sm-9">
                                         <input class="form-control follow_start_date" type="date" value="${data.start_date || ''}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">End Date</label>
+                                    <label class="col-sm-3 col-form-label text-left text-sm-center">End Date</label>
                                     <div class="col-sm-9">
                                         <input class="form-control follow_end_date" type="date" value="${data.end_date || ''}">
                                     </div>
@@ -64,13 +65,13 @@ function addFollowUpSection(data = {}) {
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Property Name</label>
+                                    <label class="col-sm-3 col-form-label text-left text-sm-center">Property Name</label>
                                     <div class="col-sm-9">
                                         <input class="form-control follow_property" type="text" value="${data.property || ''}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Description</label>
+                                    <label class="col-sm-3 col-form-label text-left text-sm-center">Description</label>
                                     <div class="col-sm-9">
                                         <input class="form-control follow_description" type="text" value="${data.description || ''}">
                                     </div>
@@ -79,91 +80,113 @@ function addFollowUpSection(data = {}) {
                                     <button type="button" class="btn btn-danger remove-follow-up">Remove</button>
                                 </div>
                             </div>
-                        </div>
+                        </div>  
                     </div>
                 </div>
             </div>
-        </div>`;
+        </div>
+    `;
 
-    const submitRow = document.getElementById('add-builder-data').closest('.row');
-    submitRow.insertAdjacentHTML('beforebegin', template);
+    const submitBtn = document.getElementById('add-builder-data');
+    submitBtn.closest('.row').insertAdjacentHTML('beforebegin', newFollowUp);
 }
 
-/**
- * Load builder details into form fields
- */
-async function loadBuilderDetails() {
+async function fetchBuilderDetails(id, token) {
     try {
-        const res = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/builder/admin/${id}`, {
+        // First get list of all builders
+        const response = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/builder/admin/${id}`, {
+            method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json'
             }
         });
-        const result = await res.json();
-        const data = result.data;
 
-        if (data) {
-            const mappings = {
-                date: data.date, builder_name: data.builder_name, party_name: data.party_name,
-                party_mono: data.party_mono, property_name: data.property_name, reference: data.reference,
-                party_profile: data.party_profile || 'Salary',
-                document: data.document || 'No',
-                document_check: data.document_check || 'No',
-                bank: data.bank, dropdown: data.dropdown || 'Pending',
-                pf: data.pf, rm: data.rm, stemppaper: data.stemppaper, tcvr: data.tcvr,
-                c_astiment: data.c_astiment, ework: data.ework, astiment: data.astiment,
-                b_astiment: data.b_astiment, vahivat: data.vahivat, loan_fees: data.loan_fees,
-            };
+        const result = await response.json();
 
-            for (const [id, val] of Object.entries(mappings)) {
-                const el = document.getElementById(id);
-                if (el) el.value = val || '';
+        if (result.data) {
+            // Find the specific builder by ID
+            const builderData = result.data
+
+            if (builderData) {
+                // Map all form fields
+                const fieldMappings = {
+                    date: builderData.date,
+                    builder_name: builderData.builder_name,
+                    party_name: builderData.party_name,
+                    party_mono: builderData.party_mono,
+                    property_name: builderData.property_name,
+                    reference: builderData.reference,
+                    party_profile: builderData.party_profile || 'Salary',
+                    document: builderData.document || 'No',
+                    document_check: builderData.document_check || 'No',
+                    bank: builderData.bank,
+                    dropdown: builderData.dropdown || 'Pending',
+                    // Cost fields
+                    pf: builderData.pf,
+                    rm: builderData.rm,
+                    stemppaper: builderData.stemppaper,
+                    tcvr: builderData.tcvr,
+                    c_astiment: builderData.c_astiment,
+                    ework: builderData.ework,
+                    astiment: builderData.astiment,
+                    b_astiment: builderData.b_astiment,
+                    vahivat: builderData.vahivat,
+                    loan_fees: builderData.loan_fees,
+                };
+
+                // Set form values with logging
+                Object.entries(fieldMappings).forEach(([fieldId, value]) => {
+                    const element = document.getElementById(fieldId);
+                    if (element) {
+                        element.value = value || '';
+                    }
+                });
             }
         }
-
-    } catch (err) {
-        console.error('Error loading builder:', err);
-        alert('Could not load builder data.');
+    } catch (error) {
+        showAlert('Error fetching builder', 'error');
     }
 }
 
-/**
- * Load and render all follow-up data
- */
-async function loadFollowUps() {
-    try {
-        const res = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/builder-follow-up-list-admin/${id}`, {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Accept": "application/json"
+function fetchFollowUpData(id) {
+    fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/builder-follow-up-list-admin/${id}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+    })
+        .then(response => response.json())
+        .then(result => {
+            if (result.message === "Follow-up data fetched successfully" && result.data.length > 0) {
+                document.querySelectorAll('.follow-up-section').forEach(section => section.remove());
+                result.data.forEach(item => addNewFollowUpSection(item));
             }
+        })
+        .catch(error => {
+            showAlert("Error fetching follow-up data", "error");
         });
-        const result = await res.json();
-        if (result.message === "Follow-up data fetched successfully" && Array.isArray(result.data)) {
-            // Remove default follow-up section if exists
-            document.querySelectorAll('.follow-up-section').forEach(s => s.remove());
-            result.data.forEach(addFollowUpSection);
-        }
-    } catch (err) {
-        console.error('Error loading follow-ups:', err);
-    }
 }
 
-/**
- * Handle update form submit
- */
+// Handle form submission
 async function handleFormSubmission(e) {
     e.preventDefault();
 
-    // Validate required fields
-    const required = ['date', 'builder_name', 'party_name', 'party_mono'];
-    const missing = required.filter(id => !document.getElementById(id).value.trim());
-    if (missing.length) {
-        return alert(`Please fill: ${missing.join(', ')}`);
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'index.html';
+        return;
     }
 
-    // Gather data
+    // Validate required fields
+    const requiredFields = ['date', 'builder_name', 'party_name', 'party_mono'];
+    const missingFields = requiredFields.filter(field => !document.getElementById(field).value.trim());
+    if (missingFields.length > 0) {
+        showAlert("Please fill all required fields.", "error");
+        return;
+    }
+
     const formData = {
         date: document.getElementById('date').value.trim(),
         builder_name: document.getElementById('builder_name').value.trim(),
@@ -176,6 +199,7 @@ async function handleFormSubmission(e) {
         document_check: document.getElementById('document_check').value || 'No',
         bank: document.getElementById('bank').value.trim(),
         dropdown: document.getElementById('dropdown').value || 'Pending',
+        // Cost data - convert empty to 0
         pf: document.getElementById('pf').value || '0',
         rm: document.getElementById('rm').value || '0',
         stemppaper: document.getElementById('stemppaper').value || '0',
@@ -186,6 +210,7 @@ async function handleFormSubmission(e) {
         b_astiment: document.getElementById('b_astiment').value || '0',
         vahivat: document.getElementById('vahivat').value || '0',
         loan_fees: document.getElementById('loan_fees').value || '0',
+
         follow_up: Array.from(document.querySelectorAll('.follow-up-section')).map(section => ({
             start_date: section.querySelector('.follow_start_date').value,
             end_date: section.querySelector('.follow_end_date').value,
@@ -195,23 +220,35 @@ async function handleFormSubmission(e) {
     };
 
     try {
-        const res = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/builder-edit-admin/${id}`, {
-            method: 'PUT',
+        const response = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/builder-edit-admin/${id}`, {
+            method: 'PUT',  // Changed from POST to PUT
             headers: {
                 'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify(formData)
         });
-        const result = await res.json();
-        if (result.status === 200 || result.status === true || res.ok) {
-            alert('Builder updated successfully.');
-            window.location.href = 'index.html';
+
+        const result = await response.json();
+
+        if (result.status === 200 || result.status === true || response.ok) {
+            showAlert("Builder updated successfully", "success");
+            setTimeout(() => {
+                window.location.href = 'index.html'; 
+            }, 1200);
         } else {
-            throw new Error(result.message || 'Update failed.');
+            showAlert(result.message || 'Update failed', 'error');
         }
-    } catch (err) {
-        console.error('Update error:', err);
-        alert('Error: ' + err.message);
+    } catch (error) {
+        showAlert('Error updating builder', 'error');
     }
-}
+};
+
+// Load builder details when page loads
+document.addEventListener('DOMContentLoaded', fetchBuilderDetails);
+
+
+document.getElementById("cancelBtn").addEventListener("click", function () {
+    window.location.href = "index.html";
+});

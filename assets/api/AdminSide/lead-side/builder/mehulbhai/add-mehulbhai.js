@@ -1,7 +1,6 @@
-
 const token = localStorage.getItem("token");
 if (!token) {
-    window.location.href = "../../../index.html";
+    window.location.href = "index.html"
 }
 
 let followUpCount = 1;
@@ -103,7 +102,6 @@ document.querySelector(".add-builder-data").addEventListener("click", async func
 
         follow_up: followUps
     };
-    console.log("Form Data:", formData);
 
     try {
         const response = await fetch(" https://loantest.innovatixtechnologies.com/account/example-app/public/api/builder-data-admin", {
@@ -117,16 +115,19 @@ document.querySelector(".add-builder-data").addEventListener("click", async func
 
         const result = await response.json();
         if (response.ok) {
-            // alert("Data submitted successfully!");
-            console.log(result);
-            window.location.href = 'index.html'// Reload the page to see the updated data
+            showAlert("Data submitted successfully!", "success");
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
         } else {
-            alert("Error submitting data: " + result.message);
-            console.error(result);
+            showAlert("Error submitting data: " + (result.message || '  -  '), "error");
         }
     } catch (error) {
-        console.error("Fetch error:", error);
-        alert("Network error occurred");
+        showAlert("Network error occurred", "error");
     }
 });
 
+
+document.getElementById("cancelBtn").addEventListener("click", function () {
+    window.location.href = "index.html";
+});

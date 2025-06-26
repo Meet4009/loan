@@ -4,13 +4,13 @@ const id = urlParams.get('id');
 document.addEventListener('DOMContentLoaded', function () {
 
     if (!id) {
-        console.error('No ID provided in URL parameters');
+        showAlert('No ID provided in URL parameters', 'error');
         return;
     }
 
     const token = localStorage.getItem('token');
     if (!token) {
-        window.location.href = "../../../index.html";
+        window.location.href = 'index.html';
         return;
     }
 
@@ -37,11 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Form submission handler
     document.getElementById('add-builder-data').addEventListener('click', handleFormSubmission);
 });
-
-// if (!id) {
-//     alert('No builder ID provided');
-//     window.location.href = 'mehul-bhai.html';
-// }
 
 
 // Add follow-up button click handler
@@ -106,12 +101,10 @@ async function fetchBuilderDetails(id, token) {
         });
 
         const result = await response.json();
-        console.log('Builder list response:', result);
 
         if (result.data) {
             // Find the specific builder by ID
             const builderData = result.data
-            console.log('Found builder:', builderData);
 
             if (builderData) {
                 // Map all form fields
@@ -145,16 +138,12 @@ async function fetchBuilderDetails(id, token) {
                     const element = document.getElementById(fieldId);
                     if (element) {
                         element.value = value || '';
-                        console.log(`Setting ${fieldId} to:`, value);
-                    } else {
-                        console.warn(`Element not found: ${fieldId}`);
                     }
                 });
             }
         }
     } catch (error) {
-        console.error('Error fetching builder:', error);
-        alert('Error loading builder data');
+        showAlert('Error fetching builder', 'error');
     }
 }
 
@@ -172,10 +161,9 @@ function fetchFollowUpData(id) {
                 document.querySelectorAll('.follow-up-section').forEach(section => section.remove());
                 result.data.forEach(item => addNewFollowUpSection(item));
             }
-            console.log("🔍 DEBUG: Fetching follow-up data for ID:", result.data);
         })
         .catch(error => {
-            console.error("Error fetching follow-up data:", error);
+            showAlert("Error fetching follow-up data", "error");
         });
 }
 
@@ -185,7 +173,7 @@ async function handleFormSubmission(e) {
 
     const token = localStorage.getItem('token');
     if (!token) {
-        alert('Please login again');
+        window.location.href = 'index.html';
         return;
     }
 
@@ -193,7 +181,7 @@ async function handleFormSubmission(e) {
     const requiredFields = ['date', 'builder_name', 'party_name', 'party_mono'];
     const missingFields = requiredFields.filter(field => !document.getElementById(field).value.trim());
     if (missingFields.length > 0) {
-        alert(`Please fill required fields: ${missingFields.join(', ')}`);
+        showAlert("Please fill all required fields.", "error");
         return;
     }
 
@@ -241,19 +229,23 @@ async function handleFormSubmission(e) {
         });
 
         const result = await response.json();
-        console.log('Update response:', result); // Debug log
 
         if (result.status === 200 || result.status === true || response.ok) {
-            alert('Builder updated successfully');
-            window.location.href = 'index.html'
+            showAlert("Builder updated successfully", "success");
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1200);
         } else {
-            throw new Error(result.message || 'Update failed');
+            showAlert(result.message || 'Update failed', 'error');
         }
     } catch (error) {
-        console.error('Error:', error);
-        alert('Error updating builder: ' + error.message);
+        showAlert('Error updating builder', 'error');
     }
 };
 
 // Load builder details when page loads
 document.addEventListener('DOMContentLoaded', fetchBuilderDetails);
+
+document.getElementById("cancelBtn").addEventListener("click", function () {
+    window.location.href = "index.html";
+});
