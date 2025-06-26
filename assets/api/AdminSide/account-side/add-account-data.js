@@ -1,79 +1,89 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const token = localStorage.getItem("token");
-    const apiUrl = "https://loantest.innovatixtechnologies.com/account/example-app/public/api/account-data-admin";
+document.addEventListener("DOMContentLoaded", () => {   
+    
 
-    const getValue = id => document.getElementById(id)?.value?.trim() || '  -  ' ;
-    const getNumber = id => parseInt(getValue(id)) || 0;
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '../index.html';
+        return;
+    }
 
-    document.querySelector('#add_acc_data').addEventListener('submit', async (e) => {
-        e.preventDefault();
+    const baseUrl = 'https://loantest.innovatixtechnologies.com/account/example-app/public/api';
 
-        const bodyData = {
-            bank: getValue("bank"),
-            file_no: getValue("file_no"),
-            date: getValue("date"),
-            f_number: getValue("f_number"),
-            mo_no: getValue("mo_no"),
-            party_name: getValue("party_name"),
-            project_name: getValue("project_name"),
-            product: getValue("product"),
-            bhl_to: getValue("bhl_to"),
-            top_up: getNumber("top_up"),
-            total_fees: getNumber("total_fees"),
-            ap_1: getNumber("ap_1"),
-            ap_1_date: getValue("ap_1_date"),
-            status: getValue("status"),
-            pf: getNumber("pf"),
-            pf_parat: getNumber("pf_parat"),
-            pf_parat_date: getValue("pf_parat_date"),
-            payment_2: getNumber("payment_2"),
-            payment_2_date: getValue("payment_2_date"),
-            payment_3: getNumber("payment_3"),
-            payment_3_date: getValue("payment_3_date"),
-            kasar: getNumber("kasar"),
-            morgej_parat: getNumber("morgej_parat"),
-            morgej_parat_date: getValue("morgej_parat_date"),
-            agreement_parat: getValue("agreement_parat"),
-            agreement_parat_date: getValue("agreement_parat_date"),
-            payout_amount: getNumber("payout_amount"),
-            payout_date: getValue("payout_date"),
-            payout_remark: getValue("payout_remark"),
-            ap_parat: getValue("ap_parat"),
-            ap_parat_date: getValue("ap_parat_date"),
-            remark_payment: getValue("remark_payment"),
-            remark: getValue("remark"),
-            remark_1: getValue("remark_1"),
-            remark_2: getValue("remark_2"),
-            remark_3: getValue("remark_3")
-        };
+    // Handle account submission
+    const accSubmitBtn = document.querySelector('#accSubmitBtn');
+    if (accSubmitBtn) {
+        accSubmitBtn.addEventListener('click', async e => {
+            e.preventDefault();
 
-        try {
-            const response = await fetch(apiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify(bodyData)
-            });
+            const bodyData = {
+                bank: document.getElementById('bank')?.value || '',
+                file_no: document.getElementById('file_no')?.value || '',
+                date: document.getElementById('date')?.value || '',
+                f_number: document.getElementById('f_number')?.value || '',
+                mo_no: document.getElementById('mo_no')?.value || '',
+                party_name: document.getElementById('party_name')?.value || '',
+                project_name: document.getElementById('project_name')?.value || '',
+                product: document.getElementById('product')?.value || '',
+                bhl_to: document.getElementById('bhl_to')?.value || '',
+                top_up: parseInt(document.getElementById('top_up')?.value) || 0,
+                total_fees: parseInt(document.getElementById('total_fees')?.value) || 0,
+                ap_1: parseInt(document.getElementById('ap_1')?.value) || 0,
+                remark_payment: document.getElementById('remark_payment')?.value || '',
+                ap_1_date: document.getElementById('ap_1_date')?.value || '',
+                status: document.getElementById('status')?.value || '',
+                pf: parseInt(document.getElementById('pf')?.value) || 0,
+                remark: document.getElementById('remark')?.value || '',
+                pf_parat: parseInt(document.getElementById('pf_parat')?.value) || 0,
+                pf_parat_date: document.getElementById('pf_parat_date')?.value || '',
+                payment_2: parseInt(document.getElementById('payment_2')?.value) || 0,
+                payment_2_date: document.getElementById('payment_2_date')?.value || '',
+                payment_3: parseInt(document.getElementById('payment_3')?.value) || 0,
+                payment_3_date: document.getElementById('payment_3_date')?.value || '',
+                kasar: parseInt(document.getElementById('kasar')?.value) || 0,
+                morgej_parat: parseInt(document.getElementById('morgej_parat')?.value) || 0,
+                morgej_parat_date: document.getElementById('morgej_parat_date')?.value || '',
+                agreement_parat: document.getElementById('agreement_parat')?.value || '',
+                agreement_parat_date: document.getElementById('agreement_parat_date')?.value || '',
+                payout_amount: parseInt(document.getElementById('payout_amount')?.value) || 0,
+                payout_date: document.getElementById('payout_date')?.value || '',
+                payout_remark: document.getElementById('payout_remark')?.value || '',
+                ap_parat: document.getElementById('ap_parat')?.value || '',
+                ap_parat_date: document.getElementById('ap_parat_date')?.value || '',
+                remark_1: document.getElementById('remark_1')?.value || '',
+                remark_2: document.getElementById('remark_2')?.value || '',
+                remark_3: document.getElementById('remark_3')?.value || ''
+            };
 
-            const result = await response.json();
+            try {
+                const response = await fetch(`${baseUrl}/account-data-admin`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(bodyData)
+                });
 
-            if (response.ok) {
-                // ✅ Success - redirect
-                window.location.href = "index.html";
-            } else {
-                console.error("❌ Failed to insert:", result);
-                alert(`Error: ${result.message || "Unknown error"}`);
+                const result = await response.json();
+                if (response.ok) {
+                    showAlert('✅ Account created successfully!', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1200);
+                } else {
+                    throw new Error(result.message || 'Failed to create account');
+                }
+            } catch (error) {
+                showAlert(`❌ Error creating account: ${error.message}`, 'error');
             }
+        });
+    }
 
-        } catch (error) {
-            console.error("❌ Network Error:", error);
-            alert("Network error occurred. Please try again.");
-        }
-    });
-
-    document.getElementById("cancelAccBtn").addEventListener("click", () => {
-        window.location.href = "index.html";
-    });
+    // Handle cancel button
+    const cancelAccBtn = document.getElementById('cancelAccBtn');
+    if (cancelAccBtn) {
+        cancelAccBtn.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+    }
 });

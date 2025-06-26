@@ -6,6 +6,97 @@
  * Module/App: Main Js
  */
 
+    // Add custom alert styles and functions
+    const style = document.createElement('style');
+    style.textContent = `
+        .custom-alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            z-index: 1000;
+            padding: 15px 20px;
+            border-radius: 5px;
+            min-width: 200px;
+            max-width: 300px;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .custom-alert.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .custom-alert.success {
+            background-color: #28a745;
+        }
+        .custom-alert.error {
+            background-color: #dc3545;
+        }
+        .custom-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            z-index: 2000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 300px;
+        }
+        .custom-modal button {
+            margin: 10px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            color: white;
+        }
+        .custom-modal .btn-yes {
+            background: #dc3545;
+        }
+        .custom-modal .btn-no {
+            background: #6c757d;
+        }
+    `;
+    document.head.appendChild(style);
+
+    const showAlert = (message, type = 'error') => {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `custom-alert ${type}`;
+        alertDiv.textContent = message;
+        document.body.appendChild(alertDiv);
+        setTimeout(() => alertDiv.classList.add('show'), 10);
+        setTimeout(() => {
+            alertDiv.classList.remove('show');
+            setTimeout(() => alertDiv.remove(), 300);
+        }, 3000);
+    };
+
+    const showConfirm = (message, onYes, onNo) => {
+        const modal = document.createElement('div');
+        modal.className = 'custom-modal';
+        modal.innerHTML = `
+            <div style="margin-bottom: 10px;">${message}</div>
+            <button class="btn-yes">Yes</button>
+            <button class="btn-no">No</button>
+        `;
+        document.body.appendChild(modal);
+        modal.querySelector('.btn-yes').onclick = () => {
+            modal.remove();
+            if (onYes) onYes();
+        };
+        modal.querySelector('.btn-no').onclick = () => {
+            modal.remove();
+            if (onNo) onNo();
+        };
+    };
+
 
 document.addEventListener("DOMContentLoaded", async function () {
     const token = localStorage.getItem('token'); // 🔁 Replace with your actual Bearer token
@@ -85,11 +176,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         cb(start, end, '');
     }
-   
+
     function initMetisMenu() {
         //metis menu
         $(".metismenu").metisMenu();
-        $( window ).resize(function() {
+        $(window).resize(function () {
             initEnlarge();
         });
     }
@@ -107,16 +198,16 @@ document.addEventListener("DOMContentLoaded", async function () {
             $('body').addClass('enlarge-menu');
         } else {
             // if ($('body').data('keep-enlarged') != true)
-                $('body').removeClass('enlarge-menu');
+            $('body').removeClass('enlarge-menu');
         }
     }
 
-    function initTooltipPlugin(){
-        $('[data-toggle="tooltip"]').tooltip()       
+    function initTooltipPlugin() {
+        $('[data-toggle="tooltip"]').tooltip()
     }
 
     function initMainIconTabMenu() {
-        $('.main-icon-menu .nav-link').on('click', function(e){
+        $('.main-icon-menu .nav-link').on('click', function (e) {
             $("body").removeClass("enlarge-menu");
             e.preventDefault();
             $(this).addClass('active');
@@ -133,8 +224,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         // === following js will activate the menu in left side bar based on url ====
         $(".leftbar-tab-menu a, .left-sidenav a").each(function () {
             var pageUrl = window.location.href.split(/[?#]/)[0];
-            if (this.href == pageUrl) { 
-                $(this).addClass("active");                
+            if (this.href == pageUrl) {
+                $(this).addClass("active");
                 $(this).parent().addClass("active"); // add active to li of the current link                 
                 $(this).parent().parent().addClass("in");
                 $(this).parent().parent().addClass("mm-show");
@@ -143,9 +234,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 $(this).parent().parent().parent().addClass("active");
                 $(this).parent().parent().parent().parent().addClass("mm-show"); // add active to li of the current link                
                 $(this).parent().parent().parent().parent().parent().addClass("mm-active");
-                var menu =  $(this).closest('.main-icon-menu-pane').attr('id');
-                $("a[href='#"+menu+"']").addClass('active');
-                
+                var menu = $(this).closest('.main-icon-menu-pane').attr('id');
+                $("a[href='#" + menu + "']").addClass('active');
+
             }
         });
     }
@@ -156,25 +247,25 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Auto complate
 
     function initAutoComplate() {
-        $(document).ready(function() {
+        $(document).ready(function () {
             BindControls();
         });
-    
+
         function BindControls() {
-            var Countries = ['Forms', 
-                'Tables', 
-                'Charts', 
+            var Countries = ['Forms',
+                'Tables',
+                'Charts',
                 'Icones',
                 'Maps'];
-    
+
             $('#AllCompo').autocomplete({
                 source: Countries,
                 minLength: 0,
                 scroll: true
-            }).focus(function() {
+            }).focus(function () {
                 $(this).autocomplete("search", "");
             });
-        } 
+        }
     }
 
 

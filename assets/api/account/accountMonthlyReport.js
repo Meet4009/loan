@@ -28,6 +28,33 @@ style.textContent = `
     .custom-alert.error {
         background-color: #dc3545;
     }
+    .custom-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        z-index: 2000;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        text-align: center;
+        max-width: 300px;
+    }
+    .custom-modal button {
+        margin: 10px;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        color: white;
+    }
+    .custom-modal .btn-yes {
+        background: #dc3545;
+    }
+    .custom-modal .btn-no {
+        background: #6c757d;
+    }
 `;
 document.head.appendChild(style);
 
@@ -41,6 +68,25 @@ const showAlert = (message, type = 'error') => {
         alertDiv.classList.remove('show');
         setTimeout(() => alertDiv.remove(), 300);
     }, 3000);
+};
+
+const showConfirm = (message, onYes, onNo) => {
+    const modal = document.createElement('div');
+    modal.className = 'custom-modal';
+    modal.innerHTML = `
+        <div style="margin-bottom: 10px;">${message}</div>
+        <button class="btn-yes">Yes</button>
+        <button class="btn-no">No</button>
+    `;
+    document.body.appendChild(modal);
+    modal.querySelector('.btn-yes').onclick = () => {
+        modal.remove();
+        if (onYes) onYes();
+    };
+    modal.querySelector('.btn-no').onclick = () => {
+        modal.remove();
+        if (onNo) onNo();
+    };
 };
 
 // ✅ Token check and redirect
@@ -155,7 +201,7 @@ function fetchMonthlyReport(startDate, endDate) {
                 button.addEventListener('click', () => {
                     const id = button.getAttribute('data-id');
 
-                    if (confirm("Are you sure you want to delete this data?")) {
+                    showConfirm("Are you sure you want to delete this data?", () => {
                         fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/account-delete/${id}`, {
                             method: 'DELETE',
                             headers: {
@@ -174,7 +220,7 @@ function fetchMonthlyReport(startDate, endDate) {
                             .catch(error => {
                                 showAlert(`Error deleting data: ${error.message}`, 'error');
                             });
-                    }
+                    });
                 });
             });
 

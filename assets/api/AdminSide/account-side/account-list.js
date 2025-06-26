@@ -29,8 +29,6 @@
             tbody.insertAdjacentHTML('beforeend', renderRow(item));
         });
 
-        attachEventListeners();
-
     } catch (err) {
         console.error("❌ Error:", err);
     }
@@ -108,37 +106,38 @@
         return `<button type="button" class="btn btn-outline-${btnClass}">${status}</button>`;
     }
 
-    function attachEventListeners() {
-        document.querySelectorAll('.update-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const id = btn.dataset.id;
-                window.location.href = `update-account.html?id=${id}`;
-            });
+
+    document.querySelectorAll('.update-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
+            window.location.href = `update-account.html?id=${id}`;
         });
+    });
 
-        document.querySelectorAll('.delete-btn').forEach(btn => {
-            btn.addEventListener('click', async () => {
-                const id = btn.dataset.id;
-                if (confirm("Are you sure you want to delete this data?")) {
-                    try {
-                        const res = await fetch(`${API_BASE}/account-delete/admin/${id}`, {
-                            method: "DELETE",
-                            headers: {
-                                "Accept": "application/json",
-                                "Authorization": `Bearer ${token}`
-                            }
-                        });
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const id = button.getAttribute('data-id');
 
-                        if (res.ok) {
-                            btn.closest("tr").remove(); // Remove row directly
-                        } else {
-                            alert("❌ Failed to delete record");
-                        }
-                    } catch (err) {
-                        console.error("❌ Delete error:", err);
+            showConfirm("Are you sure you want to delete this data?", () => {
+                fetch(`${API_BASE}/account-delete/admin/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem('token')}`
                     }
-                }
+                })
+                    .then(res => {
+                        if (!res.ok) throw new Error("Failed to delete");
+                        return res.json();
+                    })
+                    .then(() => {
+                        button.closest('tr').remove();
+                        showAlert("Deleted successfully!", "success");
+                    })
+                    .catch(() => {
+                        showAlert("❌ Failed to delete record", "error");
+                    });
             });
         });
-    }
+    });
 })();

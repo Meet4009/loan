@@ -20,6 +20,46 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Responsive tweaks for form */
+        @media (max-width: 991.98px) {
+            .form-group.row>label {
+                text-align: left !important;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .card.p-5 {
+                padding: 1rem !important;
+            }
+
+            .form-group.row {
+                flex-direction: row;
+                align-items: stretch;
+            }
+
+            .form-group.row>label,
+            .form-group.row>div {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .form-group.row>label {
+                margin-bottom: 0.5rem;
+            }
+
+            .btn,
+            .btn-sm {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+
+            .text-center.my-3>button {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
 
 </head>
 
@@ -147,7 +187,7 @@
 
         <!-- Page Content-->
         <div class="page-content">
-            <div class="container-fluid">
+            <div class="container-fluid px-2 px-md-4">
                 <!-- Page-Title -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -162,17 +202,18 @@
                 </div><!--end row-->
                 <!-- end page title end breadcrumb -->
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-12">
                         <div class="card p-5">
                             <div class="card-body">
                                 <form action="#" method="post" id="add_acc_data">
                                     <div class="row justify-content-end">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-6 col-md-12">
                                             <div class="form-group row">
                                                 <label
                                                     class="col-sm-3 col-form-label text-left text-sm-center">Bank</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control" name="bank" id="bank">
+                                                        <option selected></option>
                                                         <option>General</option>
                                                         <option>PRIVATE</option>
                                                         <option>BOB</option>
@@ -289,6 +330,7 @@
                                                     class="col-sm-3 col-form-label text-left text-sm-center">Status</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control" name="status" id="status">
+                                                        <option> </option>
                                                         <option>pending</option>
                                                         <option>completed</option>
                                                         <option>processing</option>
@@ -330,7 +372,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-6 col-md-12">
                                             <div class="form-group row">
                                                 <label for="example-text-input"
                                                     class="col-sm-3 col-form-label text-left text-sm-center">Remark
@@ -521,15 +563,12 @@
                                                         name="remark_3">
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-3 text-center"></div>
-                                                <div class="col-sm-9 text-center">
-                                                    <button type="submit" class="btn btn-primary px-5 py-2"
-                                                        id="accSubmitBtn">Submit</button>
-                                                    <button type="button" class="btn btn-danger px-5 py-2"
-                                                        id="cancelAccBtn">Cancel</button>
-                                                </div>
-                                            </div>
+                                        </div>
+                                        <div class="col-12 text-center my-3">
+                                            <button type="button" class="btn btn-primary px-5 py-2"
+                                                id="accSubmitBtn">Submit</button>
+                                            <button type="button" class="btn btn-danger px-5 py-2"
+                                                id="cancelBtn">Cancel</button>
                                         </div>
                                     </div>
                                 </form>

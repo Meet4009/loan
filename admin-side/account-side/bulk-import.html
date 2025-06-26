@@ -23,7 +23,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        @media (max-width: 991.98px) {
+            .page-title-box .row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
 
+        @media (max-width: 767.98px) {
+
+            .bg-white.p-5,
+            .upload-section.bg-white.p-5 {
+                padding: 1rem !important;
+                margin: 0.5rem !important;
+            }
+
+            .upload-box {
+                padding: 1rem !important;
+            }
+
+            .d-flex.justify-content-end.gap-2 {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.5rem !important;
+            }
+
+            .d-flex.justify-content-end.gap-2 button {
+                width: 100%;
+            }
+        }
+    </style>
 
 </head>
 
@@ -170,7 +200,8 @@
 
         <!-- Page Content-->
         <div class="page-content">
-            <div class="container-fluid">
+            <!-- Add Bootstrap responsive container -->
+            <div class="container-fluid px-2 px-md-4">
                 <!-- Page-Title -->
                 <div class="row">
                     <div class="col-sm-12">
@@ -179,7 +210,7 @@
                                 <div class="col">
                                     <h4 class="page-title">Bulk Import</h4>
                                 </div><!--end col-->
-                                <div class="col-auto align-self-center">
+                                <div class="col-auto ">
                                     <a href="add-login.html" class="btn btn-sm btn-outline-primary">
                                         <span class="day-name" id="Day_Name">Add Demo</span>
                                     </a>
@@ -190,46 +221,50 @@
                 </div><!--end row-->
                 <!-- end page title end breadcrumb -->
                 <div class="row">
-                    <div class="bg-white p-5 m-4 border-1 shadow-sm w-100" style="color: #8997bd">
-                        <h1 class="text-primary fs-2">Intructions:</h1>
-                        <ol class="mt-4" style="font-size: large;">
-                            <li>Download the format file and fill with proper date</li>
-                            <li>You can download the example file to understand how the date must be filled</li>
-                            <li>Once you downloaded and filled the format file upload in the from below and submit</li>
-                            <li>After uploading the data you need to edit them</li>
-                        </ol>
+                    <div class="col-12">
+                        <div class="bg-white p-5 m-4 border-1 shadow-sm w-100" style="color: #8997bd">
+                            <h1 class="text-primary fs-2">Intructions:</h1>
+                            <ol class="mt-4" style="font-size: large;">
+                                <li>Download the format file and fill with proper date</li>
+                                <li>You can download the example file to understand how the date must be filled</li>
+                                <li>Once you downloaded and filled the format file upload in the from below and submit</li>
+                                <li>After uploading the data you need to edit them</li>
+                            </ol>
+                        </div>
                     </div>
-
-                    <div class="upload-section bg-white p-5 m-4 border-1 shadow-sm w-100">
-                        <form class="upload-form w-80 mx-auto">
-                            <div class="mb-4">
-                                <div class="d-flex flex-column gap-3">
-                                    <div
-                                        class="upload-box p-4 border-2 border-dashed rounded-3 d-flex flex-column align-items-center justify-content-center bg-light">
-                                        <i class="fa-solid fa-cloud-arrow-up fa-3x text-primary"></i>
-                                        <p class="mb-2">Add a file here or <label for="fileUpload" class="text-primary">
+                    <div class="col-12">
+                        <div class="upload-section bg-white p-5 m-4 border-1 shadow-sm w-100">
+                            <form class="upload-form w-100 w-md-80 mx-auto">
+                                <div class="mb-4">
+                                    <div class="d-flex flex-column gap-3">
+                                        <div
+                                            class="upload-box p-4 border-2 border-dashed rounded-3 d-flex flex-column align-items-center justify-content-center bg-light">
+                                            <i class="fa-solid fa-cloud-arrow-up fa-3x text-primary"></i>
+                                            <p class="mb-2">Add a file here or <label for="fileUpload"
+                                                class="text-primary">
                                                 <input type="file" id="fileUpload" name="csv_file" class="d-none"
                                                     accept=".csv" />import</label> here</p>
-                                    </div>
-                                    <div class="selected-file d-none">
-                                        <div class="d-flex align-items-center p-3 bg-light rounded">
-                                            <i class="fas fa-file-excel text-primary me-3"></i>
-                                            <div class="flex-grow-1">
-                                                <p class="mb-0 filename">filename.xlsx</p>
-                                                <div class="progress mt-1" style="height: 2px;">
-                                                    <div class="progress-bar" role="progressbar" style="width: 0%">
+                                        </div>
+                                        <div class="selected-file d-none">
+                                            <div class="d-flex align-items-center p-3 bg-light rounded">
+                                                <i class="fas fa-file-excel text-primary me-3"></i>
+                                                <div class="flex-grow-1">
+                                                    <p class="mb-0 filename">filename.xlsx</p>
+                                                    <div class="progress mt-1" style="height: 2px;">
+                                                        <div class="progress-bar" role="progressbar" style="width: 0%">
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <button type="button" class="btn-close ms-3"></button>
                                             </div>
-                                            <button type="button" class="btn-close ms-3"></button>
                                         </div>
                                     </div>
                                 </div>
+                            </form>
+                            <div class="d-flex justify-content-end gap-2 mt-3">
+                                <button type="button" class="btn btn-primary px-5 py-2" id="submitCsv">Submit</button>
+                                <button type="reset" class="btn btn-danger mx-md-2 px-5 py-2" id="cancelCsv">Cancel</button>
                             </div>
-                        </form>
-                        <div class="d-flex justify-content-end gap-2">
-                            <button type="button" class="btn btn-primary" id="submitCsv">Submit</button>
-                            <button type="reset" class="btn btn-danger mx-2" id="cancelCsv">Cancel</button>
                         </div>
                     </div>
                 </div> <!-- end row -->
@@ -238,6 +273,7 @@
 
         </div>
         <!-- end page content -->
+
 
         <!-- jQuery  -->
         <script src="../../assets/js/jquery.min.js"></script>

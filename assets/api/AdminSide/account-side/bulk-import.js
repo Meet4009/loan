@@ -1,52 +1,56 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '../index.html';
+        return;
+    }
 
-// bulk inport
-const token = localStorage.getItem("token"); // Replace with actual token logic if needed
-if (!token) {
-    window.location.href = "../index.html";
-}
+    const baseUrl = 'https://loantest.innovatixtechnologies.com/account/example-app/public/api/';
+    const fileInput = document.getElementById('fileUpload');
+    const submitBtn = document.getElementById('submitCsv');
+    const cancelBtn = document.getElementById('cancelCsv');
 
-document.addEventListener("DOMContentLoaded", function () {
-    const fileInput = document.getElementById("fileUpload");
-    const submitBtn = document.getElementById("submitCsv");
+    // Handle CSV submission
+    if (submitBtn && fileInput) {
+        submitBtn.addEventListener('click', async () => {
+            const file = fileInput.files[0];
+            if (!file) {
+                showAlert('Please select a CSV file before submitting.', 'error');
+                return;
+            }
 
-    submitBtn.addEventListener("click", function () {
-        const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('csv_file', file);
 
-        if (!file) {
-            alert("Please select a CSV file before submitting.");
-            return;
-        }
+            try {
+                const response = await fetch(`${baseUrl}import-csv/admin`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
 
-        const formData = new FormData();
-        formData.append("csv_file", file);
-
-        fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api/import-csv/admin", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${token}`
-            },
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message) {
-                    alert(data.message);
-                    window.location.href = "index.html"; // Redirect to list page
+                const data = await response.json();
+                if (response.ok) {
+                    showAlert(`✅ ${data.message || 'CSV uploaded successfully!'}`, 'success');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1200);
                 } else {
-                    alert("Upload completed with no message.");
+                    const errorMsg = data.errors?.length > 0 ? data.errors.join(', ') : data.message || 'Unknown error';
+                    throw new Error(errorMsg);
                 }
+            } catch (error) {
+                showAlert(`Upload failed: ${error.message}`, 'error');
+            }
+        });
+    }
 
-                if (data.errors && data.errors.length > 0) {
-                    throw new Error("Errors:", data.errors);
-                }
-            })
-            .catch(error => {
-                throw new Error("Upload failed:", error);
-            });
-    });
-
-
-    document.getElementById('cancelCsv').addEventListener('click', function () {
-        window.location.reload();
-    });
+    // Handle cancel button
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+    }
 });

@@ -1,7 +1,7 @@
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', function () {
+    
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
-
     if (!id) return;
 
     const token = localStorage.getItem('token');
@@ -10,101 +10,108 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    const apiBase = "https://loantest.innovatixtechnologies.com/account/example-app/public/api";
-
-    // Helper: set form field by ID
-    const setValue = (id, value) => {
-        const el = document.getElementById(id);
-        if (el) el.value = value ?? "";
-    };
-
-    // Helper: set dropdown option by text
-    const setSelectByText = (selectId, text) => {
-        const select = document.getElementById(selectId);
-        if (!select) return;
-        [...select.options].forEach(option => {
-            if (option.text === text) select.value = option.value;
-        });
-    };
-
     // Fetch existing data
-    try {
-        const res = await fetch(`${apiBase}/account/admin/${id}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Accept': 'application/json'
+    fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/account/admin/${id}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                showAlert(`Error: HTTP ${response.status}`, 'error');
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
+            return response.json();
+        })
+        .then(response => {
+            if (!response || !response.data) {
+                showAlert('Invalid data received from server.', 'error');
+                throw new Error('Invalid data structure received');
+            }
+
+            const data = response.data;
+
+            try {
+                if (data.bank) {
+                    const bankSelect = document.getElementById("bank");
+                    Array.from(bankSelect.options).forEach(option => {
+                        if (option.text === data.bank) {
+                            bankSelect.value = option.value;
+                        }
+                    });
+                }
+
+                const fields = [
+                    "file_no", "date", "f_number", "mo_no", "party_name", "project_name", "product",
+                    "bhl_to", "top_up", "total", "total_fees", "ap_1", "remark_payment", "ap_1_date",
+                    "status", "pf", "remark", "pf_parat", "pf_parat_date", "payment_2", "payment_2_date",
+                    "payment_3", "payment_3_date", "kasar", "payment_baki", "morgej_parat",
+                    "morgej_parat_date", "m_cal", "m_diff", "stamp", "agreement_parat",
+                    "agreement_parat_date", "payout_amount", "payout_date", "payout_remark",
+                    "ap_parat", "ap_parat_date", "remark_1", "remark_2", "remark_3"
+                ];
+
+                fields.forEach(field => {
+                    if (document.getElementById(field)) {
+                        document.getElementById(field).value = data[field] || '  -  ' ;
+                    }
+                });
+
+            } catch (err) {
+                showAlert(`Error populating form: ${err.message}`, 'error');
+            }
+
+        })
+        .catch(error => {
+            showAlert(`Error fetching data: ${error.message}`, 'error');
         });
 
-        if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
-        const { data } = await res.json();
-        if (!data) throw new Error('No data received');
-
-        // Fill form
-        setSelectByText("bank", data.bank);
-        [
-            "file_no", "date", "f_number", "mo_no", "party_name", "project_name",
-            "product", "bhl_to", "top_up", "total", "total_fees", "ap_1",
-            "remark_payment", "ap_1_date", "status", "pf", "remark", "pf_parat",
-            "pf_parat_date", "payment_2", "payment_2_date", "payment_3", "payment_3_date",
-            "kasar", "payment_baki", "morgej_parat", "morgej_parat_date",
-            "m_cal", "m_diff", "stamp", "agreement_parat", "agreement_parat_date",
-            "payout_amount", "payout_date", "payout_remark",
-            "ap_parat", "ap_parat_date", "remark_1", "remark_2", "remark_3"
-        ].forEach(field => setValue(field, data[field]));
-
-    } catch (err) {
-        console.error("Failed to fetch data:", err);
-        alert("Failed to load data.");
-    }
-
-    // Handle form update
-    document.getElementById('updateAccData').addEventListener('click', async (e) => {
+    // Handle form submission
+    document.getElementById('updateAccData').addEventListener('click', function (e) {
         e.preventDefault();
 
-        // Collect form data dynamically
         const formData = { id };
         [
-            "bank", "file_no", "date", "f_number", "mo_no", "party_name",
-            "project_name", "product", "bhl_to", "top_up", "total", "total_fees",
-            "ap_1", "remark_payment", "ap_1_date", "status", "pf", "remark",
-            "pf_parat", "pf_parat_date", "payment_2", "payment_2_date",
-            "payment_3", "payment_3_date", "kasar", "payment_baki",
-            "morgej_parat", "morgej_parat_date", "m_cal", "m_diff",
-            "stamp", "agreement_parat", "agreement_parat_date",
-            "payout_amount", "payout_date", "payout_remark",
-            "ap_parat", "ap_parat_date", "remark_1", "remark_2", "remark_3"
-        ].forEach(field => formData[field] = document.getElementById(field)?.value || '  -  ' );
+            "bank", "file_no", "date", "f_number", "mo_no", "party_name", "project_name", "product",
+            "bhl_to", "top_up", "total", "total_fees", "ap_1", "remark_payment", "ap_1_date",
+            "status", "pf", "remark", "pf_parat", "pf_parat_date", "payment_2", "payment_2_date",
+            "payment_3", "payment_3_date", "kasar", "payment_baki", "morgej_parat",
+            "morgej_parat_date", "agreement_parat", "agreement_parat_date", "m_cal", "m_diff",
+            "stamp", "payout_amount", "payout_date", "payout_remark", "ap_parat", "ap_parat_date",
+            "remark_1", "remark_2", "remark_3"
+        ].forEach(field => {
+            formData[field] = document.getElementById(field)?.value || '  -  ' ;
+        });
 
-        try {
-            const res = await fetch(`${apiBase}/account-edit/admin/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(formData)
+        fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/account-edit/admin/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Data updated successfully') {
+                    showAlert('Data updated successfully!', 'success');
+                    setTimeout(() => {
+                        window.history.back();
+                    }, 1000);
+                } else {
+                    showAlert(`Failed to update: ${data.message || 'Unknown error'}`, 'error');
+                }
+            })
+            .catch(error => {
+                showAlert(`Error updating data: ${error.message}`, 'error');
             });
-
-            const result = await res.json();
-
-            if (result.message === 'Data updated successfully') {
-                window.location.href = "index.html";
-            } else {
-                alert(result.message || "Failed to update data");
-            }
-
-        } catch (err) {
-            console.error("Update failed:", err);
-            alert("Error updating data.");
-        }
     });
 
     // Cancel button
-    document.getElementById("cancelUpdate").addEventListener("click", () => {
+    document.getElementById("cancelUpdate").addEventListener("click", function () {
         window.location.href = "index.html";
     });
 });
-
-
