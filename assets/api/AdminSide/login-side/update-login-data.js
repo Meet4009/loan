@@ -9,8 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
         window.location.href = '../index.html';
         return;
     }
-    // Add this fetch request right before the DOMContentLoaded event
-
     // Fetch existing data
     fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/loginside-show/admin/${id}`, {
         method: 'GET',
@@ -21,9 +19,11 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(response => {
             if (!response.ok) {
+                showAlert(`HTTP error!`, "error");
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             if (response.headers.get('content-length') === '0') {
+                showAlert('Empty response received', "error");
                 throw new Error('Empty response received');
             }
             return response.json();
@@ -31,11 +31,12 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => {
 
             if (!response || !response.data) {
+                showAlert('Invalid data structure received', "error");
                 throw new Error('Invalid data structure received');
             }
-            
-            const yesRadio = document.querySelector('input[value="true"]');
-            const noRadio = document.querySelector('input[value="false"]');
+
+            const sessionbutton = document.querySelector('#sensionToggle');
+            const slider = document.getElementById('sensionLabel');
 
             const data = response.data;
             try {
@@ -64,29 +65,33 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById("refrence").value = data.refrence;
                 document.getElementById("builder_name").value = data.builder_name;
                 document.getElementById("rlf").value = data.rlf
-
+                console.log(data.session);
+                
                 if (data.session === 1) {
-                    yesRadio.checked = true;
-                    noRadio.checked = false;
+                    sessionbutton.checked = true;
+                    document.getElementById("sensionValue").value = "true";
+                    slider.textContent = 'Yes';
                 }
                 else {
-                    yesRadio.checked = false;
-                    noRadio.checked = true;
+                    sessionbutton.checked = false;
+                    document.getElementById("sensionValue").value = "false";
+                    slider.textContent = 'No';
                 }
-                
+
             } catch (err) {
+                showAlert('Error populating form', "error");
                 throw new Error('Error populating form:', err);
             }
         })
         .catch(error => {
-            throw new Error('Error:', error);
+            showAlert('Error fetching data', "error");
         });
 
     // Handle form submission
     document.getElementById('updateLoginData').addEventListener('click', async function (e) {
         e.preventDefault();
-        
-        const sensionValue = document.querySelector('input[name="sension"]:checked').value == "true"
+
+        const sensionValue = document.querySelector('#sensionValue')?.value === "true" ? true : false
 
         const formData = {
             date: document.getElementById("date")?.value,
@@ -105,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
             b: document.getElementById("b")?.value,
             tcr_vr: document.getElementById("tcr_vr")?.value,
             fi: document.getElementById("fi")?.value,
-            submit: document.getElementById("submitValue")?.value,
+            submit: document.getElementById("submit")?.value,
             mitesh: document.getElementById("mitesh")?.value,
             book: document.getElementById("book")?.value,
             hg: document.getElementById("hg")?.value,
@@ -116,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
             rlf: document.getElementById("rlf")?.value,
             session: sensionValue
         };
-        
+
         // Update fetch request with better error handling
         fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/loginside/admin/${id}`, {
             method: 'PUT',
@@ -127,18 +132,19 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify(formData)
         })
-        
-       .then(response => response.json())
+            .then(response => response.json())
             .then(data => {
                 if (data.message === 'Data updated successfully') {
-                    window.location.href = 'index.html';
+                    showAlert('✅ Data updated successfully!', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1200);
                 } else {
-                    throw new Error(data.message || 'Failed to update data');
+                    showAlert(data.message || 'Failed to update data', "error");
                 }
             })
-
             .catch(error => {
-                console.error('Error updating data:', error);
+                showAlert('Error updating data', "error");
             });
     });
 });

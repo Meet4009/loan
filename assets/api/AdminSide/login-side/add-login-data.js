@@ -6,8 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector('#loginForm').addEventListener('submit', async function (e) {
         e.preventDefault(); // prevent default form submission
 
-
-        const sensionValue = document.querySelectorAll('input[value="true"]:checked') ? true : false
+        const sensionValue = document.querySelector('#sensionValue')?.value === "true" ? true : false
 
         const data = {
             date: document.getElementById("date")?.value,
@@ -50,12 +49,15 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
 
             if (response.ok) {
-                window.location.href = "index.html";
+                showAlert('✅ Data inserted successfully!', 'success');
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 1200);
             } else {
-                throw new Error("❌ Failed to insert:", result.message || "Unknown error");
+                showAlert(result.message || "❌ Failed to insert.", "error");
             }
         } catch (err) {
-            throw new Error("Error:", err);
+            showAlert("❌ Error occurred while inserting data.", "error");
         }
     });
 });

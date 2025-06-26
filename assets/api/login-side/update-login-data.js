@@ -1,50 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Add CSS for custom alerts
-    const style = document.createElement('style');
-    style.textContent = `
-        .custom-alert {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-10px);
-            z-index: 1000;
-            padding: 15px 20px;
-            border-radius: 5px;
-            min-width: 200px;
-            max-width: 300px;
-            color: white;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        .custom-alert.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-        .custom-alert.success {
-            background-color: #28a745;
-        }
-        .custom-alert.error {
-            background-color: #dc3545;
-        }
-    `;
-    document.head.appendChild(style);
-
-    // Function to show custom alert
-    const showAlert = (message, type = 'error') => {
-        const alertDiv = document.createElement('div');
-        alertDiv.className = `custom-alert ${type}`;
-        alertDiv.textContent = message;
-        document.body.appendChild(alertDiv);
-        setTimeout(() => alertDiv.classList.add('show'), 10);
-        setTimeout(() => {
-            alertDiv.classList.remove('show');
-            setTimeout(() => alertDiv.remove(), 300);
-        }, 3000);
-    };
-
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
     if (!id) {
@@ -65,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(response => {
             if (!response.ok) {
-                showAlert(`HTTP error! status: ${response.status}`, "error");
+                showAlert(`HTTP error!`, "error");
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             if (response.headers.get('content-length') === '0') {
@@ -156,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
             b: document.getElementById("b")?.value,
             tcr_vr: document.getElementById("tcr_vr")?.value,
             fi: document.getElementById("fi")?.value,
-            submit: document.getElementById("submitValue")?.value,
+            submit: document.getElementById("submit")?.value,
             mitesh: document.getElementById("mitesh")?.value,
             book: document.getElementById("book")?.value,
             hg: document.getElementById("hg")?.value,
