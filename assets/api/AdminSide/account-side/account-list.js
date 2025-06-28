@@ -41,7 +41,7 @@
             <td>${item.date || ' - '}</td>
             <td>
             <div class="button-items">
-                <button type="button" class="btn btn-outline-info btn-icon-circle-sm update-btn" data-id="${item.id}">
+                <button type="button" class="btn btn-outline-info btn-icon-circle-sm update-btn" data-id="${item.id}"data-back="index" >
                     <i class="fa-solid fa-pen"></i>
                 </button>
                 <button type="button" class="btn btn-outline-danger btn-icon-circle-sm delete-btn" data-id="${item.id}">
@@ -110,6 +110,7 @@
     document.querySelectorAll('.update-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const id = btn.dataset.id;
+            localStorage.setItem("back", btn.dataset.back);
             window.location.href = `update-account.html?id=${id}`;
         });
     });

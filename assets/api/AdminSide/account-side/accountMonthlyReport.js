@@ -48,7 +48,7 @@ function fetchMonthlyReport(startDate, endDate) {
                 <td>${item.date || ''}</td>
                 <td>
                     <div class="button-items">
-                        <button type="button" class="btn btn-outline-info btn-icon-circle-sm update-btn" data-id="${item.id}"><i class="fa-solid fa-pen"></i></button>
+                        <button type="button" class="btn btn-outline-info btn-icon-circle-sm update-btn" data-id="${item.id}" data-back="monthly-report"><i class="fa-solid fa-pen"></i></button>
                         <button type="button" class="btn btn-outline-danger btn-icon-circle-sm delete-btn" data-id="${item.id}"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </td>
@@ -138,6 +138,7 @@ function fetchMonthlyReport(startDate, endDate) {
             document.querySelectorAll('.update-btn').forEach(button => {
                 button.addEventListener('click', () => {
                     const id = button.getAttribute('data-id');
+                    localStorage.setItem("back", btn.dataset.back);
                     window.location.href = `update-account.html?id=${id}`;
                 });
             });

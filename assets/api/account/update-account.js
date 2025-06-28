@@ -99,7 +99,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.message === 'Data updated successfully') {
                     showAlert('Data updated successfully!', 'success');
                     setTimeout(() => {
-                        window.history.back();
+                        const backPage = localStorage.getItem("back") || 'index';
+                        if (backPage === 'index') {
+                            window.location.href = "index.html";
+                        }
+                        else {
+                            window.location.href= `${backPage}.html`;
+                        }
                     }, 1000);
                 } else {
                     showAlert(`Failed to update: ${data.message || 'Unknown error'}`, 'error');
