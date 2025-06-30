@@ -1,5 +1,6 @@
 const token = localStorage.getItem("token");
 if (!token) {
+    showAlert("Please log in again.", "error");
     window.location.href = "../index.html"; // Redirect if no token
 }
 document.addEventListener("DOMContentLoaded", function () {
@@ -78,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 }
                             })
                             .catch(() => {
-                                showAlert("❌ Error deleting data.", "error");
+                                showAlert("Error deleting data.", "error");
                             });
                     });
                 });

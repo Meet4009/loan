@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const token = localStorage.getItem("token");
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = "index.html" // Redirect if no token
         return;
     }
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Try to parse the response as JSON
                 const data = JSON.parse(rawResponse);
                 if (!response.ok) {
-                    showAlert(`HTTP error! status: ${response.status}`, "error");
+                    (`HTTP error! status: ${response.status}`, "error");
                     return Promise.reject();
                 }
                 return data;

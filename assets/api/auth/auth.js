@@ -67,10 +67,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Optional: Clear registration form
                 e.target.reset();
             } else {
-                alert('❌ Registration failed: ' + (result.message || 'Unknown error'));
+                alert('Registration failed: ' + (result.message || 'Unknown error'));
             }
         } catch (error) {
-            alert('❌ Network error: ' + error.message);
+            alert('Network error: ' + error.message);
             console.error('Error:', error);
         }
     });
@@ -112,10 +112,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     window.location.href = '../account-side/index.html'; // Default fallback
                 }
             } else {
-                alert(`❌ Login failed: ${data.message || 'Invalid credentials'}`);
+                alert(`Login failed: ${data.message || 'Invalid credentials'}`);
             }
         } catch (err) {
-            alert('❌ Network error: ' + err.message);
+            alert('Network error: ' + err.message);
             console.error(err);
         }
     });

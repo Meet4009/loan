@@ -1,15 +1,10 @@
 
 
-/**
- * Theme: Crovex - Responsive Bootstrap 4 Admin Dashboard
- * Author: Mannatthemes
- * Module/App: Main Js
- */
-
 
 document.addEventListener("DOMContentLoaded", async function () {
     const token = localStorage.getItem('token'); // 🔁 Replace with your actual Bearer token
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = "index.html" // Redirect to login page
         return;
     }

@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const token = localStorage.getItem('token'); // 🔁 Replace with your actual Bearer token
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = "../index.html"; // Redirect to login page
         return;
     }
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (response.ok && result.status) {
             const user = result.user;
             console.log(user);
-            
+
 
             // Update DOM elements
             document.getElementById("user-name").textContent = user.name;
@@ -110,7 +111,7 @@ document.getElementById("updateProfileForm").addEventListener("submit", async fu
             showAlert("Profile updated successfully!", "success");
             setTimeout(() => window.location.reload(), 1200);
         } else {
-            showAlert(result.message || "❌ Failed to update.", "error");
+            showAlert("Failed to update.", "error");
         }
     } catch (error) {
         showAlert("Network Error while updating profile.", "error");
@@ -135,7 +136,7 @@ document.getElementById("logout-btn").addEventListener("click", async function (
             showAlert("Logged out successfully!", "success");
             setTimeout(() => window.location.href = "/index.html", 1200);
         } else {
-            showAlert(result.message || "Logout failed.", "error");
+            showAlert("Logout failed.", "error");
         }
     } catch (error) {
         showAlert("Logout error.", "error");

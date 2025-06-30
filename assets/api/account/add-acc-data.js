@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const token = localStorage.getItem('token');
     if (!token) {
+
+        showAlert("Please log in again.", "error");
         window.location.href = '../index.html';
         return;
     }
@@ -66,15 +68,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const result = await response.json();
                 if (response.ok) {
-                    showAlert('✅ Account created successfully!', 'success');
+                    showAlert('Account created successfully!', 'success');
                     setTimeout(() => {
                         window.location.href = 'index.html';
                     }, 1200);
                 } else {
-                    showAlert(result.message || 'Failed to create account', 'error');
+                    showAlert('Failed to create account', 'error');
                 }
             } catch (error) {
-                showAlert(`❌ Error creating account: ${error && error.message ? error.message : ''}`, 'error');
+                showAlert(`Error creating account`, 'error');
             }
         });
     }

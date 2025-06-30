@@ -1,5 +1,6 @@
 const token = localStorage.getItem("token");
 if (!token) {
+    showAlert("Please log in again.", "error");
     window.location.href = "index.html" // Redirect to login page
 }
 
@@ -118,10 +119,10 @@ document.querySelector('#other-data-add').addEventListener('click', async functi
                 window.location.href = "other.html";
             }, 1000);
         } else {
-            showAlert("❌ Error: " + (result.message || ""), "error");
+            showAlert("Data submit in Error", "error");
         }
     } catch (err) {
-        showAlert("❌ Network error", "error");
+        showAlert("Network error", "error");
     }
 });
 

@@ -1,6 +1,7 @@
 
 const token = localStorage.getItem("token");
 if (!token) {
+    showAlert("Please log in again.", "error");
     // Optionally redirect to login page
     window.location.href = '../login.html';
 }

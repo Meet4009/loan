@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const newRoles = response.data.filter(item => !existingRoles.includes(item.name.toLowerCase()));
             newRoles.forEach(item => roleSelect.add(new Option(item.name, item.name)));
         })
-        .catch(error => showAlert(`Failed to load roles: ${error.message}`, 'error'));
+        .catch(error => showAlert(`Failed to load roles: `, 'error'));
 
     // Handle login form submission
     const form = document.querySelector('#login-tab-pane form');
@@ -51,12 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     window.location.href = '../role-account/index.html';
                 }
-                showAlert('✅ Login successful!', 'success');
+                showAlert('Login successful!', 'success');
             } else {
-                showAlert(`Login failed: ${data.message || 'Invalid credentials'}`, 'error');
+                showAlert(`Login failed: 'Invalid credentials'}`, 'error');
             }
         } catch (error) {
-            showAlert(`Network error: ${error.message}`, 'error');
+            showAlert(`server error`, 'error');
         }
     });
 });

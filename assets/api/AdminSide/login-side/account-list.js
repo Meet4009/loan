@@ -1,6 +1,7 @@
 // Replace with your actual Bearer token received from login
 const token = localStorage.getItem("token");
 if (!token) {
+    showAlert("Please log in again.", "error");
     // Optionally redirect to login page
     window.location.href = "../index.html";
 
@@ -91,5 +92,5 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
         });
     })
     .catch(error => {
-        showAlert("❌ Error fetching account list", "error");
+        showAlert("Error fetching account list", "error");
     });

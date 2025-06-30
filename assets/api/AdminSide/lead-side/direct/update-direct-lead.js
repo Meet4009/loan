@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = 'index.html';
         return;
     }
@@ -206,13 +207,6 @@ async function handleFormSubmission(e) {
         loan_fees: getNumericValue('loan_fees'),
         follow_up: followUps
     };
-
-
-    if (!updateData.date || !updateData.party_name || !updateData.party_mono || !updateData.property_name) {
-        showAlert('Please fill all required fields', 'error');
-        return;
-    }
-
     try {
         const apiUrl = `https://loantest.innovatixtechnologies.com/account/example-app/public/api/form-update/admin/${id}`;
 
@@ -234,10 +228,10 @@ async function handleFormSubmission(e) {
                 window.location.href = 'index.html';
             }, 1200);
         } else {
-            showAlert(result.message || 'Update failed', 'error');
+            showAlert('Update failed', 'error');
         }
     } catch (error) {
-        showAlert('Error updating lead: ' + error.message, 'error');
+        showAlert('Error updating lead: ', 'error');
     }
 }
 

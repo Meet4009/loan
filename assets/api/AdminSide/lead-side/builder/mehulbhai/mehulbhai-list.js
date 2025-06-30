@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const token = localStorage.getItem("token");
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = "index.html" // Redirect if no token
         return;
     }
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Try to parse the response as JSON
                 const data = JSON.parse(rawResponse);
                 if (!response.ok) {
-                    showAlert(`HTTP error! status: ${response.status}`, "error");
+                    showAlert("faild to fatch data", "error");
                     return Promise.reject();
                 }
                 return data;
@@ -148,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         })
         .catch(error => {
-            showAlert("Error fetching data: " + error.message, "error");
+            showAlert("Error fetching data: ", "error");
             tbody.innerHTML = `<tr><td colspan="15" class="text-center">Error loading data. Please check your connection and try again. (${error.message})</td></tr>`;
 
             // If token is invalid, redirect to login

@@ -4,6 +4,7 @@
     const userRole = localStorage.getItem("userRole");
 
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = "../index.html";
         return;
     }
@@ -20,7 +21,7 @@
         });
 
         if (!response.ok) {
-            showAlert("❌ Failed to load data", "error");
+            showAlert("Failed to load data", "error");
             return;
         }
 
@@ -34,7 +35,7 @@
         attachButtonEventListeners();
 
     } catch (err) {
-        showAlert("❌ Error loading data", "error");
+        showAlert("Error loading data", "error");
     }
 
     function renderTableRow(item) {
@@ -143,7 +144,7 @@ async function handleRoleBasedAction(role, id, action, button = null) {
         const matchedRole = data.find(item => item.name === role);
 
         if (!matchedRole) {
-            showAlert("❌ Role not found", "error");
+            showAlert("Role not found", "error");
             return;
         }
 
@@ -161,13 +162,13 @@ async function handleRoleBasedAction(role, id, action, button = null) {
                 showAlert("Invalid action", "error");
         }
     } catch (error) {
-        showAlert("❌ Failed to load roles", "error");
+        showAlert("Failed to load roles", "error");
     }
 }
 
 function handleAddAccount(role) {
     if (role.permissions[0].can_add === 0) {
-        showAlert("❌ You don't have permission to add data", "error");
+        showAlert("You don't have permission to add data", "error");
         return;
     }
     window.location.href = "adddata.html";
@@ -175,7 +176,7 @@ function handleAddAccount(role) {
 
 function handleUpdateAccount(role, id) {
     if (role.permissions[0].can_update === 0) {
-        showAlert("❌ You don't have permission to update data", "error");
+        showAlert("You don't have permission to update data", "error");
         return;
     }
     window.location.href = `update-account.html?id=${id}`;
@@ -183,7 +184,7 @@ function handleUpdateAccount(role, id) {
 
 async function handleDeleteAccount(role, id, button) {
     if (role.permissions[0].can_delete === 0) {
-        showAlert("❌ You don't have permission to delete data", "error");
+        showAlert("You don't have permission to delete data", "error");
         return;
     }
 
@@ -195,7 +196,7 @@ async function handleDeleteAccount(role, id, button) {
         return;
     }
     if (!token) {
-        showAlert("No authentication token found", "error");
+        showAlert("Please log in again.", "error");
         return;
     }
 
@@ -211,13 +212,13 @@ async function handleDeleteAccount(role, id, button) {
 
             if (response.ok) {
                 button.closest("tr").remove(); // Remove row dynamically
-                showAlert("✅ Record deleted successfully", "success");
+                showAlert("Record deleted successfully", "success");
             } else {
                 const errorData = await response.json();
-                showAlert(`❌ Failed to delete record: ${errorData.message || "Unknown error"}`, "error");
+                showAlert(`Failed to delete record`, "error");
             }
         } catch (error) {
-            showAlert(`❌ Error: ${error.message}`, "error");
+            showAlert(`Error: ${error.message}`, "error");
         }
     };
 

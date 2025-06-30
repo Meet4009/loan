@@ -1,5 +1,6 @@
 const token = localStorage.getItem("token");
 if (!token) {
+    showAlert("Please log in again.", "error");
     window.location.href = "index.html" // Redirect to login page
 }
 
@@ -114,16 +115,16 @@ document.querySelector('#Agent-data-add').addEventListener('click', async functi
         const result = await response.json();
 
         if (response.ok) {
-            showAlert("✅ Agent added successfully", "success");
+            showAlert("Agent added successfully", "success");
             setTimeout(() => {
 
                 window.location.href = "agent.html"; // Redirect to agent list page
             }, 1200);
         } else {
-            showAlert(result.message || "An error occurred.", "error");
+            showAlert("faild to fatch data", "error");
         }
     } catch (err) {
-        showAlert("❌ Network error", "error");
+        showAlert("Network error", "error");
     }
 });
 

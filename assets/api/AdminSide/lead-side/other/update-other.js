@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = 'index.html';
         return;
     }
@@ -163,6 +164,7 @@ async function handleFormSubmission(e) {
     // Validate token
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         showAlert('Please login again', 'error');
         window.location.href = 'other.html';
         return;
@@ -226,7 +228,7 @@ async function handleFormSubmission(e) {
         const data = await response.json();
 
         if (!response.ok) {
-            showAlert(data.message || 'Update failed', 'error');
+            showAlert('Update failed', 'error');
             return;
         }
 

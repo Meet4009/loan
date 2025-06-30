@@ -28,10 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 form.reset();
                 showAlert('Registration successful!', 'success');
             } else {
-                showAlert(`Registration failed: ${result.message || 'Unknown error'}`, 'error');
+                showAlert(`Registration failed 'Unknown error'}`, 'error');
             }
         } catch (error) {
-            showAlert(`Network error: ${error.message}`, 'error');
+            showAlert(`Network error`, 'error');
         }
     });
 });

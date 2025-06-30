@@ -113,10 +113,10 @@ document.getElementById('submitBtn').addEventListener('click', async function (e
                 window.location.href = "index.html";
             }, 1200);
         } else {
-            showAlert(result.message || "❌ Failed to insert.", "error");
+            showAlert("Failed to insert.", "error");
         }
     } catch (err) {
-        showAlert("❌ Error occurred while submitting data.", "error");
+        showAlert("Error occurred while submitting data.", "error");
     }
 });
 

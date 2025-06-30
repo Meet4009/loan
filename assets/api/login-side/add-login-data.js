@@ -1,5 +1,6 @@
 const token = localStorage.getItem("token");
 if (!token) {
+    showAlert("Please log in again.", "error");
     window.location.href = "../index.html"; // Redirect if no token
 }
 document.addEventListener("DOMContentLoaded", function () {
@@ -49,15 +50,15 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
 
             if (response.ok) {
-                showAlert('✅ Data inserted successfully!', 'success');
+                showAlert('Data inserted successfully!', 'success');
                 setTimeout(() => {
                     window.location.href = "index.html";
                 }, 1200);
             } else {
-                showAlert(result.message || "❌ Failed to insert.", "error");
+                ("Failed to insert.", "error");
             }
         } catch (err) {
-            showAlert("❌ Error occurred while inserting data.", "error");
+            ("Error occurred while inserting data.", "error");
         }
     });
 });

@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = 'index.html';
         return;
     }
@@ -250,7 +251,7 @@ async function handleFormSubmission(e) {
                 window.location.href = 'index.html';
             }, 1200);
         } else {
-            showAlert(result.message || 'Failed to update agent', 'error');
+            showAlert('Failed to update agent', 'error');
         }
     } catch (error) {
         showAlert('Error updating agent', 'error');

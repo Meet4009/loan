@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const token = localStorage.getItem("token");
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = "index.html" // Redirect if no token
         return;
     }
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Try to parse the response as JSON
                 const data = JSON.parse(rawResponse);
                 if (!response.ok) {
-                    showAlert(`HTTP error! status: ${response.status}`, "error");
+                    showAlert("faild to fatch data", "error");
                     return Promise.reject();
                 }
                 return data;
@@ -118,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     window.location.reload();
                                 }, 1000);
                             } else {
-                                showAlert(result.message || 'Delete failed', "error");
+                                showAlert('Delete failed', "error");
                             }
                         } catch (error) {
                             showAlert('Delete error', "error");

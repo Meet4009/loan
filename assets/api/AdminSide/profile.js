@@ -2,6 +2,7 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const token = localStorage.getItem('token'); // 🔁 Replace with your actual Bearer token
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = "../index.html"; // Redirect to login page
         return;
     }
@@ -29,10 +30,10 @@ document.addEventListener("DOMContentLoaded", async function () {
             // document.getElementById("detail-email").textContent = userEmail;
             // document.getElementById("detail-mobile").textContent = user.mobile_number;
         } else {
-            showAlert(result.message || "Failed to fetch profile data");
+            showAlert("Failed to fetch profile data", "error");
         }
     } catch (error) {
-        showAlert("Error fetching profile data");
+        showAlert("Error fetching profile data", "error");
     }
 });
 // Logout functionality
@@ -53,10 +54,10 @@ document.getElementById("logout-btn").addEventListener("click", async function (
             localStorage.removeItem("token");
             window.location.href = "index.html";
         } else {
-            showAlert(result.message || "Logout failed");
+            showAlert("Logout failed", "error");
         }
     } catch (error) {
-        showAlert("Logout error");
+        showAlert("Logout error", "error");
     }
 });
 

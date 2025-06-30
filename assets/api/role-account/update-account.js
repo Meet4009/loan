@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = "../index.html";
         return;
     }
@@ -37,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (!res.ok) {
-            showAlert(`HTTP error: ${res.status}`, 'error');
+            showAlert('faild to fatch data', 'error');
             return;
         }
         const { data } = await res.json();
@@ -79,7 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             "stamp", "agreement_parat", "agreement_parat_date",
             "payout_amount", "payout_date", "payout_remark",
             "ap_parat", "ap_parat_date", "remark_1", "remark_2", "remark_3"
-        ].forEach(field => formData[field] = document.getElementById(field)?.value || '  -  ' );
+        ].forEach(field => formData[field] = document.getElementById(field)?.value || '  -  ');
 
         try {
             const res = await fetch(`${apiBase}/account-editper/${id}`, {
@@ -97,7 +98,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (result.message === 'Data updated successfully') {
                 window.location.href = "index.html";
             } else {
-                showAlert(result.message || "Failed to update data", 'error');
+                showAlert("Failed to update data", 'error');
             }
 
         } catch (err) {

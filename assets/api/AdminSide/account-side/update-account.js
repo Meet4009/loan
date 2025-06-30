@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
     if (!id) return;
 
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = "../index.html";
         return;
     }
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(response => {
             if (!response.ok) {
-                showAlert(`Error: HTTP ${response.status}`, 'error');
+                showAlert(`faild to fatch`, 'error');
                 return Promise.reject();
             }
             return response.json();
@@ -60,12 +61,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
             } catch (err) {
-                showAlert(`Error populating form: ${err.message}`, 'error');
+                showAlert(`Error populating form`, 'error');
             }
 
         })
         .catch(error => {
-            showAlert(`Error fetching data: ${error && error.message ? error.message : ''}`, 'error');
+            showAlert(`Error fetching data`, 'error');
         });
 
     // Handle form submission
@@ -82,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
             "stamp", "payout_amount", "payout_date", "payout_remark", "ap_parat", "ap_parat_date",
             "remark_1", "remark_2", "remark_3"
         ].forEach(field => {
-            formData[field] = document.getElementById(field)?.value || '' ;
+            formData[field] = document.getElementById(field)?.value || '';
         });
 
         fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/account-edit/admin/${id}`, {
@@ -102,11 +103,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         window.history.back();
                     }, 1000);
                 } else {
-                    showAlert(`Failed to update: ${data.message || 'Unknown error'}`, 'error');
+                    showAlert(`Failed to update`, 'error');
                 }
             })
             .catch(error => {
-                showAlert(`Error updating data: ${error && error.message ? error.message : ''}`, 'error');
+                showAlert(`Error updating data`, 'error');
             });
     });
 

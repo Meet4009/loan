@@ -1,6 +1,7 @@
 
 const token = localStorage.getItem("token");
 if (!token) {
+    showAlert("Please log in again.", "error");
     // Optionally redirect to login page
     window.location.href = '../login.html';
 }
@@ -14,12 +15,12 @@ async function loadFollowUpData() {
             console.error('No ID provided in URL parameters');
             return;
         }
-        const response = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent-follow-ups/${id}`,{
+        const response = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent-follow-ups/${id}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
-            }   
+            }
         });
         const result = await response.json();
 
@@ -31,7 +32,7 @@ async function loadFollowUpData() {
         // Loop and add rows
         followUps.forEach(item => {
             console.log('Follow-up item:', item); // Debugging line to check the item structure
-            
+
             const row = `
                     <tr>
                         <td>${item.builder_id}</td>

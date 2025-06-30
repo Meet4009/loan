@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = 'index.html';
         return;
     }
@@ -22,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(response => {
             if (!response.ok) {
-                showAlert(`HTTP error! status: ${response.status}`, "error");
+                showAlert(`faild to fatch data`, "error");
                 return Promise.reject();
             }
             if (response.headers.get('content-length') === '0') {
@@ -49,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         })
         .catch(error => {
-            showAlert(`Error loading data: ${error && error.message ? error.message : ''}`, "error");
+            showAlert(`Error loading data`, "error");
         });
 
     // fetching role list
@@ -105,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
-                showAlert(`Error updating data: ${error.message}`, "error");
+                showAlert(`Error updating data`, "error");
             });
     });
 });

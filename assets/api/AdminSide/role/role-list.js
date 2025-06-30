@@ -1,6 +1,6 @@
 const token = localStorage.getItem("token");
 if (!token) {
-    showAlert("❌ No token found", "error");
+    showAlert("Please log in again.", "error");
     window.location.href = "index.html"
 
 }
@@ -80,7 +80,7 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
                                 }
                             } else {
                                 if (result.message) {
-                                    showAlert("Delete failed: " + (result.message || ""), "error");
+                                    showAlert("Delete failed ", "error");
                                 }
                             }
                         })
@@ -98,6 +98,6 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
             });
         });
     });
-  
+
 
 

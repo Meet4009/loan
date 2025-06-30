@@ -1,5 +1,6 @@
 const token = localStorage.getItem("token");
 if (!token) {
+    showAlert("Please log in again.", "error");
     // Optionally redirect to login page
     window.location.href = '../login.html';
 }
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(response => {
             if (!response.ok) {
-                showAlert(`HTTP error! status: ${response.status}`, 'error');
+                showAlert(`faild to fatch data`, 'error');
                 return Promise.reject();
             }
             return response.json();

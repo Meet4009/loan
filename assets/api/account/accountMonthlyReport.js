@@ -1,6 +1,7 @@
-// ✅ Token check and redirect
+// Token check and redirect
 const token = localStorage.getItem("token");
 if (!token) {
+    showAlert("Please log in again.", "error")
     window.location.href = "../index.html";
 }
 
@@ -105,7 +106,7 @@ function fetchMonthlyReport(startDate, endDate) {
                 tbody.appendChild(row);
             });
 
-            // ✅ Delete button with custom confirmation and alert
+            // Delete button with custom confirmation and alert
             document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', () => {
                     const id = button.getAttribute('data-id');
@@ -136,7 +137,7 @@ function fetchMonthlyReport(startDate, endDate) {
                 });
             });
 
-            // ✅ Update button
+            // Update button
             document.querySelectorAll('.update-btn').forEach(button => {
                 button.addEventListener('click', () => {
                     const id = button.getAttribute('data-id');
@@ -148,11 +149,11 @@ function fetchMonthlyReport(startDate, endDate) {
 
         })
         .catch(error => {
-            showAlert(`Error loading report: ${error && error.message ? error.message : ''}`, 'error');
+            showAlert("Error loading report", 'error');
         });
 }
 
-// ✅ Search button click handler
+// Search button click handler
 document.querySelector('.apply-filter').addEventListener('click', function () {
     const startDate = document.getElementById('startDate').value;
     const endDate = document.getElementById('endDate').value;

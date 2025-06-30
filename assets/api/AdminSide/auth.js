@@ -29,10 +29,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 localStorage.setItem('token', data.token);
                 window.location.href = '../admin-side/account-side/index.html';  // Direct admin redirect
             } else {
-                showAlert(`❌ Login failed: ${data.message || 'Invalid credentials'}`);
+                showAlert(`Login failed: ${data.message || 'Invalid credentials'}`, 'error');
             }
         } catch (err) {
-            showAlert('❌ Network error: ' + err.message);
+            showAlert('Login failed ', "error");
         }
     });
 });
@@ -51,17 +51,17 @@ document.getElementById("forgotForm").addEventListener("submit", function (e) {
         },
         body: JSON.stringify({ email: email })
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.status) {
-            showAlert("✅ " + data.message + "\nYour password: " + data.password);
-        } else {
-            showAlert("❌ Email not found");
-        }
-    })
-    .catch(err => {
-        showAlert("Something went wrong");
-    });
+        .then(res => res.json())
+        .then(data => {
+            if (data.status) {
+                showAlert("" + data.message + "\nYour password: " + data.password, "success");
+            } else {
+                showAlert("Email not found", "error");
+            }
+        })
+        .catch(err => {
+            showAlert("Something went wrong", "error");
+        });
 });
 
 // Logout functionality
@@ -79,14 +79,14 @@ document.getElementById("logout-btn").addEventListener("click", async function (
         const result = await response.json();
 
         if (response.ok) {
-            // ✅ Optional: Clear token from localStorage or cookies if stored
+            // Optional: Clear token from localStorage or cookies if stored
             localStorage.removeItem("token");
-            // ✅ Redirect to login page
+            // Redirect to login page
             window.location.href = "index.html"; // 🔁 Change to your login page path
         } else {
-            showAlert(result.message || "Logout failed");
+            showAlert(result.message || "Logout failed", "error");
         }
     } catch (error) {
-        showAlert("Logout error");
+        showAlert("Logout error", "error");
     }
 });

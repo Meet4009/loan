@@ -1,6 +1,7 @@
 (async () => {
     const token = localStorage.getItem("token");
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = "../index.html";
         return;
     }
@@ -18,7 +19,7 @@
         });
 
         if (!response.ok) {
-            showAlert("❌ Failed to fetch: " + response.status + " " + response.statusText, "error");
+            showAlert("Failed to fetch", "error");
             return;
         }
 
@@ -30,7 +31,7 @@
         });
 
     } catch (err) {
-        showAlert("❌ Error fetching data", "error");
+        showAlert("Error fetching data", "error");
     }
 
     function renderRow(item) {
@@ -129,7 +130,7 @@
                 })
                     .then(res => {
                         if (!res.ok) {
-                            showAlert("❌ Failed to delete record", "error");
+                            showAlert("Failed to delete record", "error");
                             return Promise.reject();
                         }
                         return res.json();

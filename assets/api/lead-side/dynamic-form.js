@@ -1379,7 +1379,7 @@ function addFollowUpSection() {
 async function handleFormSubmission() {
     const selectedRole = document.getElementById('roleSelect').value;
     if (!selectedRole || !API_ENDPOINTS[selectedRole]) {
-        showAlert('Please select a valid role');
+        showAlert('Please select a valid role', 'error');
         return;
     }
 
@@ -1452,7 +1452,7 @@ async function handleFormSubmission() {
     try {
         const token = localStorage.getItem('token');
         if (!token) {
-            showAlert('Please login again');
+            showAlert("Please log in again.", "error");
             window.location.href = 'index.html';
         }
 
@@ -1468,15 +1468,15 @@ async function handleFormSubmission() {
         const result = await response.json();
 
         if (response.ok) {
-            showAlert('✅ Data submitted successfully');
+            showAlert('Data submitted successfully', 'success');
             const redirectUrl = redirectUser(selectedRole);
 
             window.location.href = redirectUrl
         } else {
-            showAlert('❌ Error: ' + result.message);
+            showAlert('Error: ' + result.message);
         }
     } catch (err) {
-        showAlert('❌ Network error');
+        showAlert('Network error');
     }
 }
 

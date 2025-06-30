@@ -1,6 +1,7 @@
 // Redirect if token is missing
 const token = localStorage.getItem('token');
 if (!token) {
+    showAlert("Please log in again.", "error");
     window.location.href = '../../index.html';
 }
 
@@ -14,7 +15,7 @@ async function loadFollowUpData() {
     const id = urlParams.get('id');
 
     if (!id) {
-        showAlert('❌ No ID found in URL parameters');
+        showAlert('No ID found in URL parameters', 'error');
         tableBody.innerHTML = '<tr><td colspan="6">No agent ID provided.</td></tr>';
         return;
     }
@@ -23,14 +24,14 @@ async function loadFollowUpData() {
         const response = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent-follow-ups/admin/${id}`, {
             method: 'GET',
             headers:
-                {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
+            {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
         });
 
         if (!response.ok) {
-            showAlert(`Server error: ${response.status}`);
+            showAlert(`Server error`, 'error');
             tableBody.innerHTML = '<tr><td colspan="6">Failed to load follow-up data.</td></tr>';
             return;
         }
@@ -57,7 +58,7 @@ async function loadFollowUpData() {
         tableBody.innerHTML = rows;
 
     } catch (error) {
-        showAlert('❌ Error loading follow-up data');
+        showAlert('Error loading follow-up data', 'error');
         tableBody.innerHTML = '<tr><td colspan="6">Failed to load follow-up data.</td></tr>';
     }
 }

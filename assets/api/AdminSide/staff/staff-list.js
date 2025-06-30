@@ -1,6 +1,6 @@
 const token = localStorage.getItem("token");
 if (!token) {
-    showAlert("❌ No token found", "error");
+    showAlert("Please log in again.", "error");
     window.location.href = "index.html"
 
 }
@@ -60,7 +60,7 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
                                     button.closest('tr').remove();
                                     showAlert("Staff member deleted successfully", "success");
                                 } else {
-                                    showAlert("Delete failed: " + (result.message || ""), "error");
+                                    showAlert("Delete failed", "error");
                                 }
                             })
                             .catch(() => {

@@ -1,6 +1,7 @@
 // Redirect if token is missing
 const token = localStorage.getItem('token');
 if (!token) {
+    showAlert("Please log in again.", "error");
     window.location.href = '../../index.html';
 }
 
@@ -17,7 +18,7 @@ async function loadAgentCostData() {
     const id = urlParams.get('id');
 
     if (!id) {
-        showAlert('❌ No ID found in URL parameters');
+        showAlert('No ID found in URL parameters', 'error');
         tableBody.innerHTML = '<tr><td colspan="2">No agent ID provided.</td></tr>';
         return;
     }
@@ -32,7 +33,7 @@ async function loadAgentCostData() {
         });
 
         if (!response.ok) {
-            showAlert(`Server responded with status ${response.status}`);
+            showAlert(`faild to fetch data`, 'error')
             tableBody.innerHTML = '<tr><td colspan="2">Failed to load data.</td></tr>';
             return;
         }
@@ -40,7 +41,7 @@ async function loadAgentCostData() {
         const { cost_details, total_cost } = await response.json();
 
         if (!cost_details || typeof cost_details !== 'object') {
-            showAlert('Invalid cost details received.');
+            showAlert('Invalid cost details received.', 'error');
             tableBody.innerHTML = '<tr><td colspan="2">Failed to load data.</td></tr>';
             return;
         }
@@ -66,7 +67,7 @@ async function loadAgentCostData() {
         `;
 
     } catch (error) {
-        showAlert('❌ Error fetching cost data');
+        showAlert('Error fetching cost data', 'error');
         tableBody.innerHTML = '<tr><td colspan="2">Failed to load data.</td></tr>';
     }
 }

@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = 'index.html';
         return;
     }
@@ -173,6 +174,7 @@ async function handleFormSubmission(e) {
 
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = 'index.html';
         return;
     }
@@ -236,7 +238,7 @@ async function handleFormSubmission(e) {
                 window.location.href = 'mehul-bhai.html';
             }, 1200);
         } else {
-            showAlert(result.message || 'Update failed', 'error');
+            showAlert('Update failed', 'error');
         }
     } catch (error) {
         showAlert('Error updating builder', 'error');

@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = 'index.html';
         return;
     }
@@ -175,6 +176,7 @@ async function handleFormSubmission(e) {
 
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = 'index.html';
         return;
     }
@@ -235,10 +237,10 @@ async function handleFormSubmission(e) {
         if (result.status === 200 || result.status === true || response.ok) {
             showAlert("Builder updated successfully", "success");
             setTimeout(() => {
-                window.location.href = 'index.html'; 
+                window.location.href = 'index.html';
             }, 1200);
         } else {
-            showAlert(result.message || 'Update failed', 'error');
+            showAlert('Update failed', 'error');
         }
     } catch (error) {
         showAlert('Error updating builder', 'error');

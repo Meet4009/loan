@@ -1,5 +1,6 @@
 const token = localStorage.getItem("token");
 if (!token) {
+    showAlert("Please log in again.", "error");
     window.location.href = "../../index.html";
 }
 
@@ -8,7 +9,7 @@ async function loadFollowUpData() {
 
     const id = new URLSearchParams(window.location.search).get('id');
     if (!id) {
-        showAlert('No ID provided in URL parameters','error');
+        showAlert('No ID provided in URL parameters', 'error');
         return;
     }
 
@@ -24,7 +25,7 @@ async function loadFollowUpData() {
         );
 
         if (!response.ok) {
-            showAlert(`Server responded with status ${response.status}`);
+            showAlert("faild to fatch data", "error");
             tableBody.innerHTML = '<tr><td colspan="5">Failed to load follow-up data.</td></tr>';
             return;
         }

@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = '../index.html';
         return;
     }
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(response => {
             if (!response.ok) {
-                showAlert(`HTTP error!`, "error");
+                showAlert("faild to fatch data", "error");
                 return Promise.reject();
             }
             if (response.headers.get('content-length') === '0') {
@@ -65,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById("refrence").value = data.refrence;
                 document.getElementById("builder_name").value = data.builder_name;
                 document.getElementById("rlf").value = data.rlf
-                
+
                 if (data.session === 1) {
                     sessionbutton.checked = true;
                     document.getElementById("sensionValue").value = "true";
@@ -133,12 +134,12 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.message === 'Data updated successfully') {
-                    showAlert('✅ Data updated successfully!', 'success');
+                    showAlert('Data updated successfully!', 'success');
                     setTimeout(() => {
                         window.location.href = 'index.html';
                     }, 1200);
                 } else {
-                    showAlert(data.message || 'Failed to update data', "error");
+                    showAlert('Failed to update data', "error");
                 }
             })
             .catch(error => {

@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = '../index.html';
         return;
     }
@@ -33,16 +34,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const data = await response.json();
                 if (response.ok) {
-                    showAlert(`✅ ${data.message || 'CSV uploaded successfully!'}`, 'success');
+                    showAlert(`${data.message || 'CSV uploaded successfully!'}`, 'success');
                     setTimeout(() => {
                         window.location.href = 'index.html';
                     }, 1200);
                 } else {
                     const errorMsg = data.errors?.length > 0 ? data.errors.join(', ') : data.message || 'Unknown error';
-                    showAlert(`Upload failed: ${errorMsg}`, 'error');
+                    showAlert('Upload failed', 'error');
                 }
             } catch (error) {
-                showAlert(`Upload failed: ${error && error.message ? error.message : ''}`, 'error');
+                showAlert('Upload failed: ', 'error');
             }
         });
     }

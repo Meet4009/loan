@@ -3,12 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const id = urlParams.get('id');
 
     if (!id) {
-        showAlert('No ID provided in URL parameters');
+        showAlert('No ID provided in URL parameters', 'error');
         return;
     }
 
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = '../../index.html';
         return;
     }
@@ -29,7 +30,7 @@ async function fetchFollowUpData(id, token) {
         });
 
         if (!response.ok) {
-            showAlert(`HTTP error! Status: ${response.status}`);
+            showAlert("failed to fetch follow-up data", "error");
             return;
         }
 
@@ -38,7 +39,7 @@ async function fetchFollowUpData(id, token) {
         if (result.message === "Follow-up data fetched successfully" && Array.isArray(result.data) && result.data.length > 0) {
             const tableBody = document.querySelector("#party-follow-up-table tbody");
             if (!tableBody) {
-                showAlert("Table body not found!");
+                showAlert("Table body not found!", "error");
                 return;
             }
 
@@ -68,9 +69,9 @@ async function fetchFollowUpData(id, token) {
                 `);
             });
         } else {
-            showAlert("No follow-up data found.");
+            showAlert("No follow-up data found.", "error");
         }
     } catch (error) {
-        showAlert("Error fetching follow-up data");
+        showAlert("Error fetching follow-up data", "error");
     }
 }

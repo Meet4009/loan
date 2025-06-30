@@ -16,13 +16,13 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(res => res.json())
             .then(data => {
                 if (data.status) {
-                    showAlert("✅ " + data.message + "\nYour password: " + data.password);
+                    showAlert("" + data.message + "\nYour password: " + data.password);
                 } else {
-                    showAlert("❌ Email not found");
+                    showAlert("Email not found");
                 }
             })
             .catch(err => {
-                showAlert("❌ Something went wrong");
+                showAlert("Something went wrong");
             });
     });
 });

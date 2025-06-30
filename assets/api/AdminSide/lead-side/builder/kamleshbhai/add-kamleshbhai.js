@@ -1,5 +1,6 @@
 const token = localStorage.getItem("token");
 if (!token) {
+    showAlert("Please log in again.", "error");
     window.location.href = "index.html"
 }
 
@@ -120,7 +121,7 @@ document.querySelector(".add-builder-data").addEventListener("click", async func
                 window.location.href = 'index.html';
             }, 1000);
         } else {
-            showAlert("Error submitting data: " + (result.message || '  -  '), "error");
+            showAlert("Error submitting data", "error");
         }
     } catch (error) {
         showAlert("Network error occurred", "error");

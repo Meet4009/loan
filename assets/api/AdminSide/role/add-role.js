@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = 'index.html';
         return;
     }
@@ -42,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(responseData => {
                 if (responseData && responseData.message) {
-                    showAlert(responseData.message, "success");
+                    showAlert("Role created successfully", "success");
                 }
                 setTimeout(() => {
                     window.location.href = 'roles.html';

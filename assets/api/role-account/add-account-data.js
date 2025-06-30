@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Redirect to login if no token
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = '../index.html';
         return;
     }
@@ -93,10 +94,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
 
             if (response.ok) {
-                showAlert('✅ Data submitted successfully');
+                showAlert('Data submitted successfully');
                 window.location.href = 'index.html';
             } else {
-                showAlert(result.message || 'Failed to submit data');
+                showAlert('Failed to submit data');
             }
         } catch {
             showAlert('Network error occurred. Please try again.');

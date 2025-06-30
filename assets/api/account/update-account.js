@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const token = localStorage.getItem('token');
     if (!token) {
+        showAlert("Please log in again.", "error");
         window.location.href = "../index.html";
         return;
     }
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(response => {
             if (!response.ok) {
-                showAlert(`Error: HTTP ${response.status}`, 'error');
+                showAlert(`Faild to fatch`, 'error');
                 return Promise.reject();
             }
             return response.json();
@@ -60,12 +61,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
             } catch (err) {
-                showAlert(`Error populating form: ${err.message}`, 'error');
+                showAlert('Error populating form', 'error');
             }
 
         })
         .catch(error => {
-            showAlert(`Error fetching data: ${error && error.message ? error.message : ''}`, 'error');
+            showAlert('Error fetching data ', 'error');
         });
 
     // Handle form submission
@@ -104,15 +105,15 @@ document.addEventListener('DOMContentLoaded', function () {
                             window.location.href = "index.html";
                         }
                         else {
-                            window.location.href= `${backPage}.html`;
+                            window.location.href = `${backPage}.html`;
                         }
                     }, 1000);
                 } else {
-                    showAlert(`Failed to update: ${data.message || 'Unknown error'}`, 'error');
+                    showAlert('Failed to update', 'error');
                 }
             })
             .catch(error => {
-                showAlert(`Error updating data: ${error && error.message ? error.message : ''}`, 'error');
+                showAlert('Error updating data', 'error');
             });
     });
 

@@ -1,6 +1,7 @@
 // Immediately check token and redirect if not present
 const token = localStorage.getItem("token");
 if (!token) {
+    showAlert("Please log in again.", "error");
     window.location.href = "../../index.html";
 }
 
@@ -28,7 +29,7 @@ async function loadPartyCostData() {
         );
 
         if (!response.ok) {
-            showAlert(`Server responded with status ${response.status}`);
+            showAlert(`faild to fatch data`);
             tableBody.innerHTML = '<tr><td colspan="2">Failed to load data.</td></tr>';
             tableFoot.innerHTML = '';
             return;
