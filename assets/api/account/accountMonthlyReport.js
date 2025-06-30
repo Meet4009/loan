@@ -1,4 +1,3 @@
-
 // ✅ Token check and redirect
 const token = localStorage.getItem("token");
 if (!token) {
@@ -120,15 +119,18 @@ function fetchMonthlyReport(startDate, endDate) {
                             }
                         })
                             .then(response => {
-                                if (!response.ok) throw new Error("Network response was not OK");
+                                if (!response.ok) {
+                                    showAlert("Error deleting data", 'error');
+                                    return Promise.reject();
+                                }
                                 return response.json();
                             })
                             .then(result => {
                                 showAlert('Data deleted successfully!', 'success');
                                 setTimeout(() => window.location.reload(), 1000);
                             })
-                            .catch(error => {
-                                showAlert(`Error deleting data: ${error.message}`, 'error');
+                            .catch(() => {
+                                // error already handled above
                             });
                     });
                 });
@@ -139,8 +141,6 @@ function fetchMonthlyReport(startDate, endDate) {
                 button.addEventListener('click', () => {
                     const id = button.getAttribute('data-id');
                     const back = button.getAttribute('data-back')
-                    console.log(back);
-                    
                     localStorage.setItem("back", back);
                     window.location.href = `update-account.html?id=${id}`;
                 });
@@ -148,7 +148,7 @@ function fetchMonthlyReport(startDate, endDate) {
 
         })
         .catch(error => {
-            showAlert(`Error loading report: ${error.message}`, 'error');
+            showAlert(`Error loading report: ${error && error.message ? error.message : ''}`, 'error');
         });
 }
 

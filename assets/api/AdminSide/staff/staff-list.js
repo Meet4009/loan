@@ -1,6 +1,6 @@
 const token = localStorage.getItem("token");
 if (!token) {
-    console.error("❌ No token found");
+    showAlert("❌ No token found", "error");
     window.location.href = "index.html"
 
 }
@@ -16,7 +16,7 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
     .then(response => {
         if (!response.ok) {
             showAlert("Failed to load staff data", "error");
-            throw new Error("Network response was not OK");
+            return Promise.reject();
         }
         return response.json();
     })

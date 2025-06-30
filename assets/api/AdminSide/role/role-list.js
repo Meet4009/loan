@@ -1,6 +1,6 @@
 const token = localStorage.getItem("token");
 if (!token) {
-    console.error("❌ No token found");
+    showAlert("❌ No token found", "error");
     window.location.href = "index.html"
 
 }
@@ -14,9 +14,9 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
     }
 })
     .then(response => {
-        console.log("response", response);
         if (!response.ok) {
-            throw new Error("Network response was not OK");
+            showAlert("Network response was not OK", "error");
+            return Promise.reject();
         }
         return response.json();
 
@@ -42,7 +42,6 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
                         });
                     }
                 } catch (error) {
-                    console.error("Date parsing error:", error);
                 }
             }
 
@@ -86,9 +85,7 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
                             }
                         })
                         .catch(() => {
-                            if (result.message) {
-                                showAlert("Error deleting data.", "error");
-                            }
+                            showAlert("Error deleting data.", "error");
                         });
                 });
             });
@@ -101,5 +98,6 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
             });
         });
     });
+  
 
 

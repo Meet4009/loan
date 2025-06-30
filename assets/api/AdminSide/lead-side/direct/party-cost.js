@@ -1,7 +1,8 @@
 const token = localStorage.getItem('token');
 if (!token) {
     window.location.href = '../../index.html';
-    throw new Error("Authentication token not found — redirecting.");
+    showAlert("Authentication token not found — redirecting.");
+    // No need to continue execution
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tableFooter = document.querySelector('#party-cost-table tfoot');
 
     if (!tableBody || !tableFooter) {
-        console.error('❌ Required table elements not found in the DOM.');
+        showAlert('❌ Required table elements not found in the DOM.');
         return;
     }
 
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const id = urlParams.get('id');
 
     if (!id) {
-        console.error('❌ No ID found in URL parameters.');
+        showAlert('❌ No ID found in URL parameters.');
         return;
     }
 
@@ -31,13 +32,37 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error(`HTTP Error: ${response.status}`);
+            showAlert(`HTTP Error: ${response.status}`);
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="2" class="text-danger">Failed to load cost details</td>
+                </tr>
+            `;
+            tableFooter.innerHTML = `
+                <tr>
+                    <td><b>Total Cost</b></td>
+                    <td><b>0/-</b></td>
+                </tr>
+            `;
+            return Promise.reject();
         }
         return response.json();
     })
     .then(data => {
         if (!data?.cost_details) {
-            throw new Error('❌ Invalid or empty cost details received.');
+            showAlert('❌ Invalid or empty cost details received.');
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="2" class="text-danger">Failed to load cost details</td>
+                </tr>
+            `;
+            tableFooter.innerHTML = `
+                <tr>
+                    <td><b>Total Cost</b></td>
+                    <td><b>0/-</b></td>
+                </tr>
+            `;
+            return;
         }
 
         // Reset table content
@@ -82,8 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
             </tr>
         `;
     })
-    .catch(error => {
-        console.error('❌ Fetch error:', error);
+    .catch(() => {
+        showAlert('❌ Fetch error');
         tableBody.innerHTML = `
             <tr>
                 <td colspan="2" class="text-danger">Failed to load cost details</td>

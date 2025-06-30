@@ -39,10 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     }, 1200);
                 } else {
                     const errorMsg = data.errors?.length > 0 ? data.errors.join(', ') : data.message || 'Unknown error';
-                    throw new Error(errorMsg);
+                    showAlert(`Upload failed: ${errorMsg}`, 'error');
                 }
             } catch (error) {
-                showAlert(`Upload failed: ${error.message}`, 'error');
+                showAlert(`Upload failed: ${error && error.message ? error.message : ''}`, 'error');
             }
         });
     }

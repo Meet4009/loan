@@ -15,12 +15,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
 
         const result = await response.json();
-        // console.log(result.admin[0].email);
 
         if (response.ok && result.status) {
             const username = result.admin[0].email.split('@')[0];
             const userEmail = result.admin[0].email
-
 
             // Update DOM elements
             document.getElementById("username1").textContent = username;
@@ -31,10 +29,10 @@ document.addEventListener("DOMContentLoaded", async function () {
             // document.getElementById("detail-email").textContent = userEmail;
             // document.getElementById("detail-mobile").textContent = user.mobile_number;
         } else {
-            console.error(result);
+            showAlert(result.message || "Failed to fetch profile data");
         }
     } catch (error) {
-        console.error("Error fetching profile data:", error);
+        showAlert("Error fetching profile data");
     }
 });
 // Logout functionality
@@ -52,15 +50,13 @@ document.getElementById("logout-btn").addEventListener("click", async function (
         const result = await response.json();
 
         if (response.ok) {
-            // ✅ Optional: Clear token from localStorage or cookies if stored
             localStorage.removeItem("token");
-            // ✅ Redirect to login page
-            window.location.href = "index.html"; // 🔁 Change to your login page path
+            window.location.href = "index.html";
         } else {
-            console.error(result);
+            showAlert(result.message || "Logout failed");
         }
     } catch (error) {
-        console.error(error);
+        showAlert("Logout error");
     }
 });
 

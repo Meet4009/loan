@@ -17,7 +17,7 @@ async function loadAgentCostData() {
     const id = urlParams.get('id');
 
     if (!id) {
-        console.error('❌ No ID found in URL parameters');
+        showAlert('❌ No ID found in URL parameters');
         tableBody.innerHTML = '<tr><td colspan="2">No agent ID provided.</td></tr>';
         return;
     }
@@ -32,13 +32,17 @@ async function loadAgentCostData() {
         });
 
         if (!response.ok) {
-            throw new Error(`Server responded with status ${response.status}`);
+            showAlert(`Server responded with status ${response.status}`);
+            tableBody.innerHTML = '<tr><td colspan="2">Failed to load data.</td></tr>';
+            return;
         }
 
         const { cost_details, total_cost } = await response.json();
 
         if (!cost_details || typeof cost_details !== 'object') {
-            throw new Error('Invalid cost details received.');
+            showAlert('Invalid cost details received.');
+            tableBody.innerHTML = '<tr><td colspan="2">Failed to load data.</td></tr>';
+            return;
         }
 
         // Build rows efficiently
@@ -62,7 +66,7 @@ async function loadAgentCostData() {
         `;
 
     } catch (error) {
-        console.error('❌ Error fetching cost data:', error);
+        showAlert('❌ Error fetching cost data');
         tableBody.innerHTML = '<tr><td colspan="2">Failed to load data.</td></tr>';
     }
 }

@@ -14,7 +14,7 @@ async function loadFollowUpData() {
     const id = urlParams.get('id');
 
     if (!id) {
-        console.error('❌ No ID found in URL parameters');
+        showAlert('❌ No ID found in URL parameters');
         tableBody.innerHTML = '<tr><td colspan="6">No agent ID provided.</td></tr>';
         return;
     }
@@ -22,14 +22,17 @@ async function loadFollowUpData() {
     try {
         const response = await fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent-follow-ups/admin/${id}`, {
             method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
+            headers:
+                {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
         });
 
         if (!response.ok) {
-            throw new Error(`Server error: ${response.status}`);
+            showAlert(`Server error: ${response.status}`);
+            tableBody.innerHTML = '<tr><td colspan="6">Failed to load follow-up data.</td></tr>';
+            return;
         }
 
         const { data: followUps } = await response.json();
@@ -54,7 +57,7 @@ async function loadFollowUpData() {
         tableBody.innerHTML = rows;
 
     } catch (error) {
-        console.error('❌ Error loading follow-up data:', error);
+        showAlert('❌ Error loading follow-up data');
         tableBody.innerHTML = '<tr><td colspan="6">Failed to load follow-up data.</td></tr>';
     }
 }

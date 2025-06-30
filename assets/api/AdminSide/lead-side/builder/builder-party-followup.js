@@ -8,7 +8,7 @@ async function loadFollowUpData() {
 
     const id = new URLSearchParams(window.location.search).get('id');
     if (!id) {
-        console.error('No ID provided in URL parameters');
+        showAlert('No ID provided in URL parameters','error');
         return;
     }
 
@@ -24,11 +24,12 @@ async function loadFollowUpData() {
         );
 
         if (!response.ok) {
-            throw new Error(`Server responded with status ${response.status}`);
+            showAlert(`Server responded with status ${response.status}`);
+            tableBody.innerHTML = '<tr><td colspan="5">Failed to load follow-up data.</td></tr>';
+            return;
         }
 
         const { data: followUps } = await response.json();
-        console.log("Follow-up Data:", followUps);
 
         // Clear old rows
         tableBody.innerHTML = '';
@@ -50,7 +51,7 @@ async function loadFollowUpData() {
         }
 
     } catch (error) {
-        console.error('Error loading follow-up data:', error);
+        showAlert('Error loading follow-up data');
         tableBody.innerHTML = '<tr><td colspan="5">Failed to load follow-up data.</td></tr>';
     }
 }

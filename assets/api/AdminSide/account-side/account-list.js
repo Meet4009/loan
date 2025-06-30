@@ -18,7 +18,7 @@
         });
 
         if (!response.ok) {
-            console.error("❌ Failed to fetch:", response.status, response.statusText);
+            showAlert("❌ Failed to fetch: " + response.status + " " + response.statusText, "error");
             return;
         }
 
@@ -30,7 +30,7 @@
         });
 
     } catch (err) {
-        console.error("❌ Error:", err);
+        showAlert("❌ Error fetching data", "error");
     }
 
     function renderRow(item) {
@@ -128,7 +128,10 @@
                     }
                 })
                     .then(res => {
-                        if (!res.ok) throw new Error("Failed to delete");
+                        if (!res.ok) {
+                            showAlert("❌ Failed to delete record", "error");
+                            return Promise.reject();
+                        }
                         return res.json();
                     })
                     .then(() => {
@@ -136,7 +139,7 @@
                         showAlert("Deleted successfully!", "success");
                     })
                     .catch(() => {
-                        showAlert("❌ Failed to delete record", "error");
+                        // error already handled above
                     });
             });
         });

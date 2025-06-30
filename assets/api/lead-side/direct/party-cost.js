@@ -10,14 +10,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Validate DOM elements
     if (!tableBody || !tableFooter) {
-        console.error('Required table elements not found');
+        showAlert('Required table elements not found', 'error');
         return;
     }
 
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
     if (!id) {
-        console.error('No ID provided in URL parameters');
+        showAlert('No ID provided in URL parameters', 'error');
         return;
     }
     fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/cost/${id}`, {
@@ -28,13 +28,15 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                showAlert(`HTTP error! status: ${response.status}`, 'error');
+                return Promise.reject();
             }
             return response.json();
         })
         .then(data => {
             if (!data || !data.cost_details) {
-                throw new Error('Invalid data received from server');
+                showAlert('Invalid data received from server', 'error');
+                return;
             }
 
             // Clear any existing table rows
@@ -77,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            showAlert('Error loading cost details', 'error');
             if (tableBody) {
                 tableBody.innerHTML = '<tr><td colspan="2">Failed to load cost details</td></tr>';
             }

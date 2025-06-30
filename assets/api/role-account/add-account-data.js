@@ -93,12 +93,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
 
             if (response.ok) {
+                showAlert('✅ Data submitted successfully');
                 window.location.href = 'index.html';
             } else {
-                showError(result.message || 'Failed to submit data');
+                showAlert(result.message || 'Failed to submit data');
             }
         } catch {
-            showError('Network error occurred. Please try again.');
+            showAlert('Network error occurred. Please try again.');
         }
     };
 

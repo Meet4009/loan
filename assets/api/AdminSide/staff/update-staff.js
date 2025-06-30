@@ -23,18 +23,18 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => {
             if (!response.ok) {
                 showAlert(`HTTP error! status: ${response.status}`, "error");
-                throw new Error(`HTTP error! status: ${response.status}`);
+                return Promise.reject();
             }
             if (response.headers.get('content-length') === '0') {
                 showAlert('Empty response received', "error");
-                throw new Error('Empty response received');
+                return Promise.reject();
             }
             return response.json();
         })
         .then(response => {
             if (!response || !response.data) {
                 showAlert('Invalid data structure received', "error");
-                throw new Error('Invalid data structure received');
+                return;
             }
 
             const data = response.data;
@@ -46,11 +46,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById("password").value = data.password;
             } catch (err) {
                 showAlert('Error populating form', "error");
-                throw err;
             }
         })
         .catch(error => {
-            showAlert(`Error loading data: ${error.message}`, "error");
+            showAlert(`Error loading data: ${error && error.message ? error.message : ''}`, "error");
         });
 
     // fetching role list
@@ -110,3 +109,4 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 });
+

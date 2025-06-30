@@ -19,17 +19,17 @@ document.addEventListener("DOMContentLoaded", function () {
             // Log the raw response for debugging
             const rawResponse = await response.text();
 
-
             try {
                 // Try to parse the response as JSON
                 const data = JSON.parse(rawResponse);
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    showAlert(`HTTP error! status: ${response.status}`, "error");
+                    return Promise.reject();
                 }
                 return data;
             } catch (e) {
                 showAlert("JSON Parse Error", "error");
-                throw new Error("Invalid JSON response from server");
+                return Promise.reject();
             }
         })
         .then(response => {
@@ -39,7 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const data = Array.isArray(response) ? response : response.data;
 
             if (!Array.isArray(data)) {
-                throw new Error('Expected an array of builders');
+                showAlert('Expected an array of builders', 'error');
+                return;
             }
 
             data.forEach((item) => {
@@ -151,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
             tbody.innerHTML = `<tr><td colspan="15" class="text-center">Error loading data. Please check your connection and try again. (${error.message})</td></tr>`;
 
             // If token is invalid, redirect to login
-            if (error.message.includes("401") || error.message.includes("403")) {
+            if (error.message && (error.message.includes("401") || error.message.includes("403"))) {
                 localStorage.removeItem("token");
                 window.location.href = "index.html"
             }

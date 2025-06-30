@@ -21,14 +21,14 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => {
             if (!response.ok) {
                 showAlert(`Error: HTTP ${response.status}`, 'error');
-                throw new Error(`HTTP error! status: ${response.status}`);
+                return Promise.reject();
             }
             return response.json();
         })
         .then(response => {
             if (!response || !response.data) {
                 showAlert('Invalid data received from server.', 'error');
-                throw new Error('Invalid data structure received');
+                return;
             }
 
             const data = response.data;
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         })
         .catch(error => {
-            showAlert(`Error fetching data: ${error.message}`, 'error');
+            showAlert(`Error fetching data: ${error && error.message ? error.message : ''}`, 'error');
         });
 
     // Handle form submission
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
-                showAlert(`Error updating data: ${error.message}`, 'error');
+                showAlert(`Error updating data: ${error && error.message ? error.message : ''}`, 'error');
             });
     });
 

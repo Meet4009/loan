@@ -71,10 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         window.location.href = 'index.html';
                     }, 1200);
                 } else {
-                    throw new Error(result.message || 'Failed to create account');
+                    showAlert(result.message || 'Failed to create account', 'error');
                 }
             } catch (error) {
-                showAlert(`❌ Error creating account: ${error.message}`, 'error');
+                showAlert(`❌ Error creating account: ${error && error.message ? error.message : ''}`, 'error');
             }
         });
     }

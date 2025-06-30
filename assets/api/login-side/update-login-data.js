@@ -20,11 +20,11 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => {
             if (!response.ok) {
                 showAlert(`HTTP error!`, "error");
-                throw new Error(`HTTP error! status: ${response.status}`);
+                return Promise.reject();
             }
             if (response.headers.get('content-length') === '0') {
                 showAlert('Empty response received', "error");
-                throw new Error('Empty response received');
+                return Promise.reject();
             }
             return response.json();
         })
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (!response || !response.data) {
                 showAlert('Invalid data structure received', "error");
-                throw new Error('Invalid data structure received');
+                return;
             }
 
             const sessionbutton = document.querySelector('#sensionToggle');
@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById("refrence").value = data.refrence;
                 document.getElementById("builder_name").value = data.builder_name;
                 document.getElementById("rlf").value = data.rlf
-                console.log(data.session);
                 
                 if (data.session === 1) {
                     sessionbutton.checked = true;
@@ -80,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             } catch (err) {
                 showAlert('Error populating form', "error");
-                throw new Error('Error populating form:', err);
             }
         })
         .catch(error => {
@@ -151,3 +149,4 @@ document.addEventListener('DOMContentLoaded', function () {
 document.getElementById("cancelLoginBtn").addEventListener("click", function () {
     window.location.href = "index.html";
 });
+

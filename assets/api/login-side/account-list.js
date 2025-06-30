@@ -16,7 +16,8 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
 })
     .then(response => {
         if (!response.ok) {
-            throw new Error("Network response was not OK");
+            showAlert("Network response was not OK", "error");
+            return Promise.reject();
         }
         return response.json();
     })
@@ -90,5 +91,5 @@ fetch("https://loantest.innovatixtechnologies.com/account/example-app/public/api
         });
     })
     .catch(error => {
-        throw new Error("❌ Error fetching account list:", error);
+        showAlert("❌ Error fetching account list", "error");
     });

@@ -36,9 +36,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
 
-        if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+        if (!res.ok) {
+            showAlert(`HTTP error: ${res.status}`, 'error');
+            return;
+        }
         const { data } = await res.json();
-        if (!data) throw new Error('No data received');
+        if (!data) {
+            showAlert('No data received', 'error');
+            return;
+        }
 
         // Fill form
         setSelectByText("bank", data.bank);
@@ -54,8 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ].forEach(field => setValue(field, data[field]));
 
     } catch (err) {
-        console.error("Failed to fetch data:", err);
-        alert("Failed to load data.");
+        showAlert("Failed to load data.", 'error');
     }
 
     // Handle form update
@@ -92,12 +97,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (result.message === 'Data updated successfully') {
                 window.location.href = "index.html";
             } else {
-                alert(result.message || "Failed to update data");
+                showAlert(result.message || "Failed to update data", 'error');
             }
 
         } catch (err) {
-            console.error("Update failed:", err);
-            alert("Error updating data.");
+            showAlert("Error updating data.", 'error');
         }
     });
 

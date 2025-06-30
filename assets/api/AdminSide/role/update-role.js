@@ -2,10 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Get role ID from URL and validate token
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
-    console.log(id);
 
     const token = localStorage.getItem('token');
-    console.log(token);
 
     if (!id) {
 
@@ -30,12 +28,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
         .then(response => {
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            if (!response.ok) {
+                showAlert(`HTTP error! status: ${response.status}`, "error");
+                return Promise.reject();
+            }
             return response.json();
         })
         .then(response => {
             if (!response || !response.data) {
-                throw new Error('Invalid data structure received');
+                showAlert('Invalid data structure received', "error");
+                return;
             }
 
             const data = response.data;
@@ -52,9 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         })
         .catch(error => {
-
-            showAlert(`Error loading role: ${error.message}`, "error");
-
+            showAlert(`Error loading role: ${error && error.message ? error.message : ''}`, "error");
         });
 
     // Handle form submission
@@ -84,7 +84,10 @@ document.addEventListener('DOMContentLoaded', function () {
             body: JSON.stringify(formData)
         })
             .then(response => {
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                if (!response.ok) {
+                    showAlert(`HTTP error! status: ${response.status}`, "error");
+                    return Promise.reject();
+                }
                 return response.json();
             })
             .then(result => {
@@ -94,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => {
-                showAlert(`Failed to update role: ${error.message}`, "error");
+                showAlert(`Failed to update role: ${error && error.message ? error.message : ''}`, "error");
             });
     });
 

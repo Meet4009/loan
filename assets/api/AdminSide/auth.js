@@ -29,11 +29,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 localStorage.setItem('token', data.token);
                 window.location.href = '../admin-side/account-side/index.html';  // Direct admin redirect
             } else {
-                alert(`❌ Login failed: ${data.message || 'Invalid credentials'}`);
+                showAlert(`❌ Login failed: ${data.message || 'Invalid credentials'}`);
             }
         } catch (err) {
-            alert('❌ Network error: ' + err.message);
-            console.error(err);
+            showAlert('❌ Network error: ' + err.message);
         }
     });
 });
@@ -55,14 +54,13 @@ document.getElementById("forgotForm").addEventListener("submit", function (e) {
     .then(res => res.json())
     .then(data => {
         if (data.status) {
-            alert("✅ " + data.message + "\nYour password: " + data.password);
+            showAlert("✅ " + data.message + "\nYour password: " + data.password);
         } else {
-            alert("❌ Email not found");
+            showAlert("❌ Email not found");
         }
     })
     .catch(err => {
-        console.error("Error:", err);
-        alert("Something went wrong");
+        showAlert("Something went wrong");
     });
 });
 
@@ -86,9 +84,9 @@ document.getElementById("logout-btn").addEventListener("click", async function (
             // ✅ Redirect to login page
             window.location.href = "index.html"; // 🔁 Change to your login page path
         } else {
-            console.error(result);
+            showAlert(result.message || "Logout failed");
         }
     } catch (error) {
-        console.error(error);
+        showAlert("Logout error");
     }
 });

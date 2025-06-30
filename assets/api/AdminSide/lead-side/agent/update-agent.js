@@ -165,7 +165,7 @@ async function fetchAgentDetails(id, token) {
                     }
                 }
             } else {
-                throw new Error('Agent not found');
+                showAlert('Agent not found', 'error');
             }
         }
     } catch (error) {
@@ -173,6 +173,7 @@ async function fetchAgentDetails(id, token) {
     }
 }
 
+// Fetch follow-up data
 function fetchFollowUpData(id) {
     fetch(`https://loantest.innovatixtechnologies.com/account/example-app/public/api/agent-follow-ups/admin/${id}`, {
         method: "GET",
