@@ -117,7 +117,7 @@ document.querySelector('#Agent-data-add').addEventListener('click', async functi
             showAlert("✅ Agent added successfully", "success");
             setTimeout(() => {
 
-                // window.location.href = "agent.html"; // Redirect to agent list page
+                window.location.href = "agent.html"; // Redirect to agent list page
             }, 1200);
         } else {
             showAlert(result.message || "An error occurred.", "error");

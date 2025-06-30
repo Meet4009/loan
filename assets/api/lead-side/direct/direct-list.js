@@ -91,9 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                     if (result.message === "Data and related follow-ups deleted successfully") {
                                         button.closest('tr').remove();
                                         showAlert("Data deleted successfully!", "success");
-                                        setTimeout(() => {
-                                            window.location.reload();
-                                        }, 1200);
                                     } else {
                                         showAlert("Delete failed.", "error");
                                     }

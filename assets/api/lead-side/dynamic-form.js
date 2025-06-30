@@ -625,10 +625,10 @@ const formTemplates = {
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="stemppaper" class="col-sm-3 col-form-label text-left text-sm-center">Stamp
+                                            <label for="stamp" class="col-sm-3 col-form-label text-left text-sm-center">Stamp
                                                 Paper</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" type="number" id="stemppaper">
+                                                <input class="form-control" type="number" id="stamp">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -1379,7 +1379,7 @@ function addFollowUpSection() {
 async function handleFormSubmission() {
     const selectedRole = document.getElementById('roleSelect').value;
     if (!selectedRole || !API_ENDPOINTS[selectedRole]) {
-        alert('Please select a valid role');
+        showAlert('Please select a valid role');
         return;
     }
 
@@ -1452,7 +1452,7 @@ async function handleFormSubmission() {
     try {
         const token = localStorage.getItem('token');
         if (!token) {
-            alert('Please login again');
+            showAlert('Please login again');
             window.location.href = 'index.html';
         }
 
@@ -1468,17 +1468,15 @@ async function handleFormSubmission() {
         const result = await response.json();
 
         if (response.ok) {
-            alert('✅ Data submitted successfully');
-            console.log(result);
+            showAlert('✅ Data submitted successfully');
             const redirectUrl = redirectUser(selectedRole);
 
             window.location.href = redirectUrl
         } else {
-            alert('❌ Error: ' + result.message);
-            console.error(result);
+            showAlert('❌ Error: ' + result.message);
         }
     } catch (err) {
-        alert('❌ Network error');
-        console.error(err);
+        showAlert('❌ Network error');
     }
 }
+
