@@ -24,6 +24,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = document.getElementById('password').value;
         const role = document.getElementById('role').value;
 
+        // Basic validation
+        if (!email || !password || !role ) {
+            showAlert("Please fill in all fields.", 'error');
+            return;
+        }
+
         const isSpecialRole = ['account', 'login', 'lead'].includes(role);
         const baseUrl = 'https://loantest.innovatixtechnologies.com/account/example-app/public/api/';
         const endpoint = isSpecialRole ? 'multi-login' : 'user-login';
@@ -53,10 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 showAlert('Login successful!', 'success');
             } else {
-                showAlert(`Login failed: 'Invalid credentials'}`, 'error');
+                showAlert("Login Faild Invalid credentials", 'error');
             }
         } catch (error) {
-            showAlert(`server error`, 'error');
+            showAlert(`server Error `, 'error');
         }
     });
 });

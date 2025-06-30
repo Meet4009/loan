@@ -19,7 +19,7 @@
         });
 
         if (!response.ok) {
-            showAlert("Failed to fetch", "error");
+            showAlert("Failed to fetch.", "error");
             return;
         }
 
@@ -31,7 +31,7 @@
         });
 
     } catch (err) {
-        showAlert("Error fetching data", "error");
+        showAlert("failed to load data.", "error");
     }
 
     function renderRow(item) {
@@ -130,7 +130,7 @@
                 })
                     .then(res => {
                         if (!res.ok) {
-                            showAlert("Failed to delete record", "error");
+                            showAlert("Failed to delete account data.", "error");
                             return Promise.reject();
                         }
                         return res.json();

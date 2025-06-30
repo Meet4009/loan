@@ -68,15 +68,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const result = await response.json();
                 if (response.ok) {
-                    showAlert('Account created successfully!', 'success');
+                    showAlert('Account Data created', 'success');
                     setTimeout(() => {
                         window.location.href = 'index.html';
                     }, 1200);
                 } else {
-                    showAlert('Failed to create account', 'error');
+                    showAlert('Failed to create account data', 'error');
                 }
             } catch (error) {
-                showAlert(`Error creating account`, 'error');
+                showAlert(`Error creating account data`, 'error');
             }
         });
     }

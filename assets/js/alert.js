@@ -2,6 +2,7 @@
     const style = document.createElement('style');
     style.textContent = `
         .custom-alert {
+            text-align: center;
             position: fixed;
             top: 20px;
             left: 50%;
